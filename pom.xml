@@ -230,7 +230,7 @@
 
   </dependencies>
 
-  <packaging>war</packaging>
+ <!-- <packaging>war</packaging>-->
 
   <build>
     <finalName>musicbeat</finalName>

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/target/maven-archiver/maven-archiver.iml" filepath="$PROJECT_DIR$/target/maven-archiver/maven-archiver.iml" />
       <module fileurl="file://$PROJECT_DIR$/musicbeat.iml" filepath="$PROJECT_DIR$/musicbeat.iml" />
     </modules>
   </component>

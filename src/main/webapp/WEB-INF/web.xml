@@ -12,6 +12,12 @@
     <param-value>classpath:config/spring/mybatis.xml</param-value>
   </context-param>
 
+  <!--避免部署在同一容器中的Web项目定义了相同的webAppRootKey-->
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>musicBeatApp.root</param-value>
+  </context-param>
+
   <context-param>
     <param-name>log4jConfigLocation</param-name>
     <param-value>classpath:config/log4j.properties</param-value>
