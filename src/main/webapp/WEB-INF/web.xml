@@ -85,11 +85,11 @@
 
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>
+    <welcome-file>/index.html</welcome-file>
   </welcome-file-list>
 
   <!-- session配置 -->
   <session-config>
     <session-timeout>15</session-timeout>
   </session-config>
-
 </web-app>
