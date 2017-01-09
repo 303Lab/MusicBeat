@@ -1,88 +1,111 @@
 package com.musicbeat.web.model;
 
-import java.util.Date;
-
 public class User {
+    private Integer id;
 
-    private Long id;
-    private String userName;
-    private String userPhone;
-    private String userEmail;
-    private String userPwd;
-    private String pwdSalt;
-    private Date createTime;
-    private Date modifyTime;
-    private Short isDelete;
+    private String username;
 
-    public Long getId() {
+    private String password;
+
+    private Boolean gender;
+
+    private String realname;
+
+    private String country;
+
+    private String province;
+
+    private String city;
+
+    private String address;
+
+    private String qq;
+
+    private String phone;
+
+    private String email;
+
+    private String picture;
+
+    private String privilege;
+
+    private Boolean isRealPublic;
+
+    public User(Integer id, String username, String password, Boolean gender, String realname, String country, String province, String city, String address, String qq, String phone, String email, String picture, String privilege, Boolean isRealPublic) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.gender = gender;
+        this.realname = realname;
+        this.country = country;
+        this.province = province;
+        this.city = city;
+        this.address = address;
+        this.qq = qq;
+        this.phone = phone;
+        this.email = email;
+        this.picture = picture;
+        this.privilege = privilege;
+        this.isRealPublic = isRealPublic;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getUsername() {
+        return username;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public Boolean getGender() {
+        return gender;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getRealname() {
+        return realname;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public String getCountry() {
+        return country;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getProvince() {
+        return province;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public String getCity() {
+        return city;
     }
 
-    public String getUserPwd() {
-        return userPwd;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd;
+    public String getQq() {
+        return qq;
     }
 
-    public String getPwdSalt() {
-        return pwdSalt;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPwdSalt(String pwdSalt) {
-        this.pwdSalt = pwdSalt;
+    public String getEmail() {
+        return email;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public String getPrivilege() {
+        return privilege;
     }
 
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    public Short getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(Short isDelete) {
-        this.isDelete = isDelete;
+    public Boolean getIsRealPublic() {
+        return isRealPublic;
     }
 }

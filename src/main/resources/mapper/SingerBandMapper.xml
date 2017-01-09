@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musicbeat.web.mapper.SingerBandMapper">
+  <resultMap id="BaseResultMap" type="com.musicbeat.web.model.SingerBand">
+    <constructor>
+      <idArg column="sid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="bid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from singer_band
+    where sid = #{sid,jdbcType=INTEGER}
+      and bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.musicbeat.web.model.SingerBand">
+    insert into singer_band (sid, bid)
+    values (#{sid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.musicbeat.web.model.SingerBand">
+    insert into singer_band
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="bid != null">
+        bid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="bid != null">
+        #{bid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

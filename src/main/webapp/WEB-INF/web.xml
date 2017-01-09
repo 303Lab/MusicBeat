@@ -12,6 +12,12 @@
     <param-value>classpath:config/spring/mybatis.xml</param-value>
   </context-param>
 
+  <!--过滤HTML解析，防XSS-->
+  <context-param>
+    <param-name>defaultHtmlEscape</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
   <!--避免部署在同一容器中的Web项目定义了相同的webAppRootKey-->
   <context-param>
     <param-name>webAppRootKey</param-name>

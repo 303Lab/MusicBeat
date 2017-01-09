@@ -1,34 +1,115 @@
 package com.musicbeat.web.service.impl;
 
+import com.musicbeat.web.mapper.UserMapper;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
-import com.musicbeat.web.dao.UserDao;
+import com.musicbeat.web.utils.EncryptUtil;
 
+import com.musicbeat.web.utils.RegexValidateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
+import java.util.logging.Logger;
 
-@Service("userService")
-@Transactional(rollbackFor = Exception.class)
+/**
+ * 用户服务接口实现类
+ * Created by windawings on 2017/1/5
+ */
+@Service("UserService")
 public class UserServiceImpl implements UserService {
 
-  @Resource
-  private UserDao userDao;
+  private UserMapper userMapper;
 
-  @Override
-  public User getUserById(Long userId) {
-    return userDao.selectUserById(userId);
+  private static Logger logger = Logger.getLogger(UserMapper.class.getSimpleName());
+
+  @Autowired
+  public void setUserMapper(UserMapper addMapper) {
+    this.userMapper = addMapper;
   }
 
   @Override
-  public User getUserByPhoneOrEmail(String emailOrPhone, Short state) {
-    return userDao.selectUserByPhoneOrEmail(emailOrPhone, state);
+  public void add(User user) {
+    userMapper.insert(user);
   }
 
   @Override
-  public List<User> getAllUser() {
-    return userDao.selectAllUser();
+  public void update(User user) {
+    userMapper.updateByPrimaryKeySelective(user);
+  }
+
+  @Override
+  public void delete(Integer id) {
+    userMapper.deleteByPrimaryKey(id);
+  }
+
+  @Override
+  public List<User> findById(Integer id) { return userMapper.selectByPrimaryKey(id);}
+
+  @Override
+  public List<User> findByUserName(String username) { return userMapper.selectByUserName(username);}
+
+  @Override
+  public List<User> findByUserNameSingle(String username) {
+    return userMapper.selectByUserNameSingle(username);
+  }
+
+  @Override
+  public List<User> findByRealName(String realname) {
+    return userMapper.selectByRealName(realname);
+  }
+
+  @Override
+  public List<User> findAdmin() {
+    return userMapper.selectAdmin();
+  }
+
+  @Override
+  public List<User> findByPhone(String phone) {
+    return userMapper.selectByPhone(phone);
+  }
+
+  @Override
+  public List<User> findByPhoneSingle(String phone) {return userMapper.selectByPhoneSingle(phone);}
+
+  @Override
+  public List<User> findByEmail(String email) {return userMapper.selectByEmail(email);}
+
+  @Override
+  public List<User> findByEmailSingle(String email) {return userMapper.selectByEmailSingle(email);}
+
+  @Override
+  public List<User> checkPassword(String identify, String password) {
+    List<User> users = null;
+
+    if (RegexValidateUtil.checkEmail(identify)) {
+      users = findByEmailSingle(identify);
+    } else if (RegexValidateUtil.checkMobileNumber(identify)) {
+      users = findByPhoneSingle(identify);
+    } else {
+      users = findByUserNameSingle(identify);
+    }
+
+    /*如果输入的是ID*/
+    if ((users == null || users.isEmpty()) && RegexValidateUtil.checkNumeric(identify)) {
+      try {
+        users = findById(Integer.parseInt(identify));
+      } catch (NumberFormatException e) {
+        logger.warning(e.getMessage());
+      }
+    }
+
+    if (users == null || users.isEmpty()) {
+      return null;
+    }
+
+    /*if (password.length() != EncryptUtil.SHA256LENGTH) {
+      password = EncryptUtil.SHA256(password);
+    }*/
+
+    if (users.get(0).getPassword().equals(password)) {
+      return users;
+    }
+    return null;
   }
 }

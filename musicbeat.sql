@@ -1,202 +1,223 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/12/30 15:26:25                          */
+/* Created on:     2017/1/5 ������ 21:49:40                        */
 /*==============================================================*/
 
 
-drop table if exists CD;
+drop table if exists Album;
 
-drop table if exists CD_Talks;
+drop table if exists Album_Comment;
 
-drop table if exists MUSIC;
+drop table if exists `Label`;
 
-drop table if exists Music_CD_Relationship;
+drop table if exists Label_Group;
 
-drop table if exists Music_Talks;
+drop table if exists Music;
 
-drop table if exists SINGER;
+drop table if exists Music_Album;
 
-drop table if exists Singer_CD_Relationship;
+drop table if exists Music_Comment;
 
-drop table if exists Singer_Music_Relationship;
+drop table if exists PlayList;
 
-drop table if exists Singer_Singer_Relationship;
+drop table if exists Singer;
 
-drop table if exists USER;
+drop table if exists Singer_Album;
 
-drop table if exists User_Music_Relationship;
+drop table if exists Singer_Band;
+
+drop table if exists User;
 
 /*==============================================================*/
-/* Table: CD                                                    */
+/* Table: Album                                                 */
 /*==============================================================*/
-create table CD
+create table Album
 (
-   CD_id                int not null,
-   CD_name              varchar(100),
-   CD_abstract          text,
-   publish_time         date,
-   CD_picture           longblob,
-   primary key (CD_id)
+   id                   int not null auto_increment,
+   name                 varchar(20) not null,
+   introduction         varchar(100),
+   release_time         date,
+   picture              varchar(50),
+   primary key (id)
 );
 
 /*==============================================================*/
-/* Table: CD_Talks                                              */
+/* Table: Album_Comment                                         */
 /*==============================================================*/
-create table CD_Talks
+create table Album_Comment
 (
-   user_id              int,
-   CD_id                int,
-   CD_comments          text
+   id                   int not null auto_increment,
+   uid                  int not null,
+   aid                  int not null,
+   comment              varchar(255) not null,
+   primary key (id, uid, aid)
 );
 
 /*==============================================================*/
-/* Table: MUSIC                                                 */
+/* Table: `Label`                                               */
 /*==============================================================*/
-create table MUSIC
+create table `Label`
 (
-   music_id             int not null,
-   music_name           varchar(100),
+   id                   int not null auto_increment,
+   lid                  int not null,
+   mid                  int not null,
+   name                 varchar(10) not null,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: Label_Group                                           */
+/*==============================================================*/
+create table Label_Group
+(
+   id                   int not null auto_increment,
+   name                 varchar(4) not null,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: Music                                                 */
+/*==============================================================*/
+create table Music
+(
+   id                   int not null auto_increment,
+   name                 varchar(100) not null,
    lyrics               varchar(50),
-   music_file           varchar(50),
-   school               varchar(100),
-   numberof_play        bigint,
-   numberof_download    bigint,
-   timeof_music         time,
-   primary key (music_id)
+   link                 varchar(50) not null,
+   play_amount          bigint,
+   download_amount      bigint,
+   duration             time,
+   primary key (id)
 );
 
 /*==============================================================*/
-/* Table: Music_CD_Relationship                                 */
+/* Table: Music_Album                                           */
 /*==============================================================*/
-create table Music_CD_Relationship
+create table Music_Album
 (
-   music_id             int not null,
-   CD_id                int not null,
-   primary key (music_id, CD_id)
+   mid                  int not null,
+   aid                  int not null,
+   primary key (mid, aid)
 );
 
 /*==============================================================*/
-/* Table: Music_Talks                                           */
+/* Table: Music_Comment                                         */
 /*==============================================================*/
-create table Music_Talks
+create table Music_Comment
 (
-   user_id              int,
-   music_id             int,
-   music_comments       text
+   id                   int not null auto_increment,
+   uid                  int not null,
+   mid                  int not null,
+   comment              varchar(255) not null,
+   primary key (id, uid, mid)
 );
 
 /*==============================================================*/
-/* Table: SINGER                                                */
+/* Table: PlayList                                              */
 /*==============================================================*/
-create table SINGER
+create table PlayList
 (
-   singer_id            int not null,
-   singer_name          varchar(100),
-   singer_class         varchar(50),
-   groupof              varchar(100),
-   singer_picture       longblob,
-   singer_abstract      text,
-   primary key (singer_id)
+   mid                  int not null,
+   uid                  int not null,
+   primary key (mid, uid)
 );
 
 /*==============================================================*/
-/* Table: Singer_CD_Relationship                                */
+/* Table: Singer                                                */
 /*==============================================================*/
-create table Singer_CD_Relationship
+create table Singer
 (
-   singer_id            int not null,
-   CD_id                int not null,
-   primary key (singer_id, CD_id)
+   id                   int not null auto_increment,
+   name                 varchar(100) not null,
+   gender               bool,
+   lang                 varchar(8),
+   picture              varchar(50),
+   introduction         varchar(100),
+   is_band              bool,
+   primary key (id)
 );
 
 /*==============================================================*/
-/* Table: Singer_Music_Relationship                             */
+/* Table: Singer_Album                                          */
 /*==============================================================*/
-create table Singer_Music_Relationship
+create table Singer_Album
 (
-   singer_id            int not null,
-   music_id             int not null,
-   primary key (singer_id, music_id)
+   sid                  int not null,
+   aid                  int not null,
+   primary key (sid, aid)
 );
 
 /*==============================================================*/
-/* Table: Singer_Singer_Relationship                            */
+/* Table: Singer_Band                                           */
 /*==============================================================*/
-create table Singer_Singer_Relationship
+create table Singer_Band
 (
-   singer_id            int not null,
-   SIN_singer_id        int not null,
-   primary key (singer_id, SIN_singer_id)
+   sid                  int not null,
+   bid                  int not null,
+   primary key (sid, bid)
 );
 
 /*==============================================================*/
-/* Table: USER                                                  */
+/* Table: User                                                  */
 /*==============================================================*/
-create table USER
+create table User
 (
-   user_id              int not null,
-   username             varchar(20),
-   password             varchar(32),
+   id                   int not null auto_increment,
+   username             varchar(20) not null,
+   password             varchar(32) not null,
+   gender               bool,
    realname             varchar(10),
    country              varchar(10),
    province             varchar(10),
    city                 varchar(10),
+   address              varchar(255),
+   qq                   varchar(10),
    phone                varchar(11),
-   email                varchar(20),
-   privilege            varchar(10),
-   publicrealinfo       bool,
-   primary key (user_id)
+   email                varchar(20) not null,
+   picture              varchar(50),
+   privilege            varchar(10) not null,
+   is_real_public       bool,
+   primary key (id)
 );
 
-/*==============================================================*/
-/* Table: User_Music_Relationship                               */
-/*==============================================================*/
-create table User_Music_Relationship
-(
-   music_id             int not null,
-   user_id              int not null,
-   primary key (music_id, user_id)
-);
+alter table Album_Comment add constraint FK_Album_AlbumComment foreign key (aid)
+      references Album (id) on delete restrict on update restrict;
 
-alter table CD_Talks add constraint FK_CD_CDTalks_Relationship foreign key (CD_id)
-      references CD (CD_id) on delete restrict on update restrict;
+alter table Album_Comment add constraint FK_User_AlbumComment foreign key (uid)
+      references User (id) on delete restrict on update restrict;
 
-alter table CD_Talks add constraint FK_User_CDTalks_Relationship foreign key (user_id)
-      references USER (user_id) on delete restrict on update restrict;
+alter table `Label` add constraint FK_Label_LabelGroup foreign key (lid)
+      references Label_Group (id) on delete restrict on update restrict;
 
-alter table Music_CD_Relationship add constraint FK_Music_CD_Relationship foreign key (music_id)
-      references MUSIC (music_id) on delete restrict on update restrict;
+alter table `Label` add constraint FK_Music_Label foreign key (mid)
+      references Music (id) on delete restrict on update restrict;
 
-alter table Music_CD_Relationship add constraint FK_Music_CD_Relationship2 foreign key (CD_id)
-      references CD (CD_id) on delete restrict on update restrict;
+alter table Music_Album add constraint FK_Music_Album foreign key (mid)
+      references Music (id) on delete restrict on update restrict;
 
-alter table Music_Talks add constraint FK_Music_MusicTalks_Relationship foreign key (music_id)
-      references MUSIC (music_id) on delete restrict on update restrict;
+alter table Music_Album add constraint FK_Music_Album2 foreign key (aid)
+      references Album (id) on delete restrict on update restrict;
 
-alter table Music_Talks add constraint FK_User_MusicTalks_Relationship foreign key (user_id)
-      references USER (user_id) on delete restrict on update restrict;
+alter table Music_Comment add constraint FK_Music_MusicComment foreign key (mid)
+      references Music (id) on delete restrict on update restrict;
 
-alter table Singer_CD_Relationship add constraint FK_Singer_CD_Relationship foreign key (singer_id)
-      references SINGER (singer_id) on delete restrict on update restrict;
+alter table Music_Comment add constraint FK_User_MusicComment foreign key (uid)
+      references User (id) on delete restrict on update restrict;
 
-alter table Singer_CD_Relationship add constraint FK_Singer_CD_Relationship2 foreign key (CD_id)
-      references CD (CD_id) on delete restrict on update restrict;
+alter table PlayList add constraint FK_PlayList foreign key (mid)
+      references Music (id) on delete restrict on update restrict;
 
-alter table Singer_Music_Relationship add constraint FK_Singer_Music_Relationship foreign key (singer_id)
-      references SINGER (singer_id) on delete restrict on update restrict;
+alter table PlayList add constraint FK_PlayList2 foreign key (uid)
+      references User (id) on delete restrict on update restrict;
 
-alter table Singer_Music_Relationship add constraint FK_Singer_Music_Relationship2 foreign key (music_id)
-      references MUSIC (music_id) on delete restrict on update restrict;
+alter table Singer_Album add constraint FK_Singer_Album foreign key (sid)
+      references Singer (id) on delete restrict on update restrict;
 
-alter table Singer_Singer_Relationship add constraint FK_Singer_Singer_Relationship foreign key (singer_id)
-      references SINGER (singer_id) on delete restrict on update restrict;
+alter table Singer_Album add constraint FK_Singer_Album2 foreign key (aid)
+      references Album (id) on delete restrict on update restrict;
 
-alter table Singer_Singer_Relationship add constraint FK_Singer_Singer_Relationship2 foreign key (SIN_singer_id)
-      references SINGER (singer_id) on delete restrict on update restrict;
+alter table Singer_Band add constraint FK_Singer_Band foreign key (sid)
+      references Singer (id) on delete restrict on update restrict;
 
-alter table User_Music_Relationship add constraint FK_User_Music_Relationship foreign key (music_id)
-      references MUSIC (music_id) on delete restrict on update restrict;
-
-alter table User_Music_Relationship add constraint FK_User_Music_Relationship2 foreign key (user_id)
-      references USER (user_id) on delete restrict on update restrict;
-
+alter table Singer_Band add constraint FK_Singer_Band2 foreign key (bid)
+      references Singer (id) on delete restrict on update restrict;
