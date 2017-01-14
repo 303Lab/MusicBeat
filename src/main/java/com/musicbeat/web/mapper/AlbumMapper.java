@@ -13,5 +13,7 @@ public interface AlbumMapper {
 
     int updateByPrimaryKeySelective(Album record);
 
+    int updateByPrimaryKeyWithBLOBs(Album record);
+
     int updateByPrimaryKey(Album record);
 }

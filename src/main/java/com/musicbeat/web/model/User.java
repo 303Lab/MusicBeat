@@ -17,8 +17,6 @@ public class User {
 
     private String city;
 
-    private String address;
-
     private String qq;
 
     private String phone;
@@ -31,7 +29,9 @@ public class User {
 
     private Boolean isRealPublic;
 
-    public User(Integer id, String username, String password, Boolean gender, String realname, String country, String province, String city, String address, String qq, String phone, String email, String picture, String privilege, Boolean isRealPublic) {
+    private String address;
+
+    public User(Integer id, String username, String password, Boolean gender, String realname, String country, String province, String city, String qq, String phone, String email, String picture, String privilege, Boolean isRealPublic, String address) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -40,13 +40,13 @@ public class User {
         this.country = country;
         this.province = province;
         this.city = city;
-        this.address = address;
         this.qq = qq;
         this.phone = phone;
         this.email = email;
         this.picture = picture;
         this.privilege = privilege;
         this.isRealPublic = isRealPublic;
+        this.address = address;
     }
 
     public Integer getId() {
@@ -81,10 +81,6 @@ public class User {
         return city;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public String getQq() {
         return qq;
     }
@@ -107,5 +103,9 @@ public class User {
 
     public Boolean getIsRealPublic() {
         return isRealPublic;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

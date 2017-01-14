@@ -14,5 +14,5 @@ public interface MusicCommentMapper {
 
     int updateByPrimaryKeySelective(MusicComment record);
 
-    int updateByPrimaryKey(MusicComment record);
+    int updateByPrimaryKeyWithBLOBs(MusicComment record);
 }

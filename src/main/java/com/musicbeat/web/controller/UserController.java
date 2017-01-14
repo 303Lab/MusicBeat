@@ -2,14 +2,15 @@ package com.musicbeat.web.controller;
 
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,22 +20,30 @@ import java.util.List;
 @Controller
 @Scope(value = "prototype")
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserController{
+  private static Logger logger = Logger.getLogger(UserController.class);
+
   @Resource
   private UserService userService;
 
+  /*用户登录Controller*/
   @RequestMapping(value = "/login", method = RequestMethod.POST)
-  public ModelAndView login(
-    @RequestParam(value = "username") String identify,
-    @RequestParam(value = "password") String password
-  ) {
-    List<User> users = userService.checkPassword(identify, password);
-    if (users != null) {
-      ModelAndView modelAndView = new ModelAndView();
-      modelAndView.addObject("userInfo", users.get(0));
-      return modelAndView;
-    }
+  public ModelAndView login(HttpServletRequest request) {
+    ModelAndView modelAndView = new ModelAndView();
+    try{
+      String identify = request.getParameter("username");
+      String password = request.getParameter("password");
+      List<User> users = userService.checkPassword(identify, password);
 
-    return null;
+      if (users != null) {
+        modelAndView.addObject("userinfo", users.get(0));
+        modelAndView.addObject("status", "success");
+        return modelAndView;
+      }
+    }catch (Exception e) {
+      modelAndView.addObject("status", "fail");
+      logger.error(e.getMessage());
+    }
+    return modelAndView;
   }
 }

@@ -14,5 +14,5 @@ public interface AlbumCommentMapper {
 
     int updateByPrimaryKeySelective(AlbumComment record);
 
-    int updateByPrimaryKey(AlbumComment record);
+    int updateByPrimaryKeyWithBLOBs(AlbumComment record);
 }

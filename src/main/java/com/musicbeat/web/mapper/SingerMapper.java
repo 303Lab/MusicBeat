@@ -13,5 +13,7 @@ public interface SingerMapper {
 
     int updateByPrimaryKeySelective(Singer record);
 
+    int updateByPrimaryKeyWithBLOBs(Singer record);
+
     int updateByPrimaryKey(Singer record);
 }

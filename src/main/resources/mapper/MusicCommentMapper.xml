@@ -6,15 +6,27 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <idArg column="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <idArg column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="comment" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.musicbeat.web.model.MusicComment">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="comment" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, uid, mid, comment
+    id, uid, mid
   </sql>
-  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    comment
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from music_comment
     where id = #{id,jdbcType=INTEGER}
       and uid = #{uid,jdbcType=INTEGER}
@@ -32,7 +44,7 @@
     </selectKey>
     insert into music_comment (uid, mid, comment
       )
-    values (#{uid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}
+    values (#{uid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{comment,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.musicbeat.web.model.MusicComment">
@@ -59,7 +71,7 @@
         #{mid,jdbcType=INTEGER},
       </if>
       <if test="comment != null">
-        #{comment,jdbcType=VARCHAR},
+        #{comment,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -67,16 +79,16 @@
     update music_comment
     <set>
       <if test="comment != null">
-        comment = #{comment,jdbcType=VARCHAR},
+        comment = #{comment,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
       and uid = #{uid,jdbcType=INTEGER}
       and mid = #{mid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.MusicComment">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.MusicComment">
     update music_comment
-    set comment = #{comment,jdbcType=VARCHAR}
+    set comment = #{comment,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
       and uid = #{uid,jdbcType=INTEGER}
       and mid = #{mid,jdbcType=INTEGER}

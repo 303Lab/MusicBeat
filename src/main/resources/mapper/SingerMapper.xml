@@ -8,16 +8,31 @@
       <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="lang" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="introduction" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="is_band" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.musicbeat.web.model.Singer">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="lang" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_band" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="introduction" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
   <sql id="Base_Column_List">
-    id, name, gender, lang, picture, introduction, is_band
+    id, name, gender, lang, picture, is_band
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    introduction
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from singer
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -30,10 +45,10 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into singer (name, gender, lang, 
-      picture, introduction, is_band
+      picture, is_band, introduction
       )
     values (#{name,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, #{lang,jdbcType=VARCHAR}, 
-      #{picture,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{isBand,jdbcType=BIT}
+      #{picture,jdbcType=VARCHAR}, #{isBand,jdbcType=BIT}, #{introduction,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.musicbeat.web.model.Singer">
@@ -54,11 +69,11 @@
       <if test="picture != null">
         picture,
       </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
       <if test="isBand != null">
         is_band,
+      </if>
+      <if test="introduction != null">
+        introduction,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -74,11 +89,11 @@
       <if test="picture != null">
         #{picture,jdbcType=VARCHAR},
       </if>
-      <if test="introduction != null">
-        #{introduction,jdbcType=VARCHAR},
-      </if>
       <if test="isBand != null">
         #{isBand,jdbcType=BIT},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -97,13 +112,23 @@
       <if test="picture != null">
         picture = #{picture,jdbcType=VARCHAR},
       </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
       <if test="isBand != null">
         is_band = #{isBand,jdbcType=BIT},
       </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.Singer">
+    update singer
+    set name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BIT},
+      lang = #{lang,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      is_band = #{isBand,jdbcType=BIT},
+      introduction = #{introduction,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Singer">
@@ -112,7 +137,6 @@
       gender = #{gender,jdbcType=BIT},
       lang = #{lang,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR},
       is_band = #{isBand,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>

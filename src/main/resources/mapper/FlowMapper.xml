@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musicbeat.web.mapper.FlowMapper">
+  <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Flow">
+    <constructor>
+      <idArg column="time" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="amount" javaType="java.lang.Float" jdbcType="REAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    time, amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.util.Date" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from flow
+    where time = #{time,jdbcType=DATE}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Date">
+    delete from flow
+    where time = #{time,jdbcType=DATE}
+  </delete>
+  <insert id="insert" parameterType="com.musicbeat.web.model.Flow">
+    insert into flow (time, amount)
+    values (#{time,jdbcType=DATE}, #{amount,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.musicbeat.web.model.Flow">
+    insert into flow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="time != null">
+        time,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.Flow">
+    update flow
+    <set>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=REAL},
+      </if>
+    </set>
+    where time = #{time,jdbcType=DATE}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Flow">
+    update flow
+    set amount = #{amount,jdbcType=REAL}
+    where time = #{time,jdbcType=DATE}
+  </update>
+</mapper>

@@ -11,18 +11,18 @@ public class Singer {
 
     private String picture;
 
-    private String introduction;
-
     private Boolean isBand;
 
-    public Singer(Integer id, String name, Boolean gender, String lang, String picture, String introduction, Boolean isBand) {
+    private String introduction;
+
+    public Singer(Integer id, String name, Boolean gender, String lang, String picture, Boolean isBand, String introduction) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.lang = lang;
         this.picture = picture;
-        this.introduction = introduction;
         this.isBand = isBand;
+        this.introduction = introduction;
     }
 
     public Integer getId() {
@@ -45,11 +45,11 @@ public class Singer {
         return picture;
     }
 
-    public String getIntroduction() {
-        return introduction;
-    }
-
     public Boolean getIsBand() {
         return isBand;
+    }
+
+    public String getIntroduction() {
+        return introduction;
     }
 }

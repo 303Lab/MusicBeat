@@ -4,16 +4,23 @@
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Album">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="release_time" jdbcType="DATE" property="releaseTime" />
     <result column="picture" jdbcType="VARCHAR" property="picture" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.musicbeat.web.model.Album">
+    <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
+  </resultMap>
   <sql id="Base_Column_List">
-    id, name, introduction, release_time, picture
+    id, name, release_time, picture
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    introduction
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from album
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -25,10 +32,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into album (name, introduction, release_time, 
-      picture)
-    values (#{name,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{releaseTime,jdbcType=DATE}, 
-      #{picture,jdbcType=VARCHAR})
+    insert into album (name, release_time, picture, 
+      introduction)
+    values (#{name,jdbcType=VARCHAR}, #{releaseTime,jdbcType=DATE}, #{picture,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.musicbeat.web.model.Album">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -39,28 +46,28 @@
       <if test="name != null">
         name,
       </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
       <if test="releaseTime != null">
         release_time,
       </if>
       <if test="picture != null">
         picture,
       </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="releaseTime != null">
         #{releaseTime,jdbcType=DATE},
       </if>
       <if test="picture != null">
         #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -70,22 +77,29 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
       <if test="releaseTime != null">
         release_time = #{releaseTime,jdbcType=DATE},
       </if>
       <if test="picture != null">
         picture = #{picture,jdbcType=VARCHAR},
       </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.Album">
+    update album
+    set name = #{name,jdbcType=VARCHAR},
+      release_time = #{releaseTime,jdbcType=DATE},
+      picture = #{picture,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Album">
     update album
     set name = #{name,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=DATE},
       picture = #{picture,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

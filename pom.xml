@@ -106,13 +106,6 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-    <!-- 单元测试里会用到注入，注入spring管理的bean-->
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-      <scope>test</scope>
-    </dependency>
     <!-- spring单元测试的依赖-->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -267,6 +260,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.4</version>
         <executions>
           <execution>
             <phase>prepare-package</phase>

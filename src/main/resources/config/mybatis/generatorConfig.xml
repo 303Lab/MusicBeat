@@ -143,6 +143,15 @@
            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>
+    <table tableName="flow" domainObjectName="Flow" enableCountByExample="false"
+           enableUpdateByExample="false"
+           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="traffic" domainObjectName="Traffic" enableCountByExample="false"
+           enableUpdateByExample="false"
+           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="billboard" domainObjectName="Billboard" enableCountByExample="false"
+           enableUpdateByExample="false"
+           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
     <table tableName="music_album" domainObjectName="MusicAlbum" enableCountByExample="false"
            enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>

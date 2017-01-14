@@ -7,11 +7,11 @@ public class Album {
 
     private String name;
 
-    private String introduction;
-
     private Date releaseTime;
 
     private String picture;
+
+    private String introduction;
 
     public Integer getId() {
         return id;
@@ -29,14 +29,6 @@ public class Album {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction == null ? null : introduction.trim();
-    }
-
     public Date getReleaseTime() {
         return releaseTime;
     }
@@ -51,5 +43,13 @@ public class Album {
 
     public void setPicture(String picture) {
         this.picture = picture == null ? null : picture.trim();
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction == null ? null : introduction.trim();
     }
 }

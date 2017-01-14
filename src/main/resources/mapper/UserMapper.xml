@@ -1,46 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicbeat.web.mapper.UserMapper">
-  <!--返回映射实体-->
+
+  <!--无地址返回Map-->
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.User">
     <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT"/>
-      <arg column="realname" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="country" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="province" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="qq" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="privilege" javaType="java.lang.String" jdbcType="VARCHAR"/>
-      <arg column="is_real_public" javaType="java.lang.Boolean" jdbcType="BIT"/>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="password" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="realname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="country" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="province" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="qq" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="privilege" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_real_public" javaType="java.lang.Boolean" jdbcType="BIT" />
     </constructor>
   </resultMap>
 
-  <!--基础列表属性-->
+  <!--有地址返回Map-->
+  <resultMap id="ResultMapWithBLOBs" type="com.musicbeat.web.model.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="password" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="realname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="country" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="province" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="qq" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="privilege" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_real_public" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="address" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+
+  <!--无地址基础列表属性-->
   <sql id="Base_Column_List">
-    id, username, password, gender, realname, country, province, city, address, qq, phone,
-    email, picture, privilege, is_real_public
+    id, username, password, gender, realname, country, province, city, qq, phone, email, 
+    picture, privilege, is_real_public
+  </sql>
+
+  <!--地址基础列表属性-->
+  <sql id="Blob_Column_List">
+    address
   </sql>
 
   <!--由主键获取用户-->
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
 
   <!--由用户名获取用户-->
   <select id="selectByUserName" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="username != null and username != ''">
@@ -51,9 +81,11 @@
 
   <!--由用户名获取用户，非like语句-->
   <select id="selectByUserNameSingle" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="username != null and username != ''">
@@ -64,9 +96,11 @@
 
   <!--由用户真实姓名获取用户-->
   <select id="selectByRealName" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="realname != null and realname != ''">
@@ -76,18 +110,22 @@
   </select>
 
   <!--获取管理员-->
-  <select id="selectAdmin" resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+  <select id="selectAdmin" resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     where privilege = 'admin'
   </select>
 
   <!--由号码获取用户-->
   <select id="selectByPhone" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="phone != null and phone != ''">
@@ -98,9 +136,11 @@
 
   <!--由号码获取用户，非like语句-->
   <select id="selectByPhoneSingle" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="phone != null and phone != ''">
@@ -111,9 +151,11 @@
 
   <!--由邮箱获取用户-->
   <select id="selectByEmail" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="email != null and email != ''">
@@ -124,9 +166,11 @@
 
   <!--由邮箱获取用户，非like语句-->
   <select id="selectByEmailSingle" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="BaseResultMap">
+          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List" />
     from user
     <where>
       <if test="email != null and email != ''">
@@ -137,8 +181,8 @@
 
   <!--由主键删除用户-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    DELETE FROM user
-    WHERE id = #{id,jdbcType=INTEGER}
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
   </delete>
 
   <!--插入新用户-->
@@ -146,16 +190,16 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (username, password, gender,
-    realname, country, province,
-    city, address, qq,
-    phone, email, picture,
-    privilege, is_real_public)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=BIT},
-    #{realname,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
-    #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR},
-    #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR},
-    #{privilege,jdbcType=VARCHAR}, #{isRealPublic,jdbcType=BIT})
+    insert into user (username, password, gender, 
+      realname, country, province, 
+      city, qq, phone, email, 
+      picture, privilege, is_real_public, 
+      address)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{gender,jdbcType=BIT}, 
+      #{realname,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR}, #{privilege,jdbcType=VARCHAR}, #{isRealPublic,jdbcType=BIT}, 
+      #{address,jdbcType=LONGVARCHAR})
   </insert>
 
   <!--插入新用户，属性可选-->
@@ -186,9 +230,6 @@
       <if test="city != null">
         city,
       </if>
-      <if test="address != null">
-        address,
-      </if>
       <if test="qq != null">
         qq,
       </if>
@@ -207,13 +248,16 @@
       <if test="isRealPublic != null">
         is_real_public,
       </if>
+      <if test="address != null">
+        address,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+        #{password,jdbcType=CHAR},
       </if>
       <if test="gender != null">
         #{gender,jdbcType=BIT},
@@ -229,9 +273,6 @@
       </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
       </if>
       <if test="qq != null">
         #{qq,jdbcType=VARCHAR},
@@ -251,6 +292,9 @@
       <if test="isRealPublic != null">
         #{isRealPublic,jdbcType=BIT},
       </if>
+      <if test="address != null">
+        #{address,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
 
@@ -262,7 +306,7 @@
         username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+        password = #{password,jdbcType=CHAR},
       </if>
       <if test="gender != null">
         gender = #{gender,jdbcType=BIT},
@@ -278,9 +322,6 @@
       </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="qq != null">
         qq = #{qq,jdbcType=VARCHAR},
@@ -300,28 +341,49 @@
       <if test="isRealPublic != null">
         is_real_public = #{isRealPublic,jdbcType=BIT},
       </if>
+      <if test="address != null">
+        address = #{address,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--由主键更新用户-->
-  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.User">
-    UPDATE user
-    SET username     = #{username,jdbcType=VARCHAR},
-      password       = #{password,jdbcType=VARCHAR},
-      gender         = #{gender,jdbcType=BIT},
-      realname       = #{realname,jdbcType=VARCHAR},
-      country        = #{country,jdbcType=VARCHAR},
-      province       = #{province,jdbcType=VARCHAR},
-      city           = #{city,jdbcType=VARCHAR},
-      address        = #{address,jdbcType=VARCHAR},
-      qq             = #{qq,jdbcType=VARCHAR},
-      phone          = #{phone,jdbcType=VARCHAR},
-      email          = #{email,jdbcType=VARCHAR},
-      picture        = #{picture,jdbcType=VARCHAR},
-      privilege      = #{privilege,jdbcType=VARCHAR},
-      is_real_public = #{isRealPublic,jdbcType=BIT}
-    WHERE id = #{id,jdbcType=INTEGER}
+  <!--由主键更新用户，含地址-->
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      gender = #{gender,jdbcType=BIT},
+      realname = #{realname,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      privilege = #{privilege,jdbcType=VARCHAR},
+      is_real_public = #{isRealPublic,jdbcType=BIT},
+      address = #{address,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <!--由主键更新用户，不含地址-->
+  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      gender = #{gender,jdbcType=BIT},
+      realname = #{realname,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      privilege = #{privilege,jdbcType=VARCHAR},
+      is_real_public = #{isRealPublic,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

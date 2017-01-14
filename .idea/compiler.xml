@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="maven-archiver" target="1.5" />
+      <module name="maven-archiver" target="1.8" />
       <module name="musicbeat" target="1.8" />
     </bytecodeTargetLevel>
   </component>

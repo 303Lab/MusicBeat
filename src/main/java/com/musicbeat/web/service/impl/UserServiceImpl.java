@@ -3,7 +3,6 @@ package com.musicbeat.web.service.impl;
 import com.musicbeat.web.mapper.UserMapper;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
-import com.musicbeat.web.utils.EncryptUtil;
 
 import com.musicbeat.web.utils.RegexValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,10 +101,6 @@ public class UserServiceImpl implements UserService {
     if (users == null || users.isEmpty()) {
       return null;
     }
-
-    /*if (password.length() != EncryptUtil.SHA256LENGTH) {
-      password = EncryptUtil.SHA256(password);
-    }*/
 
     if (users.get(0).getPassword().equals(password)) {
       return users;

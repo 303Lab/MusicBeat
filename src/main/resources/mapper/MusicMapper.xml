@@ -7,13 +7,11 @@
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="lyrics" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="link" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="play_amount" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="download_amount" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="duration" javaType="java.util.Date" jdbcType="TIME" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, lyrics, link, play_amount, download_amount, duration
+    id, name, lyrics, link, duration
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -30,11 +28,9 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into music (name, lyrics, link, 
-      play_amount, download_amount, duration
-      )
+      duration)
     values (#{name,jdbcType=VARCHAR}, #{lyrics,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
-      #{playAmount,jdbcType=BIGINT}, #{downloadAmount,jdbcType=BIGINT}, #{duration,jdbcType=TIME}
-      )
+      #{duration,jdbcType=TIME})
   </insert>
   <insert id="insertSelective" parameterType="com.musicbeat.web.model.Music">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -51,12 +47,6 @@
       <if test="link != null">
         link,
       </if>
-      <if test="playAmount != null">
-        play_amount,
-      </if>
-      <if test="downloadAmount != null">
-        download_amount,
-      </if>
       <if test="duration != null">
         duration,
       </if>
@@ -70,12 +60,6 @@
       </if>
       <if test="link != null">
         #{link,jdbcType=VARCHAR},
-      </if>
-      <if test="playAmount != null">
-        #{playAmount,jdbcType=BIGINT},
-      </if>
-      <if test="downloadAmount != null">
-        #{downloadAmount,jdbcType=BIGINT},
       </if>
       <if test="duration != null">
         #{duration,jdbcType=TIME},
@@ -94,12 +78,6 @@
       <if test="link != null">
         link = #{link,jdbcType=VARCHAR},
       </if>
-      <if test="playAmount != null">
-        play_amount = #{playAmount,jdbcType=BIGINT},
-      </if>
-      <if test="downloadAmount != null">
-        download_amount = #{downloadAmount,jdbcType=BIGINT},
-      </if>
       <if test="duration != null">
         duration = #{duration,jdbcType=TIME},
       </if>
@@ -111,8 +89,6 @@
     set name = #{name,jdbcType=VARCHAR},
       lyrics = #{lyrics,jdbcType=VARCHAR},
       link = #{link,jdbcType=VARCHAR},
-      play_amount = #{playAmount,jdbcType=BIGINT},
-      download_amount = #{downloadAmount,jdbcType=BIGINT},
       duration = #{duration,jdbcType=TIME}
     where id = #{id,jdbcType=INTEGER}
   </update>
