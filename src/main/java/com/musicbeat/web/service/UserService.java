@@ -1,6 +1,7 @@
 package com.musicbeat.web.service;
 
 import com.musicbeat.web.model.User;
+import com.musicbeat.web.model.viewmodel.UserViewModel;
 
 import java.util.List;
 

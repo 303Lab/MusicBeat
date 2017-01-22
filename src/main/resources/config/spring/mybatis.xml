@@ -32,22 +32,48 @@
   -->
 
   <!-- 配置数据源 -->
-  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-        destroy-method="close">
+  <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"-->
+  <!--destroy-method="close">-->
+  <!--<property name="driverClassName" value="${driverClasss}"/>-->
+  <!--<property name="url" value="${jdbcUrl}"/>-->
+  <!--<property name="username" value="${username}"/>-->
+  <!--<property name="password" value="${password}"/>-->
+  <!--&lt;!&ndash; 初始化连接大小 &ndash;&gt;-->
+  <!--<property name="initialSize" value="${initialSize}"/>-->
+  <!--&lt;!&ndash; 连接池最大数量 &ndash;&gt;-->
+  <!--<property name="maxActive" value="${maxActive}"/>-->
+  <!--&lt;!&ndash; 连接池最大空闲 &ndash;&gt;-->
+  <!--<property name="maxIdle" value="${maxIdle}"/>-->
+  <!--&lt;!&ndash; 连接池最小空闲 &ndash;&gt;-->
+  <!--<property name="minIdle" value="${minIdle}"/>-->
+  <!--&lt;!&ndash; 获取连接最大等待时间 &ndash;&gt;-->
+  <!--<property name="maxWait" value="${maxWait}"/>-->
+  <!--</bean>-->
+
+  <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
     <property name="driverClassName" value="${driverClasss}"/>
     <property name="url" value="${jdbcUrl}"/>
     <property name="username" value="${username}"/>
     <property name="password" value="${password}"/>
-    <!-- 初始化连接大小 -->
-    <property name="initialSize" value="${initialSize}"/>
     <!-- 连接池最大数量 -->
     <property name="maxActive" value="${maxActive}"/>
-    <!-- 连接池最大空闲 -->
-    <property name="maxIdle" value="${maxIdle}"/>
     <!-- 连接池最小空闲 -->
     <property name="minIdle" value="${minIdle}"/>
     <!-- 获取连接最大等待时间 -->
     <property name="maxWait" value="${maxWait}"/>
+    <!-- 初始化连接大小 -->
+    <property name="initialSize" value="${initialSize}"/>
+    <property name="testWhileIdle" value="${testWhileIdle}"/>
+    <property name="testOnBorrow" value="${testOnBorrow}"/>
+    <property name="testOnReturn" value="${testOnReturn}"/>
+    <property name="validationQuery" value="${validationQuery}"/>
+    <property name="validationInterval" value="${validationInterval}"/>
+    <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}"/>
+    <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
+    <property name="removeAbandoned" value="${removeAbandoned}"/>
+    <property name="logAbandoned" value="${logAbandoned}"/>
+    <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}"/>
+    <property name="jmxEnabled" value="${jmxEnabled}"/>
   </bean>
 
   <!--sqlsessionFactory bean-->
@@ -73,6 +99,47 @@
   <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <!-- 将session放入redis -->
+  <context:annotation-config/>
+  <bean id="redisHttpSessionConfiguration"
+        class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+    <property name="maxInactiveIntervalInSeconds" value="120"/>
+  </bean>
+
+  <!-- redis 配置 -->
+  <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+    <property name="hostName" value="${redis_hostname}"/>
+    <property name="port" value="${redis_port}"/>
+    <property name="password" value="${redis_password}"/>
+  </bean>
+
+  <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+    <property name="connectionFactory" ref="jedisConnectionFactory"></property>
+    <property name="keySerializer">
+      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    </property>
+    <property name="valueSerializer">
+      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    </property>
+    <property name="hashKeySerializer">
+      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    </property>
+    <property name="hashValueSerializer">
+      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    </property>
+  </bean>
+
+  <bean id="defaultCookieSerializer"
+        class="org.springframework.session.web.http.DefaultCookieSerializer">
+    <property name="cookieName" value="MUSICBEAT_SESSION_ID"/>
+    <property name="cookiePath" value="/"/>
+  </bean>
+
+  <bean id="cookieHttpSessionStrategy"
+        class="org.springframework.session.web.http.CookieHttpSessionStrategy">
+    <property name="cookieSerializer" ref="defaultCookieSerializer"/>
   </bean>
 
   <tx:advice id="txAdvice" transaction-manager="transactionManager">

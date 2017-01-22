@@ -2,12 +2,15 @@ package com.musicbeat.web.service.impl;
 
 import com.musicbeat.web.mapper.UserMapper;
 import com.musicbeat.web.model.User;
+import com.musicbeat.web.model.viewmodel.UserViewModel;
 import com.musicbeat.web.service.UserService;
 
 import com.musicbeat.web.utils.RegexValidateUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -16,7 +19,7 @@ import java.util.logging.Logger;
  * Created by windawings on 2017/1/5
  */
 @Service("UserService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
   private UserMapper userMapper;
 

@@ -20,6 +20,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.musicbeat.web.model.constant.RequestParamsConstant.Password;
+import static com.musicbeat.web.model.constant.RequestParamsConstant.UserName;
+import static com.musicbeat.web.model.constant.SessionAttributesConstant.UserInfo;
+import static com.musicbeat.web.model.constant.StatusConstant.Status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -62,21 +66,21 @@ public class UserControllerTest {
       ResultActions resultActions =
         this.mockMvc.perform(MockMvcRequestBuilders
                                .post("/user/login/")
-                               .param("username", "windawings")
-                               .param("password", "123")
+                               .param(UserName, "windawings")
+                               .param(Password, "123")
                                .accept(MediaType.APPLICATION_JSON));
       MvcResult mvcResult = resultActions.andExpect(status().isOk())
                                          .andExpect(view().name("user/login"))
                                          .andDo(print())
                                          .andReturn();
-      logger.debug(
+      logger.info(
         "\"status\":"
-        + JSON.toJSONString(mvcResult.getModelAndView().getModel().get("status"))
+        + JSON.toJSONString(mvcResult.getModelAndView().getModel().get(Status))
         + ", "
         + "\"userinfo\":"
-        + JSON.toJSONString(mvcResult.getModelAndView().getModel().get("userinfo")));
+        + JSON.toJSONString(mvcResult.getModelAndView().getModel().get(UserInfo)));
     }catch (Exception e) {
-      logger.error(e.getMessage());
+      logger.error(e, e.fillInStackTrace());
     }
 
   }
