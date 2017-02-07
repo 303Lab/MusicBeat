@@ -17,108 +17,9 @@ import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.helpers.OptionConverter;
 import org.apache.log4j.spi.LoggingEvent;
 
-/**
- * MyDailyRollingFileAppender extends {@link FileAppender} so that the underlying
- * file is rolled over at a user chosen frequency.
- *
- * <p>
- * The rolling schedule is specified by the <b>DatePattern</b> option. This
- * pattern should follow the {@link SimpleDateFormat} conventions. In
- * particular, you <em>must</em> escape literal text within a pair of single
- * quotes. A formatted version of the date pattern is used as the suffix for the
- * rolled file name.
- *
- * <p>
- * For example, if the <b>File</b> option is set to <code>/foo/bar.log</code>
- * and the <b>DatePattern</b> set to <code>'.'yyyy-MM-dd</code>, on 2001-02-16
- * at midnight, the logging file <code>/foo/bar.log</code> will be copied to
- * <code>/foo/bar.log.2001-02-16</code> and logging for 2001-02-17 will continue
- * in <code>/foo/bar.log</code> until it rolls over the next day.
- *
- * <p>
- * Is is possible to specify monthly, weekly, half-daily, daily, hourly, or
- * minutely rollover schedules.
- *
- * <p>
- * <table border="1" cellpadding="2">
- * <tr>
- * <th>DatePattern</th>
- * <th>Rollover schedule</th>
- * <th>Example</th>
- *
- * <tr>
- * <td><code>'.'yyyy-MM</code>
- * <td>Rollover at the beginning of each month</td>
- *
- * <td>At midnight of May 31st, 2002 <code>/foo/bar.log</code> will be copied to
- * <code>/foo/bar.log.2002-05</code>. Logging for the month of June will be
- * output to <code>/foo/bar.log</code> until it is also rolled over the next
- * month.
- *
- * <tr>
- * <td><code>'.'yyyy-ww</code>
- *
- * <td>Rollover at the first day of each week. The first day of the week depends
- * on the locale.</td>
- *
- * <td>Assuming the first day of the week is Sunday, on Saturday midnight, June
- * 9th 2002, the file <i>/foo/bar.log</i> will be copied to
- * <i>/foo/bar.log.2002-23</i>. Logging for the 24th week of 2002 will be output
- * to <code>/foo/bar.log</code> until it is rolled over the next week.
- *
- * <tr>
- * <td><code>'.'yyyy-MM-dd</code>
- *
- * <td>Rollover at midnight each day.</td>
- *
- * <td>At midnight, on March 8th, 2002, <code>/foo/bar.log</code> will be copied
- * to <code>/foo/bar.log.2002-03-08</code>. Logging for the 9th day of March
- * will be output to <code>/foo/bar.log</code> until it is rolled over the next
- * day.
- *
- * <tr>
- * <td><code>'.'yyyy-MM-dd-a</code>
- *
- * <td>Rollover at midnight and midday of each day.</td>
- *
- * <td>At noon, on March 9th, 2002, <code>/foo/bar.log</code> will be copied to
- * <code>/foo/bar.log.2002-03-09-AM</code>. Logging for the afternoon of the 9th
- * will be output to <code>/foo/bar.log</code> until it is rolled over at
- * midnight.
- *
- * <tr>
- * <td><code>'.'yyyy-MM-dd-HH</code>
- *
- * <td>Rollover at the top of every hour.</td>
- *
- * <td>At approximately 11:00.000 o'clock on March 9th, 2002,
- * <code>/foo/bar.log</code> will be copied to
- * <code>/foo/bar.log.2002-03-09-10</code>. Logging for the 11th hour of the 9th
- * of March will be output to <code>/foo/bar.log</code> until it is rolled over
- * at the beginning of the next hour.
- *
- *
- * <tr>
- * <td><code>'.'yyyy-MM-dd-HH-mm</code>
- *
- * <td>Rollover at the beginning of every minute.</td>
- *
- * <td>At approximately 11:23,000, on March 9th, 2001, <code>/foo/bar.log</code>
- * will be copied to <code>/foo/bar.log.2001-03-09-10-22</code>. Logging for the
- * minute of 11:23 (9th of March) will be output to <code>/foo/bar.log</code>
- * until it is rolled over the next minute.
- *
- * </table>
- *
- * <p>
- * Do not use the colon ":" character in anywhere in the <b>DatePattern</b>
- * option. The text before the colon is interpeted as the protocol specificaion
- * of a URL which is probably not what you want.
- */
+
 public class MyDailyRollingFileAppender extends FileAppender {
 
-  // The code assumes that the following constants are in a increasing
-  // sequence.
   static final int TOP_OF_TROUBLE = -1;
   static final int TOP_OF_MINUTE = 0;
   static final int TOP_OF_HOUR = 1;
@@ -127,59 +28,29 @@ public class MyDailyRollingFileAppender extends FileAppender {
   static final int TOP_OF_WEEK = 4;
   static final int TOP_OF_MONTH = 5;
 
-  /**
-   * The default maximum file size is 10MB.
-   */
-  protected long maxFileSize = 10 * 1024 * 1024;
+  private long maxFileSize = 10 * 1024 * 1024;
 
-  /**
-   * There is one backup file by default.
-   */
-  protected int maxBackupIndex = 1;
+  private int maxBackupIndex = 1;
 
-  /**
-   * The date pattern. By default, the pattern is set to "'.'yyyy-MM-dd"
-   * meaning daily rollover.
-   */
   private String datePattern = "'.'yyyy-MM-dd";
 
-  /**
-   * The log file will be renamed to the value of the scheduledFilename
-   * variable when the next interval is entered. For example, if the rollover
-   * period is one hour, the log file will be renamed to the value of
-   * "scheduledFilename" at the beginning of the next hour.
-   *
-   * The precise time when a rollover occurs depends on logging activity.
-   */
   private String scheduledFilename;
 
-  /**
-   * The next time we estimate a rollover should occur.
-   */
   private long nextCheck = System.currentTimeMillis() - 1;
 
-  Date now = new Date();
+  private Date now = new Date();
 
-  SimpleDateFormat sdf;
+  private SimpleDateFormat sdf;
 
-  RollingCalendar rc = new RollingCalendar();
+  private RollingCalendar rc = new RollingCalendar();
 
   int checkPeriod = TOP_OF_TROUBLE;
 
-  // The gmtTimeZone is used only in computeCheckPeriod() method.
-  static final TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
+  private static final TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
 
-  /**
-   * The default constructor does nothing.
-   */
   public MyDailyRollingFileAppender() {
   }
 
-  /**
-   * Instantiate a <code>MyDailyRollingFileAppender</code> and open the file
-   * designated by <code>filename</code>. The opened filename will become the
-   * ouput destination for this appender.
-   */
   public MyDailyRollingFileAppender(Layout layout, String filename,
                                     String datePattern) throws IOException {
     super(layout, filename, true);
@@ -187,76 +58,30 @@ public class MyDailyRollingFileAppender extends FileAppender {
     activateOptions();
   }
 
-  /**
-   * Get the maximum size that the output file is allowed to reach before
-   * being rolled over to backup files.
-   *
-   * @since 1.1
-   */
   public long getMaximumFileSize() {
     return maxFileSize;
   }
 
-  /**
-   * Set the maximum size that the output file is allowed to reach before
-   * being rolled over to backup files.
-   *
-   * <p>
-   * This method is equivalent to {@link #setMaxFileSize} except that it is
-   * required for differentiating the setter taking a <code>long</code>
-   * argument from the setter taking a <code>String</code> argument by the
-   * JavaBeans {@link java.beans.Introspector Introspector}.
-   *
-   * @see #setMaxFileSize(String)
-   */
   public void setMaximumFileSize(long maxFileSize) {
     this.maxFileSize = maxFileSize;
   }
 
-  /**
-   * Set the maximum size that the output file is allowed to reach before
-   * being rolled over to backup files.
-   *
-   * <p>
-   * In configuration files, the <b>MaxFileSize</b> option takes an long
-   * integer in the range 0 - 2^63. You can specify the value with the
-   * suffixes "KB", "MB" or "GB" so that the integer is interpreted being
-   * expressed respectively in kilobytes, megabytes or gigabytes. For example,
-   * the value "10KB" will be interpreted as 10240.
-   */
   public void setMaxFileSize(String value) {
     maxFileSize = OptionConverter.toFileSize(value, maxFileSize + 1);
   }
 
-  /**
-   * Returns the value of the <b>MaxBackupIndex</b> option.
-   */
   public int getMaxBackupIndex() {
     return maxBackupIndex;
   }
 
-  /**
-   * Set the maximum number of backup files to keep around.
-   *
-   * <p>
-   * The <b>MaxBackupIndex</b> option determines how many backup files are
-   * kept before the oldest is erased. This option takes a positive integer
-   * value. If set to zero, then there will be no backup files and the log
-   * file will be truncated when it reaches <code>MaxFileSize</code>.
-   */
   public void setMaxBackupIndex(int maxBackups) {
     this.maxBackupIndex = maxBackups;
   }
 
-  /**
-   * The <b>DatePattern</b> takes a string in the same format as expected by
-   * {@link SimpleDateFormat}. This options determines the rollover schedule.
-   */
   public void setDatePattern(String pattern) {
     datePattern = pattern;
   }
 
-  /** Returns the value of the <b>DatePattern</b> option. */
   public String getDatePattern() {
     return datePattern;
   }
@@ -279,7 +104,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
     }
   }
 
-  void printPeriodicity(int type) {
+  private void printPeriodicity(int type) {
     switch (type) {
       case TOP_OF_MINUTE:
         LogLog.debug("Appender [" + name + "] to be rolled every minute.");
@@ -308,16 +133,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
     }
   }
 
-  // This method computes the roll over period by looping over the
-  // periods, starting with the shortest, and stopping when the r0 is
-  // different from from r1, where r0 is the epoch formatted according
-  // the datePattern (supplied by the user) and r1 is the
-  // epoch+nextMillis(i) formatted according to datePattern. All date
-  // formatting is done in GMT and not local format because the test
-  // logic is based on comparisons relative to 1970-01-01 00:00:00
-  // GMT (the epoch).
-
-  int computeCheckPeriod() {
+  private int computeCheckPeriod() {
     RollingCalendar rollingCalendar = new RollingCalendar(gmtTimeZone,
                                                           Locale.ENGLISH);
     // set sate to 1970-01-01 00:00:00 GMT
@@ -341,22 +157,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
     return TOP_OF_TROUBLE; // Deliberately head for trouble...
   }
 
-  /**
-   * Implements the usual roll over behaviour.
-   *
-   * <p>
-   * If <code>MaxBackupIndex</code> is positive, then files {
-   * <code>File.1</code>, ..., <code>File.MaxBackupIndex -1</code> are renamed
-   * to {<code>File.2</code>, ..., <code>File.MaxBackupIndex</code> .
-   * Moreover, <code>File</code> is renamed <code>File.1</code> and closed. A
-   * new <code>File</code> is created to receive further log output.
-   *
-   * <p>
-   * If <code>MaxBackupIndex</code> is equal to zero, then the
-   * <code>File</code> is truncated with no backup files created.
-   */
-  public// synchronization not necessary since doAppend is alreasy synched
-  void sizeRollOver() {
+  private void sizeRollOver() {
     File target;
     File file;
 
@@ -428,10 +229,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
     this.qw = new CountingQuietWriter(writer, errorHandler);
   }
 
-  /**
-   * Rollover the current file to a new file.
-   */
-  void timeRollOver() throws IOException {
+  private void timeRollOver() throws IOException {
 
         /* Compute filename, but only if datePattern is specified */
     if (datePattern == null) {
@@ -474,14 +272,6 @@ public class MyDailyRollingFileAppender extends FileAppender {
     scheduledFilename = datedFilename;
   }
 
-  /**
-   * This method differentiates MyDailyRollingFileAppender from its super class.
-   *
-   * <p>
-   * Before actually logging, this method will check whether it is time to do
-   * a rollover. If it is, it will schedule the next rollover time and then
-   * rollover.
-   * */
   protected void subAppend(LoggingEvent event) {
     long n = System.currentTimeMillis();
 
@@ -502,14 +292,9 @@ public class MyDailyRollingFileAppender extends FileAppender {
   }
 }
 
-/**
- * RollingCalendar is a helper class to MyDailyRollingFileAppender. Given a
- * periodicity type and the current time, it computes the start of the next
- * interval.
- * */
 class RollingCalendar extends GregorianCalendar {
 
-  int type = MyDailyRollingFileAppender.TOP_OF_TROUBLE;
+  private int type = MyDailyRollingFileAppender.TOP_OF_TROUBLE;
 
   RollingCalendar() {
     super();
@@ -523,11 +308,11 @@ class RollingCalendar extends GregorianCalendar {
     this.type = type;
   }
 
-  public long getNextCheckMillis(Date now) {
+  long getNextCheckMillis(Date now) {
     return getNextCheckDate(now).getTime();
   }
 
-  public Date getNextCheckDate(Date now) {
+  private Date getNextCheckDate(Date now) {
     this.setTime(now);
 
     switch (type) {

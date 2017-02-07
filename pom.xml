@@ -13,11 +13,11 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- spring版本号 -->
-    <spring.version>4.3.5.RELEASE</spring.version>
+    <spring.version>4.3.6.RELEASE</spring.version>
     <spring-session.version>1.3.0.RELEASE</spring-session.version>
 
     <!-- mybatis版本号 -->
-    <mybatis.version>3.4.1</mybatis.version>
+    <mybatis.version>3.4.2</mybatis.version>
 
     <!-- mysql驱动版本号 -->
     <mysql-driver.version>5.1.40</mysql-driver.version>
@@ -27,6 +27,11 @@
     <!-- log4j日志包版本号 -->
     <slf4j.version>1.7.22</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
+
+    <!-- JSON -->
+    <jackson.version>2.8.6</jackson.version>
+
+    <aop.version>1.8.10</aop.version>
 
     <!--  MyBatis Generator  -->
     <!--  Java接口和实体类  -->
@@ -101,16 +106,6 @@
       <artifactId>spring-aop</artifactId>
       <version>${spring.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session</artifactId>
-      <version>${spring-session.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.session</groupId>
-      <artifactId>spring-session-data-redis</artifactId>
-      <version>${spring-session.version}</version>
-    </dependency>
 
     <!-- 添加junit4依赖 -->
     <dependency>
@@ -134,11 +129,19 @@
       <version>${mybatis.version}</version>
     </dependency>
 
+    <!-- druid 监控-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.0.28</version>
+      <classifier>sources</classifier>
+    </dependency>
+
     <!-- 添加mybatis/spring整合包依赖 -->
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.1</version>
     </dependency>
 
     <!-- 添加mysql驱动依赖 -->
@@ -149,17 +152,17 @@
     </dependency>
 
     <!-- 添加数据库连接池依赖 -->
-    <!--<dependency>-->
-      <!--<groupId>commons-dbcp</groupId>-->
-      <!--<artifactId>commons-dbcp</artifactId>-->
-      <!--<version>1.4</version>-->
-    <!--</dependency>-->
+    <!--<dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>-->
 
     <!-- 添加fastjson -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
-      <version>1.2.23</version>
+      <version>1.2.24</version>
     </dependency>
 
     <!-- 添加日志相关jar包 -->
@@ -185,35 +188,45 @@
       <artifactId>jackson-mapper-asl</artifactId>
       <version>1.9.13</version>
     </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.9.13</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.8.5</version>
+      <version>${jackson.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.8.5</version>
+      <version>${jackson.version}</version>
     </dependency>
 
+    <!-- commons -->
+    <!-- 上传文件 -->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
       <version>1.3.2</version>
     </dependency>
-
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.5</version>
     </dependency>
-
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.2</version>
     </dependency>
 
     <!--servlet/jsp api start-->
@@ -222,7 +235,6 @@
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>
     </dependency>
-
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>jsp-api</artifactId>
@@ -231,17 +243,17 @@
     </dependency>
     <!--servlet/jsp api end-->
 
+    <!-- aop -->
     <!--aspectj start-->
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
-      <version>1.8.10</version>
+      <version>${aop.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjrt</artifactId>
-      <version>1.8.10</version>
+      <version>${aop.version}</version>
     </dependency>
     <!--aspectj end-->
 
@@ -266,6 +278,16 @@
 
     <!--Redis-->
     <dependency>
+      <groupId>org.springframework.session</groupId>
+      <artifactId>spring-session-data-redis</artifactId>
+      <version>${spring-session.version}</version>
+    </dependency>
+    <!--<dependency>
+      <groupId>org.springframework.session</groupId>
+      <artifactId>spring-session</artifactId>
+      <version>${spring-session.version}</version>
+    </dependency>-->
+    <!--<dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
       <version>2.9.0</version>
@@ -275,6 +297,16 @@
       <artifactId>embedded-redis</artifactId>
       <version>0.6</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-pool2</artifactId>
+      <version>2.4.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>1.8.0.RELEASE</version>
+    </dependency>-->
 
     <!--JOOR-->
     <!--<dependency>-->
@@ -306,6 +338,16 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.10.4</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <aggregate>true</aggregate>
+          <tags>
+            <tag>
+              <name>time.creation</name>
+              <head>创建时间</head>
+            </tag>
+          </tags>
+        </configuration>
         <executions>
           <execution>
             <phase>prepare-package</phase>

@@ -4,7 +4,6 @@
     "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
   <properties resource="config/jdbc.properties"/>
-
   <!--指定特定数据库的jdbc驱动jar包的位置 -->
   <!--<classPathEntry location="E:\mvnRepo\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar"/>-->
 
@@ -42,7 +41,7 @@
     </commentGenerator>
 
     <!--jdbc的数据库连接 -->
-    <jdbcConnection driverClass="${driverClasss}"
+    <jdbcConnection driverClass="${driverClass}"
                     connectionURL="${jdbcUrl}"
                     userId="${username}"
                     password="${password}">

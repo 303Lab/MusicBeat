@@ -14,21 +14,15 @@ public interface UserMapper {
 
     List<User> selectByPrimaryKey(Integer id);
 
-    List<User> selectByUserName(@Param("username") String username);
+    List<User> selectByUserName(@Param("username") String username, @Param("like") Boolean like);
 
-    List<User> selectByUserNameSingle(@Param("username") String username);
-
-    List<User> selectByRealName(@Param("realname")String realname);
+    List<User> selectByRealName(@Param("realname")String realname, @Param("like") Boolean like);
 
     List<User> selectAdmin();
 
-    List<User> selectByPhone(@Param("phone")String phone);
+    List<User> selectByPhone(@Param("phone")String phone, @Param("like") Boolean like);
 
-    List<User> selectByPhoneSingle(@Param("phone")String phone);
-
-    List<User> selectByEmail(@Param("email")String email);
-
-    List<User> selectByEmailSingle(@Param("email")String email);
+    List<User> selectByEmail(@Param("email")String email, @Param("like") Boolean like);
 
     int updateByPrimaryKeySelective(User record);
 

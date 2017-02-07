@@ -5,14 +5,20 @@ import java.util.regex.Pattern;
 
 /**
  * 正则匹配类
- * Created by windawings on 2017/1/9 0009.
+ *
+ * @author windawings
+ * @time.creation 2017/01/26 13:45
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class RegexValidateUtil {
+
+
   /**
    * 验证邮箱
    *
-   * @param email
-   * @return
+   * @param email 邮箱
+   * @return boolean
    */
   public static boolean checkEmail(String email) {
     boolean flag = false;
@@ -30,8 +36,8 @@ public class RegexValidateUtil {
   /**
    * 验证手机号码
    *
-   * @param mobileNumber
-   * @return
+   * @param mobileNumber 手机号码
+   * @return boolean
    */
   public static boolean checkMobileNumber(String mobileNumber) {
     boolean flag = false;
@@ -42,6 +48,7 @@ public class RegexValidateUtil {
       flag = matcher.matches();
     } catch (Exception e) {
       flag = false;
+
     }
     return flag;
   }
@@ -49,15 +56,13 @@ public class RegexValidateUtil {
   /**
    * 验证数字
    *
-   * @param number
-   * @return
+   * @param number 数字
+   * @return boolean
    */
   public static boolean checkNumeric(String number) {
     Pattern pattern = Pattern.compile("[0-9]*");
     Matcher isNum = pattern.matcher(number);
-    if (!isNum.matches()) {
-      return false;
-    }
-    return true;
+
+    return isNum.matches();
   }
 }

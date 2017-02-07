@@ -1,0 +1,27 @@
+// 登陆页面
+//- @author windawings
+//- @time.creation 2017/02/03 16:00
+//- @version 1.0.0
+//- @since 1.0.0
+
+div.panel.panel-primary
+    div.panel-heading
+        div.panel-title 双向数据绑定
+    div.panel-body
+        div.row.col-md-12: form.form-horizontal(name="loginForm", role="form", ng-submit="login(credentials)" novalidate)
+            div.form-group
+                label.col-md-2.control-label 用户名
+                div.col-md-10: input.form-control(type="text", ng-trim="true", placeholder="example@email.com or mobile phone or username", ng-model="credentials.userId", value="", required)
+            div.form-group
+                label.col-md-2.control-label 密码
+                div.col-md-10: input.form-control(type="password", ng-trim="true", placeholder="input can be only numbers, letters and underscore" ng-model="credentials.password", value="", required)
+            div.form-group
+                div.col-sm-offset-2.col-md-10: div.checkbox: label
+                    input(type="checkbox" ng-trim="true", ng-model="credentials.autoLogin")
+                    | 自动登录
+            div.form-group
+                div.col-sm-offset-2.col-md-10
+                    button.btn.btn-default(type="button", ng-click="getFormData()") 获取Form表单的值
+                    button.btn.btn-default(type="button",ng-click="setFormData()") 设置Form表单的值
+                    button.btn.btn-default(type="button",ng-click="restForm()") 重置Form表单的值
+                    button.btn.btn-default(type="submit") 登陆

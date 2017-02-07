@@ -1,0 +1,16 @@
+// 用户顶部导航条
+//- @author windawings
+//- @time.creation 2017/02/02 21:10
+//- @version 1.0.0
+//- @since 1.0.0
+
+#nav.panel.panel-primary()
+    ul
+        li: a(ng-href="#/") 主页
+        li: a(ui-sref="app.user") 用户信息
+        li: a(ui-sref="app.security") 安全设置
+        li: a(ui-sref="app.login") 用户登录
+        li: div(ng-if="session.isAuthed")
+                p Welcome,
+                    span(ng-bind-html="session.currentUser | welcomeFilter")
+

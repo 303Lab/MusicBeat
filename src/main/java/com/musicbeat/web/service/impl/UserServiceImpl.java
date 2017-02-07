@@ -2,28 +2,26 @@ package com.musicbeat.web.service.impl;
 
 import com.musicbeat.web.mapper.UserMapper;
 import com.musicbeat.web.model.User;
-import com.musicbeat.web.model.viewmodel.UserViewModel;
 import com.musicbeat.web.service.UserService;
 
 import com.musicbeat.web.utils.RegexValidateUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * 用户服务接口实现类
- * Created by windawings on 2017/1/5
+ *
+ * @author windawings
+ * @time.creation 2017/1/5
+ * @version 1.0.0
+ * @since 1.0.0
  */
 @Service("UserService")
 public class UserServiceImpl implements UserService{
 
   private UserMapper userMapper;
-
-  private static Logger logger = Logger.getLogger(UserMapper.class.getSimpleName());
 
   @Autowired
   public void setUserMapper(UserMapper addMapper) {
@@ -49,16 +47,11 @@ public class UserServiceImpl implements UserService{
   public List<User> findById(Integer id) { return userMapper.selectByPrimaryKey(id);}
 
   @Override
-  public List<User> findByUserName(String username) { return userMapper.selectByUserName(username);}
+  public List<User> findByUserName(String username, Boolean like) { return userMapper.selectByUserName(username, like);}
 
   @Override
-  public List<User> findByUserNameSingle(String username) {
-    return userMapper.selectByUserNameSingle(username);
-  }
-
-  @Override
-  public List<User> findByRealName(String realname) {
-    return userMapper.selectByRealName(realname);
+  public List<User> findByRealName(String realname, Boolean like) {
+    return userMapper.selectByRealName(realname, like);
   }
 
   @Override
@@ -67,29 +60,23 @@ public class UserServiceImpl implements UserService{
   }
 
   @Override
-  public List<User> findByPhone(String phone) {
-    return userMapper.selectByPhone(phone);
+  public List<User> findByPhone(String phone, Boolean like) {
+    return userMapper.selectByPhone(phone, like);
   }
 
   @Override
-  public List<User> findByPhoneSingle(String phone) {return userMapper.selectByPhoneSingle(phone);}
-
-  @Override
-  public List<User> findByEmail(String email) {return userMapper.selectByEmail(email);}
-
-  @Override
-  public List<User> findByEmailSingle(String email) {return userMapper.selectByEmailSingle(email);}
+  public List<User> findByEmail(String email, Boolean like) {return userMapper.selectByEmail(email, like);}
 
   @Override
   public List<User> checkPassword(String identify, String password) {
     List<User> users = null;
 
     if (RegexValidateUtil.checkEmail(identify)) {
-      users = findByEmailSingle(identify);
+      users = findByEmail(identify, false);
     } else if (RegexValidateUtil.checkMobileNumber(identify)) {
-      users = findByPhoneSingle(identify);
+      users = findByPhone(identify, false);
     } else {
-      users = findByUserNameSingle(identify);
+      users = findByUserName(identify, false);
     }
 
     /*如果输入的是ID*/
@@ -97,7 +84,7 @@ public class UserServiceImpl implements UserService{
       try {
         users = findById(Integer.parseInt(identify));
       } catch (NumberFormatException e) {
-        logger.warning(e.getMessage());
+        logger.error(e.getMessage());
       }
     }
 

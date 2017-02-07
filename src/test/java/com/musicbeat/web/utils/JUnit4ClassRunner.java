@@ -8,12 +8,15 @@ import java.io.FileNotFoundException;
 
 /**
  * JUnit加载Log配置文件
- * Created by windawings on 2017/1/8 0008.
+ * @author windawings
+ * @time.creation 2017/1/8
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class JUnit4ClassRunner extends SpringJUnit4ClassRunner {
   static {
     try {
-      Log4jConfigurer.initLogging("src/test/resources/config/log4j.properties");
+      Log4jConfigurer.initLogging("classpath:config/log4j.properties");
     } catch (FileNotFoundException ex) {
       System.err.println("Cannot Initialize log4j");
     }

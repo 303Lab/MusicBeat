@@ -1,8 +1,11 @@
 <component name="ArtifactManager">
-  <artifact type="war" build-on-make="true" name="musicbeat:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="musicbeat.war">
+  <artifact type="war" name="musicbeat:war">
+    <output-path>$PROJECT_DIR$/target/musicbeat_war</output-path>
+    <root id="archive" name="musicbeat_war.war">
       <element id="artifact" artifact-name="musicbeat:war exploded" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/META-INF/MANIFEST.MF" />
+      </element>
     </root>
   </artifact>
 </component>

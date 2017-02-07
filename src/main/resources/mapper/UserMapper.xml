@@ -74,22 +74,14 @@
     from user
     <where>
       <if test="username != null and username != ''">
-        and username = "%"#{username,jdbcType=VARCHAR}"%"
-      </if>
-    </where>
-  </select>
-
-  <!--由用户名获取用户，非like语句-->
-  <select id="selectByUserNameSingle" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List" />
-    from user
-    <where>
-      <if test="username != null and username != ''">
-        and username = #{username,jdbcType=VARCHAR}
+        <choose>
+          <when test="like">
+            and username = "%"#{username,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and username = #{username,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
       </if>
     </where>
   </select>
@@ -104,7 +96,15 @@
     from user
     <where>
       <if test="realname != null and realname != ''">
-        and realname like "%"#{realname,jdbcType=VARCHAR}"%"
+        <choose>
+          <when test="like">
+            and realname like "%"#{realname,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and realname like #{realname,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+
       </if>
     </where>
   </select>
@@ -129,22 +129,14 @@
     from user
     <where>
       <if test="phone != null and phone != ''">
-        and phone like "%"#{phone,jdbcType=VARCHAR}"%"
-      </if>
-    </where>
-  </select>
-
-  <!--由号码获取用户，非like语句-->
-  <select id="selectByPhoneSingle" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List" />
-    from user
-    <where>
-      <if test="phone != null and phone != ''">
-        and phone = #{phone,jdbcType=VARCHAR}
+        <choose>
+          <when test="like">
+            and phone like "%"#{phone,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and phone like #{phone,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
       </if>
     </where>
   </select>
@@ -159,22 +151,14 @@
     from user
     <where>
       <if test="email != null and email != ''">
-        and email like "%"#{email,jdbcType=VARCHAR}"%"
-      </if>
-    </where>
-  </select>
-
-  <!--由邮箱获取用户，非like语句-->
-  <select id="selectByEmailSingle" parameterType="java.lang.String"
-          resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List" />
-    from user
-    <where>
-      <if test="email != null and email != ''">
-        and email = #{email,jdbcType=VARCHAR}
+        <choose>
+          <when test="like">
+            and email like "%"#{email,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and email like #{email,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
       </if>
     </where>
   </select>

@@ -3,8 +3,10 @@ package com.musicbeat.web.model.viewmodel;
 /**
  * User视图类
  *
- * @auther windawings
- * @create 2017/01/20 19:20
+ * @author windawings
+ * @time.creation 2017/01/20 19:20
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class UserViewModel {
 
@@ -29,8 +31,6 @@ public class UserViewModel {
   private String email;
 
   private String picture;
-
-  private String privilege;
 
   private Boolean isRealPublic;
 
@@ -124,14 +124,6 @@ public class UserViewModel {
 
   public void setPicture(String picture) {
     this.picture = picture;
-  }
-
-  public String getPrivilege() {
-    return privilege;
-  }
-
-  public void setPrivilege(String privilege) {
-    this.privilege = privilege;
   }
 
   public Boolean getRealPublic() {

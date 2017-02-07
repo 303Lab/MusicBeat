@@ -9,15 +9,17 @@ import java.util.List;
 /**
  * 视图类转换工具类
  *
- * @auther windawings
- * @create 2017/01/20 19:43
+ * @author windawings
+ * @time.creation 2017/01/20 19:43
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class ModelConvertUtil {
   private static Logger logger = Logger.getLogger(ModelConvertUtil.class);
   private static final String ViewModelPrefix = "com.musicbeat.web.model.viewmodel.";
 
   /**
-   * 把List<@ModelName>转化为List<@ViewModelName>
+   * 把List.ModelName转化为List.ViewModelName
    *
    * @param source model list
    * @return view model list

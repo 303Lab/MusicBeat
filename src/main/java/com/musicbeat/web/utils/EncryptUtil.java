@@ -4,8 +4,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 加密工具类
- * Created by windawings on 2017/1/9 0009.
+ * 加密哈希工具类
+ *
+ * @author windawings
+ * @time.creation 2017/01/26 13:44
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class EncryptUtil  {
   public static final int SHA256LENGTH = 64;
@@ -13,8 +17,8 @@ public class EncryptUtil  {
   /**
    * 传入文本内容，返回 SHA-256 串
    *
-   * @param strText
-   * @return
+   * @param strText the str text
+   * @return string
    */
   public static String SHA256(final String strText) {
     return SHA(strText, "SHA-256");
@@ -23,8 +27,8 @@ public class EncryptUtil  {
   /**
    * 传入文本内容，返回 SHA-512 串
    *
-   * @param strText
-   * @return
+   * @param strText the str text
+   * @return string
    */
   public static String SHA512(final String strText) {
     return SHA(strText, "SHA-512");
@@ -33,8 +37,8 @@ public class EncryptUtil  {
   /**
    * 传入文本内容，返回 MD5 串
    *
-   * @param strText
-   * @return
+   * @param strText the str text
+   * @return string
    */
   public static String MD5(final String strText) {
     return SHA(strText, "MD5");
@@ -43,8 +47,8 @@ public class EncryptUtil  {
   /**
    * 传入文本内容，返回 SHA1 串
    *
-   * @param strText
-   * @return
+   * @param strText the str text
+   * @return string
    */
   public static String SHA1(final String strText) {
     return SHA(strText, "SHA-1");
@@ -53,9 +57,9 @@ public class EncryptUtil  {
   /**
    * 字符串 SHA 加密
    *
-   * @param strText
-   * @param strType
-   * @return
+   * @param strText 哈希字串
+   * @param strType 哈希类型
+   * @return 哈希内容
    */
   private static String SHA(final String strText, final String strType) {
     // 返回值
@@ -73,10 +77,10 @@ public class EncryptUtil  {
         byte byteBuffer[] = messageDigest.digest();
 
         // 將 byte 轉換爲 string
-        StringBuffer strHexString = new StringBuffer();
+        StringBuilder strHexString = new StringBuilder();
         // 遍歷 byte buffer
-        for (int i = 0; i < byteBuffer.length; i++) {
-          String hex = Integer.toHexString(0xff & byteBuffer[i]);
+        for (byte b: byteBuffer) {
+          String hex = Integer.toHexString(0xFF & b);
           if (hex.length() == 1) {
             strHexString.append('0');
           }

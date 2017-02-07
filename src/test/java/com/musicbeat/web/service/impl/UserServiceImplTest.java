@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,16 +21,16 @@ import java.util.List;
  * UserServiceImpl Tester.
  *
  * @author windawings
- * @version 1.0
- * @since <pre>1/8/2017</pre>
+ * @time.creation 1/8/2017
+ * @version 1.0.0
+ * @since 1.0.0
  */
 @RunWith(JUnit4ClassRunner.class)//表示继承了JUnit4ClassRunner类
 @ContextConfiguration(locations = {"classpath*:config/spring/*.xml"}) //指定Spring配置文件的位置
 //很多情况下单元测试离不开事务，下面的注解指明使用的事务管理器
 //如果defaultRollback为true，测试运行结束后，默认回滚事务，不影响数据库
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-@Transactional //指定默认所有测试方法的事务特性
-
+@Rollback(true)
+@Transactional(transactionManager = "transactionManager")
 public class UserServiceImplTest {
   private static Logger logger = Logger.getLogger(UserServiceImplTest.class);
 
@@ -116,11 +116,13 @@ public class UserServiceImplTest {
   }
 
   /**
-   * Method: findByUserName(String name)
+   * Method: findByUserName(String name, Boolean like)
    */
   @Test
   public void testFindByUserName() throws Exception {
-    List<User> result = userService.findByUserName("windawings");
+    List<User> result = userService.findByUserName("windawings", true);
+    logger.info(JSON.toJSONString(result));
+    result = userService.findByUserName("windawings", false);
     logger.info(JSON.toJSONString(result));
   }
 
@@ -129,7 +131,7 @@ public class UserServiceImplTest {
    */
   @Test
   public void testFindByRealName() throws Exception {
-    List<User> result = userService.findByRealName("www");
+    List<User> result = userService.findByRealName("www", true);
     logger.info(JSON.toJSONString(result));
   }
 
@@ -147,7 +149,7 @@ public class UserServiceImplTest {
    */
   @Test
   public void testFindByPhone() throws Exception {
-    List<User> result = userService.findByPhone("13066666666");
+    List<User> result = userService.findByPhone("13066666666", false);
     logger.info(JSON.toJSONString(result));
   }
 
@@ -156,8 +158,8 @@ public class UserServiceImplTest {
    */
   @Test
   public void testFindByEmail() throws Exception {
-    List<User> result = userService.findByEmail("windawings@foxmail.com");
+    List<User> result = userService.findByEmail("windawings@foxmail.com", true);
     logger.info(JSON.toJSONString(result));
   }
 
-} 
+}
