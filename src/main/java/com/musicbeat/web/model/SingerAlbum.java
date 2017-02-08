@@ -1,9 +1,26 @@
 package com.musicbeat.web.model;
 
-public class SingerAlbum {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SingerAlbum implements Serializable{
+
+    private static final long serialVersionUID = 7031856981307468540L;
+
     private Integer sid;
 
     private Integer aid;
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+
+        list.add(sid.toString());
+        list.add(aid.toString());
+
+        return list.toString();
+    }
 
     public SingerAlbum(Integer sid, Integer aid) {
         this.sid = sid;

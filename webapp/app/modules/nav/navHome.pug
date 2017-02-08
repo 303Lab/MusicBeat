@@ -12,5 +12,5 @@
         li: a(ui-sref="app.login") 用户登录
         li: div(ng-if="session.isAuthed")
                 p Welcome,
-                    span(ng-bind-html="session.currentUser | welcomeFilter")
+                    span(ng-bind-html="session.currentUser.username")
 

@@ -1,6 +1,25 @@
 package com.musicbeat.web.model;
 
-public class MusicComment {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MusicComment implements Serializable {
+
+    private static final long serialVersionUID = -4175926311225998081L;
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+
+        list.add(id.toString());
+        list.add(uid.toString());
+        list.add(mid.toString());
+        list.add(comment);
+
+        return list.toString();
+    }
+
     private Integer id;
 
     private Integer uid;
@@ -13,7 +32,7 @@ public class MusicComment {
         this.id = id;
         this.uid = uid;
         this.mid = mid;
-        this.comment = comment;
+        this.comment = comment == null ? null : comment.trim();
     }
 
     public Integer getId() {

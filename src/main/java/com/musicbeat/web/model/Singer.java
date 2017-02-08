@@ -1,6 +1,28 @@
 package com.musicbeat.web.model;
 
-public class Singer {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Singer implements Serializable{
+
+    private static final long serialVersionUID = 8704081907096194569L;
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+
+        list.add(id.toString());
+        list.add(name);
+        list.add(gender == null ? "嬲" : gender ? "男" : "女");
+        list.add(lang);
+        list.add(picture);
+        list.add(isBand ? "组合" : "个人");
+        list.add(introduction);
+
+        return list.toString();
+    }
+
     private Integer id;
 
     private String name;
@@ -17,12 +39,12 @@ public class Singer {
 
     public Singer(Integer id, String name, Boolean gender, String lang, String picture, Boolean isBand, String introduction) {
         this.id = id;
-        this.name = name;
+        this.name = name == null ? null : name.trim();
         this.gender = gender;
-        this.lang = lang;
-        this.picture = picture;
+        this.lang = lang == null ? null : lang.trim();
+        this.picture = picture == null ? null : picture.trim();
         this.isBand = isBand;
-        this.introduction = introduction;
+        this.introduction = introduction == null ? null : introduction.trim();
     }
 
     public Integer getId() {

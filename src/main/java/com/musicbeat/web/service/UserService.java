@@ -2,6 +2,7 @@ package com.musicbeat.web.service;
 
 import com.musicbeat.web.model.User;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
+
 public interface UserService{
 
   Logger logger = Logger.getLogger(UserService.class);

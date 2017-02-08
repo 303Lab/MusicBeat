@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicbeat.web.mapper.BillboardMapper">
+
+  <!--设置二级缓存-->
+  <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
+
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Billboard">
     <constructor>
       <idArg column="time" javaType="java.util.Date" jdbcType="DATE" />
@@ -9,26 +13,31 @@
       <arg column="play_amount" javaType="java.lang.Long" jdbcType="BIGINT" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List">
     time, mid, download_amount, play_amount
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.util.Date" resultMap="BaseResultMap">
+
+  <select id="selectByPrimaryKey" useCache="true" parameterType="java.util.Date" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from billboard
     where time = #{time,jdbcType=DATE}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.util.Date">
+
+  <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.util.Date">
     delete from billboard
     where time = #{time,jdbcType=DATE}
   </delete>
-  <insert id="insert" parameterType="com.musicbeat.web.model.Billboard">
+
+  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.Billboard">
     insert into billboard (time, mid, download_amount, 
       play_amount)
     values (#{time,jdbcType=DATE}, #{mid,jdbcType=INTEGER}, #{downloadAmount,jdbcType=BIGINT}, 
       #{playAmount,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.musicbeat.web.model.Billboard">
+
+  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.Billboard">
     insert into billboard
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="time != null">
@@ -59,7 +68,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.Billboard">
+
+  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.Billboard">
     update billboard
     <set>
       <if test="mid != null">
@@ -74,7 +84,8 @@
     </set>
     where time = #{time,jdbcType=DATE}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Billboard">
+
+  <update id="updateByPrimaryKey" flushCache="true" parameterType="com.musicbeat.web.model.Billboard">
     update billboard
     set mid = #{mid,jdbcType=INTEGER},
       download_amount = #{downloadAmount,jdbcType=BIGINT},

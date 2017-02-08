@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicbeat.web.mapper.UserMapper">
 
+  <!--设置二级缓存-->
+  <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
+
   <!--无地址返回Map-->
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.User">
     <constructor>
@@ -55,7 +58,7 @@
   </sql>
 
   <!--由主键获取用户-->
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -65,7 +68,7 @@
   </select>
 
   <!--由用户名获取用户-->
-  <select id="selectByUserName" parameterType="java.lang.String"
+  <select id="selectByUserName" useCache="true" parameterType="java.lang.String"
           resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
@@ -87,7 +90,7 @@
   </select>
 
   <!--由用户真实姓名获取用户-->
-  <select id="selectByRealName" parameterType="java.lang.String"
+  <select id="selectByRealName" useCache="true" parameterType="java.lang.String"
           resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
@@ -110,7 +113,7 @@
   </select>
 
   <!--获取管理员-->
-  <select id="selectAdmin" resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
+  <select id="selectAdmin" useCache="true" resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
     ,
@@ -120,7 +123,7 @@
   </select>
 
   <!--由号码获取用户-->
-  <select id="selectByPhone" parameterType="java.lang.String"
+  <select id="selectByPhone" useCache="true" parameterType="java.lang.String"
           resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
@@ -142,7 +145,7 @@
   </select>
 
   <!--由邮箱获取用户-->
-  <select id="selectByEmail" parameterType="java.lang.String"
+  <select id="selectByEmail" useCache="true" parameterType="java.lang.String"
           resultType="com.musicbeat.web.model.User" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List"/>
@@ -164,13 +167,13 @@
   </select>
 
   <!--由主键删除用户-->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
   <!--插入新用户-->
-  <insert id="insert" parameterType="com.musicbeat.web.model.User">
+  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -187,7 +190,7 @@
   </insert>
 
   <!--插入新用户，属性可选-->
-  <insert id="insertSelective" parameterType="com.musicbeat.web.model.User">
+  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -283,7 +286,7 @@
   </insert>
 
   <!--由主键更新用户，属性可选-->
-  <update id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.User">
+  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.User">
     update user
     <set>
       <if test="username != null">
@@ -333,7 +336,7 @@
   </update>
 
   <!--由主键更新用户，含地址-->
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.User">
+  <update id="updateByPrimaryKeyWithBLOBs" flushCache="true" parameterType="com.musicbeat.web.model.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=CHAR},
@@ -353,7 +356,7 @@
   </update>
 
   <!--由主键更新用户，不含地址-->
-  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.User">
+  <update id="updateByPrimaryKey" flushCache="true" parameterType="com.musicbeat.web.model.User">
     update user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=CHAR},

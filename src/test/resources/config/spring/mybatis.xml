@@ -5,24 +5,21 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-  <!-- 自动扫描 -->
-  <context:component-scan base-package="com.musicbeat.web"/>
-
-  <!-- 第〇种方式: 加载一个properties文件 -->
-  <!--<context:property-placeholder location="classpath:config/jdbc.properties" ignore-unresolvable="true"
-  />-->
+  <!-- 第〇种方式: 加载一个properties文件, 看tag应该不是bean注入都行，不过这里还是用spring的 -->
+  <!--<context:property-placeholder location="classpath:config/jdbc.properties" ignore-unresolvable="true" />-->
 
   <!-- 第一种方式：加载一个properties文件 -->
-  <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  <bean id="mysqlPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location" value="classpath:config/jdbc.properties"/>
-  </bean>-->
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+  </bean>
 
 
    <!-- 第二种方式：加载多个properties文件 -->
-  <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+  <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
       <property name="locations">
           <list>
               <value>classpath:config/jdbc.properties</value>
@@ -33,28 +30,10 @@
   </bean>
   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
       <property name="properties" ref="configProperties"/>
-  </bean>
-
-  <!-- 配置数据源 -->
-  <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-  destroy-method="close">
-  <property name="driverClassName" value="${driverClasss}"/>
-  <property name="url" value="${jdbcUrl}"/>
-  <property name="username" value="${username}"/>
-  <property name="password" value="${password}"/>
-  &lt;!&ndash; 初始化连接大小 &ndash;&gt;
-  <property name="initialSize" value="${initialSize}"/>
-  &lt;!&ndash; 连接池最大数量 &ndash;&gt;
-  <property name="maxActive" value="${maxActive}"/>
-  &lt;!&ndash; 连接池最大空闲 &ndash;&gt;
-  <property name="maxIdle" value="${maxIdle}"/>
-  &lt;!&ndash; 连接池最小空闲 &ndash;&gt;
-  <property name="minIdle" value="${minIdle}"/>
-  &lt;!&ndash; 获取连接最大等待时间 &ndash;&gt;
-  <property name="maxWait" value="${maxWait}"/>
   </bean>-->
 
-  <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
+  <!-- 配置数据源 -->
+  <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
     <property name="driverClassName" value="${driverClass}"/>
     <property name="url" value="${jdbcUrl}"/>
     <property name="username" value="${username}"/>
@@ -88,14 +67,11 @@
   </bean>
 
   <!--sqlsessionFactory bean-->
-  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="configLocation" value="classpath:config/mybatis/sqlmapConfig.xml"/>
-    <property name="dataSource" ref="dataSource"/>
-  </bean>
-
   <!-- mybatis和spring完美整合，不需要mybatis的配置映射文件 -->
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
+    <!-- MyBatis with Redis Cache -->
+    <property name="configLocation" value="classpath:config/mybatis/redis.xml"/>
     <!-- 自动扫描mapping.xml文件 -->
     <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
   </bean>
@@ -137,68 +113,4 @@
     <aop:pointcut id="transactionPointcut" expression="execution(* com.musicbeat.web.service..*Impl.*(..))" />
     <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
   </aop:config>
-
-  <!-- 将session放入redis -->
-  <context:annotation-config/>
-  <!-- redis 配置 -->
-  <bean id="httpSessionMonitorListener" class="com.musicbeat.web.utils.HttpSessionMonitorListener" />
-
-  <!-- @Important -->
-  <!-- Cookie strategy is the framework default strategy,But exist cross-domain problem -->
-  <!-- Reason: org.springframework.session.web.http.DefaultCookieSerializer.getCookiePath(HttpServletRequest) -->
-  <bean id="cookieHttpSessionStrategy" class="org.springframework.session.web.http.CookieHttpSessionStrategy" />
-
-  <bean id="redisHttpSessionConfiguration" class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
-    <property name="maxInactiveIntervalInSeconds" value="1800" />
-    <property name="httpSessionStrategy" ref="cookieHttpSessionStrategy"/>
-    <property name="httpSessionListeners">
-      <list>
-        <ref bean="httpSessionMonitorListener"/>
-      </list>
-    </property>
-  </bean>
-
-  <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-    <property name="maxTotal" value="${redis.pool.maxTotal}" />
-    <property name="maxIdle" value="${redis.pool.maxIdle}" />
-    <property name="minIdle" value="${redis.pool.minIdle}" />
-    <property name="blockWhenExhausted" value="${redis.pool.blockWhenExhausted}" />
-    <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}" />
-    <property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
-    <property name="testOnReturn" value="${redis.pool.testOnReturn}" />
-    <property name="testWhileIdle" value="${redis.pool.testWhileIdle}" />
-    <property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}" />
-    <property name="timeBetweenEvictionRunsMillis" value="${redis.pool.timeBetweenEvictionRunsMillis}" />
-    <property name="numTestsPerEvictionRun" value="${redis.pool.numTestsPerEvictionRun}" />
-  </bean>
-
-  <!-- @Important -->
-  <!-- Autowired By Type Of org.springframework.data.redis.connection.RedisConnectionFactory -->
-  <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-    <property name="hostName" value="${redis.host}" />
-    <property name="port" value="${redis.port}" />
-    <property name="password" value="${redis.password}" />
-    <property name="database" value="${redis.database}" />
-    <property name="timeout" value="${redis.timeout}" />
-    <property name="poolConfig" ref="jedisPoolConfig" />
-    <property name="usePool" value="${redis.usePool}" />
-  </bean>
-
-  <bean id="jedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-    <property name="connectionFactory" ref="jedisConnectionFactory" />
-    <property name="keySerializer">
-      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-    </property>
-    <property name="valueSerializer">
-      <!-- <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" /> -->
-      <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
-    </property>
-    <property name="hashKeySerializer">
-      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-    </property>
-    <property name="hashValueSerializer">
-      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-    </property>
-  </bean>
-
 </beans>

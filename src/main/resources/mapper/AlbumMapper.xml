@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicbeat.web.mapper.AlbumMapper">
+
+  <!--设置二级缓存-->
+  <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
+
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Album">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="release_time" jdbcType="DATE" property="releaseTime" />
     <result column="picture" jdbcType="VARCHAR" property="picture" />
   </resultMap>
+
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.musicbeat.web.model.Album">
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, name, release_time, picture
   </sql>
+
   <sql id="Blob_Column_List">
     introduction
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+
+  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -24,11 +32,13 @@
     from album
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+  <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
     delete from album
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.musicbeat.web.model.Album">
+
+  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.Album">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -37,7 +47,8 @@
     values (#{name,jdbcType=VARCHAR}, #{releaseTime,jdbcType=DATE}, #{picture,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.musicbeat.web.model.Album">
+
+  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.Album">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -71,7 +82,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.Album">
+
+  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.Album">
     update album
     <set>
       <if test="name != null">
@@ -89,7 +101,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.Album">
+
+  <update id="updateByPrimaryKeyWithBLOBs" flushCache="true" parameterType="com.musicbeat.web.model.Album">
     update album
     set name = #{name,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=DATE},
@@ -97,7 +110,8 @@
       introduction = #{introduction,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Album">
+
+  <update id="updateByPrimaryKey" flushCache="true" parameterType="com.musicbeat.web.model.Album">
     update album
     set name = #{name,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=DATE},

@@ -19,7 +19,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 
 public class MyDailyRollingFileAppender extends FileAppender {
-
+  static final String logSuffix = ".log";
   static final int TOP_OF_TROUBLE = -1;
   static final int TOP_OF_MINUTE = 0;
   static final int TOP_OF_HOUR = 1;
@@ -86,6 +86,15 @@ public class MyDailyRollingFileAppender extends FileAppender {
     return datePattern;
   }
 
+  public String removeSuffix(String name) {
+    int loc = name.indexOf(logSuffix);
+    if(loc != -1) {
+      name.replaceAll(logSuffix, "");
+    }
+
+    return name;
+  }
+
   public void activateOptions() {
     super.activateOptions();
     if (datePattern != null && fileName != null) {
@@ -94,8 +103,10 @@ public class MyDailyRollingFileAppender extends FileAppender {
       int type = computeCheckPeriod();
       printPeriodicity(type);
       rc.setType(type);
+
       File file = new File(fileName);
-      scheduledFilename = fileName
+
+      scheduledFilename = removeSuffix(fileName)
                           + sdf.format(new Date(file.lastModified()));
 
     } else {
@@ -165,7 +176,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
                  + ((CountingQuietWriter) qw).getCount());
     LogLog.debug("maxBackupIndex=" + maxBackupIndex);
 
-    String datedFilename = fileName + sdf.format(now);
+    String datedFilename = removeSuffix(fileName) + sdf.format(now);
 
     if (maxBackupIndex > 0) {
       // Delete the oldest file, to keep Windows happy.
@@ -237,7 +248,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
       return;
     }
 
-    String datedFilename = fileName + sdf.format(now);
+    String datedFilename = removeSuffix(fileName) + sdf.format(now);
     // It is too early to roll over because we are still within the
     // bounds of the current interval. Rollover will occur once the
     // next interval is reached.

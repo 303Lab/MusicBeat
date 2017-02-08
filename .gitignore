@@ -11,7 +11,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 src/main/resources/config/jdbc.properties
-src/main/resources/config/redis.properties
+src/main/webapp/WEB-INF/resources/
 src/test/logs/
 target/
 webapp/node_modules

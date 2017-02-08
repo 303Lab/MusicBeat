@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicbeat.web.mapper.MusicCommentMapper">
+
+  <!--设置二级缓存-->
+  <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
+
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.MusicComment">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -8,6 +12,7 @@
       <idArg column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
+
   <resultMap id="ResultMapWithBLOBs" type="com.musicbeat.web.model.MusicComment">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -16,13 +21,16 @@
       <arg column="comment" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List">
     id, uid, mid
   </sql>
+
   <sql id="Blob_Column_List">
     comment
   </sql>
-  <select id="selectByPrimaryKey" parameterType="map" resultMap="ResultMapWithBLOBs">
+
+  <select id="selectByPrimaryKey" useCache="true" parameterType="map" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -32,13 +40,15 @@
       and uid = #{uid,jdbcType=INTEGER}
       and mid = #{mid,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="map">
+
+  <delete id="deleteByPrimaryKey" flushCache="true" parameterType="map">
     delete from music_comment
     where id = #{id,jdbcType=INTEGER}
       and uid = #{uid,jdbcType=INTEGER}
       and mid = #{mid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.musicbeat.web.model.MusicComment">
+
+  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.MusicComment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -47,7 +57,8 @@
     values (#{uid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{comment,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.musicbeat.web.model.MusicComment">
+
+  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.MusicComment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -75,7 +86,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.MusicComment">
+
+  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.MusicComment">
     update music_comment
     <set>
       <if test="comment != null">
@@ -86,7 +98,8 @@
       and uid = #{uid,jdbcType=INTEGER}
       and mid = #{mid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.MusicComment">
+
+  <update id="updateByPrimaryKeyWithBLOBs" flushCache="true" parameterType="com.musicbeat.web.model.MusicComment">
     update music_comment
     set comment = #{comment,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}

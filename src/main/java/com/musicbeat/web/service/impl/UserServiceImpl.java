@@ -5,9 +5,9 @@ import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
 
 import com.musicbeat.web.utils.RegexValidateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,12 +21,8 @@ import java.util.List;
 @Service("UserService")
 public class UserServiceImpl implements UserService{
 
+  @Resource
   private UserMapper userMapper;
-
-  @Autowired
-  public void setUserMapper(UserMapper addMapper) {
-    this.userMapper = addMapper;
-  }
 
   @Override
   public void add(User user) {

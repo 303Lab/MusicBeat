@@ -10,11 +10,11 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RunWith(JUnit4ClassRunner.class)//表示继承了JUnit4ClassRunner类
-@ContextConfiguration(locations = {"classpath*:config/spring/*.xml"}) //指定Spring配置文件的位置
+@ContextConfiguration(locations = {"classpath:config/spring/*.xml"}) //指定Spring配置文件的位置
 //很多情况下单元测试离不开事务，下面的注解指明使用的事务管理器
 //如果defaultRollback为true，测试运行结束后，默认回滚事务，不影响数据库
 @Rollback(true)
@@ -34,7 +34,7 @@ import java.util.List;
 public class UserServiceImplTest {
   private static Logger logger = Logger.getLogger(UserServiceImplTest.class);
 
-  @Autowired
+  @Resource
   private UserService userService;
 
   @Before

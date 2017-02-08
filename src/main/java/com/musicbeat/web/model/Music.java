@@ -1,8 +1,27 @@
 package com.musicbeat.web.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Music {
+public class Music implements Serializable {
+
+    private static final long serialVersionUID = 7711938471810119154L;
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+
+        list.add(id.toString());
+        list.add(name);
+        list.add(lyrics);
+        list.add(link);
+        list.add(duration.toString());
+
+        return list.toString();
+    }
+
     private Integer id;
 
     private String name;
@@ -15,9 +34,9 @@ public class Music {
 
     public Music(Integer id, String name, String lyrics, String link, Date duration) {
         this.id = id;
-        this.name = name;
-        this.lyrics = lyrics;
-        this.link = link;
+        this.name = name == null ? null : name.trim();
+        this.lyrics = lyrics == null ? null : lyrics.trim();
+        this.link = link == null ? null : link.trim();
         this.duration = duration;
     }
 

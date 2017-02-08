@@ -1,8 +1,13 @@
 package com.musicbeat.web.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable{
+
+    private static final long serialVersionUID = 4799602879543296825L;
+
     private Integer id;
 
     private String username;
@@ -33,22 +38,45 @@ public class User implements Serializable{
 
     private String address;
 
+    @Override
+    public String toString() {
+      List<String> list = new ArrayList<>();
+
+      list.add(id.toString());
+      list.add(username);
+      list.add(password);
+      list.add(gender == null ? "嬲" : gender ? "男" : "女");
+      list.add(realname);
+      list.add(country);
+      list.add(province);
+      list.add(city);
+      list.add(qq);
+      list.add(phone);
+      list.add(email);
+      list.add(picture);
+      list.add(privilege);
+      list.add(isRealPublic ? "资料公开": "资料非公开");
+      list.add(address);
+
+      return list.toString();
+    }
+
     public User(Integer id, String username, String password, Boolean gender, String realname, String country, String province, String city, String qq, String phone, String email, String picture, String privilege, Boolean isRealPublic, String address) {
         this.id = id;
-        this.username = username;
-        this.password = password;
+        this.username = username == null ? null : username.trim();
+        this.password = password == null ? null : password.trim();
         this.gender = gender;
-        this.realname = realname;
-        this.country = country;
-        this.province = province;
-        this.city = city;
-        this.qq = qq;
-        this.phone = phone;
-        this.email = email;
-        this.picture = picture;
-        this.privilege = privilege;
+        this.realname = realname == null ? null : realname.trim();
+        this.country = country == null ? null : country.trim();
+        this.province = province == null ? null : province.trim();
+        this.city = city == null ? null : city.trim();
+        this.qq = qq == null ? null : qq.trim();
+        this.phone = phone == null ? null : phone.trim();
+        this.email = email == null ? null : email.trim();
+        this.picture = picture == null ? null : picture.trim();
+        this.privilege = privilege == null ? null : privilege.trim();
         this.isRealPublic = isRealPublic;
-        this.address = address;
+        this.address = address == null ? null : address.trim();
     }
 
     public Integer getId() {
@@ -110,4 +138,6 @@ public class User implements Serializable{
     public String getAddress() {
         return address;
     }
+
+
 }

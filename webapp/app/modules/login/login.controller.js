@@ -43,17 +43,19 @@ function loginController($scope, authService, ngDialog){
             .then(
                 function (data) { // 返回了response.data信息体
                     $scope.credentials = angular.copy(emptyCredentials);
+                    $scope.message = angular.toJson(data.userData, true);
                     ngDialog.open({
-                        template: "firstDialogId", //use template id defined in HTML
+                        template: "loginNgDialog",
                         className: "ngdialog-theme-default",
                         scope: $scope
                     });
                 },
                 function (reason) {
+                    $scope.message = reason.message;
                     ngDialog.open({
-                          template: reason.message, //use template id defined in HTML
+                          template: "loginNgDialog",
                           className: "ngdialog-theme-default",
-                          plain: true
+                          scope: $scope
                       });
                 }
             );

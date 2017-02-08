@@ -1,8 +1,27 @@
 package com.musicbeat.web.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Traffic {
+public class Traffic implements Serializable {
+
+    private static final long serialVersionUID = -4840773955407257972L;
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+
+        list.add(id);
+        list.add(url);
+        list.add(seed);
+        list.add(step.toString());
+        list.add(time.toString());
+
+        return list.toString();
+    }
+
     private String id;
 
     private String url;
@@ -14,9 +33,9 @@ public class Traffic {
     private Date time;
 
     public Traffic(String id, String url, String seed, Integer step, Date time) {
-        this.id = id;
-        this.url = url;
-        this.seed = seed;
+        this.id = id == null ? null : id.trim();
+        this.url = url == null ? null : url.trim();
+        this.seed = seed == null ? null : seed.trim();
         this.step = step;
         this.time = time;
     }

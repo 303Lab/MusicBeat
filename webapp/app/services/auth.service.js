@@ -48,18 +48,21 @@ function authService($http, $q, appConst, authEvent, $localStorage, $sessionStor
                         }
                         $sessionStorage.currentUser = response.data.userData;
                         $sessionStorage.accessToken = response.data.accessToken;
-                        $sessionStorage.isAuthed = (response.data.status === authEvent.success);
+                        $sessionStorage.isAuthed = response.data.status === authEvent.success;
                         if (response.data.roleName) {
                             $sessionStorage.roleName = response.data.roleName;
                         }
-
                         deferred.resolve(response.data);
                     }
                 )
                 .catch(
-                    function (err, status) {
-                        console.log(err + "\n" + status);
-                        deferred.reject(err);
+                    function (err) {
+                        $localStorage.$reset();
+                        $sessionStorage.currentUser = "";
+                        $sessionStorage.accessToken = "";
+                        $sessionStorage.isAuthed = false;
+                        $sessionStorage.roleName = "";
+                        deferred.reject(err.data);
                     }
                 );
 

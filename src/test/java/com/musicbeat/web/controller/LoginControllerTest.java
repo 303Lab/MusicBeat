@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,6 +19,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 import static com.musicbeat.web.model.constant.Constants.REQUEST_PASSWORD;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_USERNAME;
@@ -46,7 +47,7 @@ public class LoginControllerTest {
 
   private MockMvc mockMvc;
 
-  @Autowired
+  @Resource
   private LoginController loginController;
 
   @Before

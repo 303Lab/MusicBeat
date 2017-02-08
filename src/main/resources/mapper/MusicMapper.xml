@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.musicbeat.web.mapper.MusicMapper">
+
+  <!--设置二级缓存-->
+  <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
+
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Music">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -10,20 +14,24 @@
       <arg column="duration" javaType="java.util.Date" jdbcType="TIME" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List">
     id, name, lyrics, link, duration
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from music
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+  <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
     delete from music
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.musicbeat.web.model.Music">
+
+  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.Music">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -32,7 +40,8 @@
     values (#{name,jdbcType=VARCHAR}, #{lyrics,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
       #{duration,jdbcType=TIME})
   </insert>
-  <insert id="insertSelective" parameterType="com.musicbeat.web.model.Music">
+
+  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.Music">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -66,7 +75,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.Music">
+
+  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.Music">
     update music
     <set>
       <if test="name != null">
@@ -84,7 +94,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Music">
+
+  <update id="updateByPrimaryKey" flushCache="true" parameterType="com.musicbeat.web.model.Music">
     update music
     set name = #{name,jdbcType=VARCHAR},
       lyrics = #{lyrics,jdbcType=VARCHAR},

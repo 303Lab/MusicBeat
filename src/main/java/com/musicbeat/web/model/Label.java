@@ -1,6 +1,25 @@
 package com.musicbeat.web.model;
 
-public class Label {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Label implements Serializable {
+
+    private static final long serialVersionUID = -8149927506836925295L;
+
+    @Override
+    public String toString() {
+        List<String> list = new ArrayList<>();
+
+        list.add(id.toString());
+        list.add(lid.toString());
+        list.add(mid.toString());
+        list.add(name);
+
+        return list.toString();
+    }
+
     private Integer id;
 
     private Integer lid;
@@ -13,7 +32,7 @@ public class Label {
         this.id = id;
         this.lid = lid;
         this.mid = mid;
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
     public Integer getId() {

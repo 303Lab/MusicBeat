@@ -1,24 +1,20 @@
 package com.musicbeat.web.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.model.viewmodel.UserViewModel;
 import com.musicbeat.web.service.UserService;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.musicbeat.web.model.constant.Constants.Access_Token;
 import static com.musicbeat.web.model.constant.Constants.Auth_Role;
@@ -42,8 +38,7 @@ import static com.musicbeat.web.utils.ModelConvertUtil.Convert2ViewModel;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Controller
-@Scope(value = "prototype")
+@Controller("LoginController")
 public class LoginController extends BaseController{
 
   @Resource
@@ -52,22 +47,26 @@ public class LoginController extends BaseController{
   /**
    * 用户登录Controller
    *
-   * @param request the request
    * @return the model and view
    */
   @RequestMapping(value = "/login", method = RequestMethod.POST)
   public @ResponseBody
-  ModelMap Login(HttpServletRequest request) {
-    HttpSession session = request.getSession();
+  ModelMap Login() {
     ModelMap model = new ModelMap();
+    JSONObject logObj = new JSONObject();
+
     try {
       /*如果用户已登录，清除登陆信息*/
       if (session.getAttribute(SESSION_USER) != null) {
         session.removeAttribute(SESSION_USER);
+        session.removeAttribute(Access_Token);
       }
 
       String identify = request.getParameter(REQUEST_USERNAME);
       String password = request.getParameter(REQUEST_PASSWORD);
+
+      logObj.put("user", identify);
+      logObj.put("pass", password);
 
       /*检验用户名和密码*/
       List<User> users = userService.checkPassword(identify, password);
@@ -77,23 +76,28 @@ public class LoginController extends BaseController{
         UserViewModel userViewModel = (UserViewModel) Convert2ViewModel(user);
 
         /*返回视图*/
-        model.addAttribute(SESSION_USER, userViewModel);
-        model.addAttribute(RESPONSE_STATUS, RESPONSE_SUCCESS);
-        model.addAttribute(Access_Token, "bear test string from ModelAndView");
-        model.addAttribute(Auth_Role, user.getPrivilege());
-        model.addAttribute(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
+        model.put(SESSION_USER, userViewModel);
+        model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+        model.put(Access_Token, "bear test string from ModelAndView");
+        model.put(Auth_Role, user.getPrivilege());
+        model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
 
         /*存入Session*/
         session.setAttribute(SESSION_USER, user);
         session.setAttribute(Access_Token, "bear test string from SessionCache");
 
+        logger.info(logObj.toJSONString() + " Log in");
+
       } else {
-        model.addAttribute(RESPONSE_STATUS, RESPONSE_FAIL);
-        model.addAttribute(RESPONSE_MESSAGE, RESPONSE_ERROR_CREDENTIAL);
+        model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+        model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_CREDENTIAL);
+        logger.warn(logObj.toJSONString() + " Log failed");
+        response.setStatus(401);
       }
     } catch (Exception e) {
-      model.addAttribute(RESPONSE_STATUS, RESPONSE_FAIL);
-      model.addAttribute(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
+      model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+      model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
+      logger.error(logObj.toJSONString() + " Log error");
       logger.error(e, e.fillInStackTrace());
     }
     return model;
