@@ -22,10 +22,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
-import static com.musicbeat.web.model.constant.Constants.REQUEST_PASSWORD;
-import static com.musicbeat.web.model.constant.Constants.REQUEST_USERNAME;
+import static com.musicbeat.web.model.constant.Constants.HTTP_UTF8;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_DATA_JSON;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_PASSWORD_JSON;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_TYPE_JSON;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_USERNAME_JSON;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_STATUS;
 import static com.musicbeat.web.model.constant.Constants.SESSION_USER;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,8 +37,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * UserController Tester.
  *
  * @author windawings
- * @time.creation 1/9/2017
  * @version 1.0.0
+ * @time.creation 1/9/2017
  * @since 1.0.0
  */
 @RunWith(JUnit4ClassRunner.class)
@@ -43,45 +47,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional(transactionManager = "transactionManager")
 public class LoginControllerTest {
 
-  private static Logger logger = Logger.getLogger(LoginControllerTest.class);
+    private static Logger logger = Logger.getLogger(LoginControllerTest.class);
 
-  private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-  @Resource
-  private LoginController loginController;
+    @Resource
+    private LoginController loginController;
 
-  @Before
-  public void before() throws Exception {
-    this.mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
-  }
+    @Before
+    public void before() throws Exception {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
+    }
 
-  @After
-  public void after() throws Exception {
-  }
+    @After
+    public void after() throws Exception {
+    }
 
-  /**
-   * Method: login(HttpServletRequest request)
-   */
-  @Test
-  public void testLogin() throws Exception {
-    try{
-      ResultActions resultActions =
-        this.mockMvc.perform(MockMvcRequestBuilders
-                               .post("/api/login/")
-                               .param(REQUEST_USERNAME, "windawings")
-                               .param(REQUEST_PASSWORD, "123")
-                               .accept(MediaType.APPLICATION_JSON));
-      MvcResult mvcResult = resultActions.andExpect(status().isOk())
-                                         .andDo(print())
-                                         .andReturn();
+    /**
+     * Method: login(HttpServletRequest request)
+     */
+    @Test
+    public void testLogin() throws Exception {
+        try {
 
-      JSONObject response = (JSONObject) JSON.parse(mvcResult.getResponse().getContentAsString());
+            JSONObject data = new JSONObject();
+            data.put(REQUEST_USERNAME_JSON, "windawings");
+            data.put(REQUEST_PASSWORD_JSON, "123");
 
-      JSONObject output = new JSONObject();
-      output.put(RESPONSE_STATUS, response.get(RESPONSE_STATUS));
-      output.put(SESSION_USER, response.get(SESSION_USER));
+            ResultActions resultActions =
+              this.mockMvc.perform(MockMvcRequestBuilders
+                                     .post("/api/login/", REQUEST_TYPE_JSON)
+                                     .characterEncoding(HTTP_UTF8)
+                                     .contentType(APPLICATION_JSON_UTF8)
+                                     .content(data.toJSONString())
+                                     .accept(APPLICATION_JSON_UTF8));
+            MvcResult mvcResult = resultActions.andExpect(status().isOk())
+                                               .andDo(print())
+                                               .andReturn();
 
-      logger.info(output.toJSONString());
+            JSONObject response = (JSONObject) JSON.parse(mvcResult.getResponse().getContentAsString());
+
+            JSONObject output = new JSONObject();
+            output.put(RESPONSE_STATUS, response.get(RESPONSE_STATUS));
+            output.put(SESSION_USER, response.get(SESSION_USER));
+
+            logger.info(output.toJSONString());
 
       /*logger.info(
         "\"status\":"
@@ -89,9 +99,9 @@ public class LoginControllerTest {
         + ", "
         + "\"userinfo\":"
         + JSON.toJSONString(mvcResult.getModelAndView().getModel().get(SESSION_USER)));*/
-    }catch (Exception e) {
-      logger.error(e, e.fillInStackTrace());
-    }
+        } catch (Exception e) {
+            logger.error(e, e.fillInStackTrace());
+        }
 
-  }
+    }
 }

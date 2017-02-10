@@ -27,7 +27,7 @@ public class HttpSessionMonitorListener implements HttpSessionListener {
     obj.put("session", session.getId());
     obj.put("live(s)", maxInterval);
     obj.put("create", TimeConvertUtil.timeStamp2DateTimeMSec(session.getCreationTime()));
-    obj.put("expire", TimeConvertUtil.timeStamp2DateTimeMSec(session.getCreationTime() + maxInterval*1000));
+    obj.put("expire", TimeConvertUtil.timeStamp2DateTimeMSec(session.getCreationTime() + (long)maxInterval*1000));
     obj.put("lastAccess", TimeConvertUtil.timeStamp2DateTimeMSec(session.getLastAccessedTime()));
 
     if(flag) { logger.info(obj.toJSONString() + " Session created"); }

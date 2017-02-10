@@ -24,17 +24,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
-  * 解决Spring-Session Cookie跨域问题
-  * 关键方法: getCookiePath
-  *
-  * @link <href>http://blog.csdn.net/alaska_bibi/article/details/53126456?locationNum=3&fps=1</href>
- * @link <href>http://www.cnblogs.com/interdrp/p/5596563.html</href>
-  *
-  * @author windawings
-  * @version 1.0.0
-  * @time.creation 2017/02/08 23:46
-  * @since 1.0.0
-  */
+ * 解决Spring-Session Cookie跨域问题
+ * 关键方法: getCookiePath
+ *
+ * <a href="http://blog.csdn.net/alaska_bibi/article/details/53126456?locationNum=3&fps=1">参考网址1</a>
+ * <a href="http://www.cnblogs.com/interdrp/p/5596563.html">参考网址2</a>
+ *
+ * @author windawings
+ * @version 1.0.0
+ * @time.creation 2017/02/08 23:46
+ * @since 1.0.0
+ */
 public final class CustomCookieHttpSessionStrategy
   implements MultiHttpSessionStrategy, HttpSessionManager {
     /**

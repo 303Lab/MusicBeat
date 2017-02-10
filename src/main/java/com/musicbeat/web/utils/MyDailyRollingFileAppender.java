@@ -19,7 +19,8 @@ import org.apache.log4j.spi.LoggingEvent;
 
 
 public class MyDailyRollingFileAppender extends FileAppender {
-  static final String logSuffix = ".log";
+  private static final String logSuffix = ".log";
+
   static final int TOP_OF_TROUBLE = -1;
   static final int TOP_OF_MINUTE = 0;
   static final int TOP_OF_HOUR = 1;
@@ -86,10 +87,10 @@ public class MyDailyRollingFileAppender extends FileAppender {
     return datePattern;
   }
 
-  public String removeSuffix(String name) {
+  private String removeSuffix(String name) {
     int loc = name.indexOf(logSuffix);
     if(loc != -1) {
-      name.replaceAll(logSuffix, "");
+      name = name.replaceAll(logSuffix, "");
     }
 
     return name;
