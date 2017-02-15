@@ -6,4 +6,4 @@
  */
 
 angular
-    .module("app.ctrls", ["app.services", "ngDialog", "ngSanitize", "ngStorage"]);
+    .module("app.ctrls", ["app.services", "app.configs", "ngDialog", "ngSanitize", "ngStorage"]);

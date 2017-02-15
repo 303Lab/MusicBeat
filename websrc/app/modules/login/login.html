@@ -1,0 +1,32 @@
+<div class="login-wrapper panel panel-primary">
+    <div class="login panel-body">
+        <form name="loginForm" role="form" ng-submit="login(credentials);" novalidate>
+            <div class="form-group">
+                <input type="text" placeholder="Username or Phonenumber or E-mail" ng-model="credentials.userId" ng-change="inputChange();">
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password *" ng-model="credentials.password" ng-change="inputChange();">
+            </div>
+            <div class="form-group" ng-if="message.text != undefined && message.text != null">
+                <p class="text-center" ng-bind="message.text" style="color:#EE3D3D"></p>
+            </div>
+            <div class="text-center" class="button-wrapper">
+                <button type="submit" class="button">Login</button>
+            </div>
+            <div class="text-center">
+                <p>Lost your password ?
+                    <a ui-sref="auth.forget" class="forget-open">Retrieve</a>
+                </p>
+                <p>Don't have an account ?
+                    <a ui-sref="auth.signup" class="signup-open">Sign up</a>
+                </p>
+                <div class="social">
+                    <p>Connect with Social Networks</p>
+                    <a href=""><img src="images/weibo.png" alt="weibo"></a>
+                    <a href=""><img src="images/qq.png" alt="qq"></a>
+                    <a href=""><img src="images/weixin.png" alt="weixin"></a>
+                </div> <!-- end .social -->
+            </div>
+        </form>
+    </div> <!-- end .login -->
+</div> <!-- end .login-wrapper -->

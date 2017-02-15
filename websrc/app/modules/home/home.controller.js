@@ -1,16 +1,37 @@
 /**
- * 主页控制器
+ *
  * @author windawings
- * @time.creation 2017/02/06 19:17
+ * @create.time 2017/02/13 21:39
  * @version 1.0.0
  * @since 1.0.0
  */
 
 angular
     .module("app.ctrls")
-    .controller("homeController", ["$scope", "authService", "$localStorage", homeController]);
+    .controller("homeController", ["$scope", "$state", homeController]);
 
-function homeController($scope, authService, $localStorage) {
-    $scope.session = authService.session;
-    $scope.$storage = $localStorage;
+function homeController($scope, $state) {
+    $scope.changeStateSinger = function () {
+        $state.go("app.singer");
+    };
+
+    /*==========  Highlights Slider  ==========*/
+    jQuery(".highlight-slider").owlCarousel({
+        loop: true,
+        nav: true,
+        dots: false,
+        navText: ['<i class="pe-7s-angle-left"></i>', '<i class="pe-7s-angle-right"></i>'],
+        items: 6,
+        responsive: {
+            0: {
+                items: 2
+            },
+            480: {
+                items: 6
+            },
+            769: {
+                items: 6
+            }
+        }
+    });
 }

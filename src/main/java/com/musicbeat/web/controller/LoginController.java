@@ -3,6 +3,7 @@ package com.musicbeat.web.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,6 @@ import javax.annotation.Resource;
 import java.net.URLDecoder;
 import java.util.List;
 
-import static com.musicbeat.web.model.constant.Constants.ACCESS_TOKEN;
 import static com.musicbeat.web.model.constant.Constants.AUTH_ROLE;
 import static com.musicbeat.web.model.constant.Constants.HTTP_UTF8;
 import static com.musicbeat.web.model.constant.Constants.LOG_PASSWORD;
@@ -51,9 +51,10 @@ public class LoginController extends BaseController {
     /**
      * 用户登录Controller
      *
+     * @param jsonObject the json object
      * @return the model and view
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ModelMap login(@RequestBody JSONObject jsonObject) {
 
         ModelMap model = new ModelMap();
@@ -63,7 +64,6 @@ public class LoginController extends BaseController {
             // 如果用户已登录，清除登陆信息
             if (session.getAttribute(SESSION_USER) != null) {
                 session.removeAttribute(SESSION_USER);
-                session.removeAttribute(ACCESS_TOKEN);
             }
 
             // 解析Json对象
@@ -79,18 +79,16 @@ public class LoginController extends BaseController {
 
             if (users != null) {
                 User user = users.get(0);
-                JSONObject userViewModel =  convert2ViewModelIgnoreNull(user);
+                JSONObject userViewModel = convert2ViewModelIgnoreNull(user);
 
                 // 返回视图
                 model.put(SESSION_USER, userViewModel);
                 model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-                model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
                 model.put(AUTH_ROLE, user.getPrivilege());
                 model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
 
                 // 存入Session
                 session.setAttribute(SESSION_USER, user);
-                session.setAttribute(ACCESS_TOKEN, "bear test string from SessionCache");
 
                 logger.info(logObj.toJSONString() + " Log in");
 
@@ -109,6 +107,64 @@ public class LoginController extends BaseController {
             logger.error(logObj.toJSONString() + " Log error");
             logger.error(e, e.fillInStackTrace());
         }
+        return model;
+    }
+
+    /**
+     * 用户注销
+     *
+     * @return the model map
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public @ResponseBody ModelMap logout() {
+        ModelMap model = new ModelMap();
+        JSONObject logObj = new JSONObject();
+
+        try {
+            // 如果用户已登录，清除登陆信息
+            User user = (User) session.getAttribute(SESSION_USER);
+
+            if (user != null) {
+                logObj.put(LOG_USER, user.getUsername());
+                session.removeAttribute(SESSION_USER);
+            }
+
+            // 返回视图
+            model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+            model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
+
+            // 日志记录
+            logger.info(logObj.toJSONString() + " Log out");
+
+        }catch (Exception e) {
+            model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+            model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
+            response.setStatus(SC_INTERNAL_SERVER_ERROR);
+
+            logger.error(logObj.toJSONString() + " LogOut Error");
+            logger.error(e, e.fillInStackTrace());
+        }
+
+        return model;
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ModelMap register(@RequestBody JSONObject jsonObject) {
+
+        ModelMap model = new ModelMap();
+        JSONObject logObj = new JSONObject();
+
+        try {
+
+        }catch (Exception e) {
+            model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+            model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
+            response.setStatus(SC_INTERNAL_SERVER_ERROR);
+
+            logger.error(logObj.toJSONString() + " Register Error");
+            logger.error(e, e.fillInStackTrace());
+        }
+
         return model;
     }
 

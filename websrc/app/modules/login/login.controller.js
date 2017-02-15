@@ -8,33 +8,16 @@
 
 angular
     .module("app.ctrls")
-    .controller("loginController", ["$scope", "authService", "ngDialog", loginController]);
+    .controller("loginController", ["$scope", "authService", loginController]);
 
-function loginController($scope, authService, ngDialog){
+function loginController($scope, authService){
 
-    $scope.getFormData = function () {
-        console.log($scope.credentials);
+    // 监听文本
+    $scope.inputChange = function () {
+        if ($scope.credentials.userId.trim() !== "" || $scope.credentials.password.trim() !== ""){
+            $scope.message.text = "";
+        }
     };
-
-    $scope.setFormData = function () {
-        $scope.credentials = {
-            userId: "13088888888",
-            password: "233",
-            autoLogin: false
-        };
-    };
-
-    $scope.restForm = function () {
-        $scope.credentials={
-            userId: "windawings@foxmail.com",
-            password: "123",
-            autoLogin: true
-        };
-    };
-
-    var emptyCredentials = {userId: "", password: "", autoLogin: false};
-    $scope.credentials = angular.copy(emptyCredentials);
-    $scope.message = "";
 
     $scope.login = function() {
         if (!$scope.credentials.userId.trim() || !$scope.credentials.password.trim()) return;
@@ -42,27 +25,27 @@ function loginController($scope, authService, ngDialog){
             .login($scope.credentials)
             .then(
                 function (data) { // 返回了response.data信息体
-                    $scope.credentials = angular.copy(emptyCredentials);
-                    $scope.message = angular.toJson(data.userData, true);
-                    ngDialog.open({
-                        template: "loginNgDialog",
-                        className: "ngdialog-theme-default",
-                        scope: $scope
-                    });
+                    $scope.credentials.userId = "";
+                    $scope.credentials.password = "";
+
+                    // 关闭各种Panel
+                    jQuery(document).click();
                 },
                 function (reason) {
-                    $scope.message = reason.message;
-                    ngDialog.open({
-                          template: "loginNgDialog",
-                          className: "ngdialog-theme-default",
-                          scope: $scope
-                      });
+                    $scope.credentials.userId = "";
+                    $scope.credentials.password = "";
+                    if (reason.message !== null && reason.message !== undefined) {
+                        $scope.message.text = reason.message;
+                    } else {
+                        $scope.message.text = "Internal Error (500)";
+                    }
                 }
             );
     };
 
-    $scope.closeLoginPanel = function () {
-        angular.copy(emptyCredentials, $scope.credentials);
-        authService.session.isShowPanel = false;
+    /*==========  Validate Email  ==========*/
+    $scope.validateEmail = function ($validate_email) {
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        return emailReg.test($validate_email);
     };
 }

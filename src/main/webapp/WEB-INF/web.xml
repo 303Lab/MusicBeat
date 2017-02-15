@@ -76,6 +76,8 @@
   </filter-mapping>
 
   <!-- spring监听器 -->
+
+  <!-- Log4j Listener-->
   <listener>
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
@@ -100,7 +102,7 @@
   </filter-mapping>
 
   <welcome-file-list>
-    <welcome-file>/WEB-INF/resources/tpls/home.html</welcome-file>
+    <welcome-file>/WEB-INF/resources/tpls/index.html</welcome-file>
   </welcome-file-list>
 
   <!-- session配置 -->

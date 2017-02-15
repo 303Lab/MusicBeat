@@ -17,13 +17,9 @@ public class Constants {
     public static final String REQUEST_TYPE_JSON = "json";
     public static final String REQUEST_USERNAME_JSON = "username";
     public static final String REQUEST_PASSWORD_JSON = "password";
-    public static final String REQUEST_DATA_JSON = "data";
 
     // === Session ===
     public static final String SESSION_USER = "userData";
-
-    // === Access Token ===
-    public static final String ACCESS_TOKEN = "accessToken";
 
     // === Auth Role ===
     public static final String AUTH_ROLE = "roleName";

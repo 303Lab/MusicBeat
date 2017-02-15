@@ -53,8 +53,20 @@
   <!-- 加载静态资源 -->
   <mvc:default-servlet-handler/>
 
-  <mvc:resources mapping="js/**" location="/WEB-INF/resources/js/"/>
-  <mvc:resources mapping="css/**" location="/WEB-INF/resources/css/"/>
-  <mvc:resources mapping="tpls/**" location="/WEB-INF/resources/tpls/"/>
-  <mvc:resources mapping="fonts/**" location="/WEB-INF/resources/fonts/"/>
+  <mvc:resources mapping="js/**" location="/WEB-INF/resources/js/**"/>
+  <mvc:resources mapping="css/**" location="/WEB-INF/resources/css/**"/>
+  <mvc:resources mapping="tpls/**" location="/WEB-INF/resources/tpls/**"/>
+  <mvc:resources mapping="fonts/**" location="/WEB-INF/resources/fonts/**"/>
+  <mvc:resources mapping="images/**" location="/WEB-INF/resources/images/**"/>
+
+  <!--配置拦截器, 多个拦截器,顺序执行 -->
+  <mvc:interceptors>
+    <!-- 用户登录拦截 -->
+    <mvc:interceptor>
+      <mvc:mapping path="/api/changePassword"/>
+      <!--<mvc:exclude-mapping path="/admin/login.do"/>-->
+      <bean class="com.musicbeat.web.interceptor.UserInterceptor"></bean>
+    </mvc:interceptor>
+  </mvc:interceptors>
+
 </beans>

@@ -15,7 +15,7 @@ angular
         "app.ctrls"
     ])
     .run(["$rootScope", "$state", "$stateParams",
-          function ($rootScope,   $state,   $stateParams) {
+          function ($scope, $rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
     }]

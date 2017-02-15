@@ -13,65 +13,84 @@ angular
 function authService($http, $q, appConst, authEvent, $localStorage, $sessionStorage) {
 
     var serviceBaseApi = appConst.apiUrl;
-    var serviceApi = serviceBaseApi + "/login";
+    var loginApi = serviceBaseApi + "/login";
+    var logoutApi = serviceBaseApi + "/logout";
 
     var defaultSession = {
-        isShowPanel: false, //是否展开loginPanel
         isAuthed: false, //是否已经过认证
         roleName: "", //当前用户角色
         currentUser: null, //当前用户
-        accessToken: ""     //
     };
 
     $sessionStorage.$default(defaultSession);
 
     function fnLogOut() {
+        var deferred = $q.defer();
+        $http.get(logoutApi)
+            .then(
+                function (response) {
+                    var logString = {
+                        status: response.data.status,
+                        message: response.data.message
+                    };
+
+                    console.log(angular.toJson(logString));
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
         $sessionStorage.$reset(defaultSession);
     }
 
+    function fnLogin(credentials) {
+        var data = {
+            username: encodeURIComponent(credentials.userId.trim()),
+            password: encodeURIComponent(credentials.password.trim())
+        };
+
+        var deferred = $q.defer();
+
+        var postHeader = {
+            headers: {"Content-Type": "application/json;charset=UTF-8"}
+        };
+
+        $http.post(loginApi, angular.toJson(data), postHeader)
+            .then(
+                function (response) {
+                    $sessionStorage.currentUser = response.data.userData;
+                    $sessionStorage.isAuthed = response.data.status === authEvent.success;
+                    if (response.data.roleName) {
+                        $sessionStorage.roleName = response.data.roleName;
+                    }
+
+                    $localStorage.playlist = [
+                        {mid:1, name:"千里之外"},
+                        {mid:2, name:"干物女喂喂"}
+                    ];
+
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    $localStorage.$reset();
+                    $sessionStorage.currentUser = null;
+                    $sessionStorage.accessToken = "";
+                    $sessionStorage.isAuthed = false;
+                    $sessionStorage.roleName = "";
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
     return {
-        login: function(credentials) {
-            var data = {
-                username: encodeURIComponent(credentials.userId.trim()),
-                password: encodeURIComponent(credentials.password.trim())
-            };
-
-            var deferred = $q.defer();
-
-            var postHeader = {
-                headers: {"Content-Type": "application/json;charset=UTF-8"}
-            };
-
-            $http.post(serviceApi, angular.toJson(data), postHeader)
-                .then(
-                    function (response) {
-                        if (credentials.autoLogin) {
-                            $localStorage.accessToken = response.data.accessToken;
-                        } else {
-                            $localStorage.$reset();
-                        }
-                        $sessionStorage.currentUser = response.data.userData;
-                        $sessionStorage.accessToken = response.data.accessToken;
-                        $sessionStorage.isAuthed = response.data.status === authEvent.success;
-                        if (response.data.roleName) {
-                            $sessionStorage.roleName = response.data.roleName;
-                        }
-                        deferred.resolve(response.data);
-                    }
-                )
-                .catch(
-                    function (err) {
-                        $localStorage.$reset();
-                        $sessionStorage.currentUser = "";
-                        $sessionStorage.accessToken = "";
-                        $sessionStorage.isAuthed = false;
-                        $sessionStorage.roleName = "";
-                        deferred.reject(err.data);
-                    }
-                );
-
-            return deferred.promise;
-        },
+        login: fnLogin,
 
         logout: fnLogOut,
 

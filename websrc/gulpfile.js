@@ -11,7 +11,7 @@
 
 var gulp        = require("gulp");
 var $           = require("gulp-load-plugins")();
-var browserSync = require("browser-sync");
+var browserSync = require("browser-sync")
 var del         = require("del");
 var reload      = browserSync.reload;
 var production  = false;
@@ -20,24 +20,48 @@ var output = $.if(production, "public", "../src/main/webapp/WEB-INF/resources");
 
 var path = {
     vendorJs: [
-        // "node_modules/satellizer/dist/satellizer.min.js",
         $.if(production, "node_modules/jquery/dist/jquery.min.js", "node_modules/jquery/dist/jquery.js"),
+        $.if(production, "node_modules/bootstarp/dist/js/bootstrap.min.js", "node_modules/bootstarp/dist/js/bootstrap.js"),
         $.if(production, "node_modules/angular/angular.min.js", "node_modules/angular/angular.js"),
         $.if(production, "node_modules/angular-*/**/angular-*.min.js", "node_modules/angular-*/**/angular-*.js"),
         $.if(production, "node_modules/ng-dialog/js/ngDialog.min.js", "node_modules/ng-dialog/js/ngDialog.js"),
         $.if(production, "node_modules/ngStorage/ngStorage.min.js", "node_modules/ngStorage/ngStorage.js"),
+        "app/lib/js/owl.carousel.min.js",
+        "app/lib/js/countdown.js",
+        "app/lib/js/sweetalert.min.js",
+        "app/lib/js/Nivo-Lightbox/nivo-lightbox.min.js",
+        "app/lib/js/jquery.nouislider.all.min.js",
+        "app/lib/js/scripts.js",
+        "app/lib/js/html5shiv.min.js",
+        "app/lib/js/respond.min.js",
     ],
     vendorCss: [
+        "app/static/fonts/font-awesome/css/font-awesome.min.css",
+        "app/static/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css",
+        "app/static/fonts/pe-icon-7-stroke/css/helper.css",
+        "app/static/fonts/pe-icon-social/css/pe-icon-social.css",
+        "app/static/fonts/pe-icon-social/css/helper.css",
+        "app/static/fonts/quicksand-dash/css/stylesheet.css",
         $.if(production, "node_modules/bootstrap/dist/css/bootstrap.min.css", "node_modules/bootstrap/dist/css/bootstrap.css"),
-        $.if(production, "node_modules/ng-dialog/css/ngDialog.css", "node_modules/ng-dialog/css/ngDialog.min.css"),
-        $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-default.css", "node_modules/ng-dialog/css/ngDialog-theme-default.min.css"),
-        $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-plain.css", "node_modules/ng-dialog/css/ngDialog-theme-plain.min.css"),
+        $.if(production, "node_modules/ng-dialog/css/ngDialog.min.css", "node_modules/ng-dialog/css/ngDialog.css"),
+        $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-default.min.css", "node_modules/ng-dialog/css/ngDialog-theme-default.css"),
+        $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-plain.min.css", "node_modules/ng-dialog/css/ngDialog-theme-plain.css"),
+        "app/lib/css/owl.carousel.css",
+        "app/lib/css/owl.theme.default.css",
+        "app/lib/css/animate.min.css",
+        "app/lib/css/jquery.nouislider.min.css",
     ],
-    appJs: ["app/**/*.module.js", "app/**/*.js"],
-    appCss: ["app/static/**/*"],
-    font: ["node_modules/bootstrap/fonts/*"],
+    appJs: ["app/**/*.module.js", "app/**/*.js", "!app/lib/**/*.js", "!app/static/**/*"],
+    appCss: ["app/static/css/*"],
+    font: ["node_modules/bootstrap/fonts/*",
+           "app/static/fonts/font-awesome/fonts/*",
+           "app/static/fonts/pe-icon-7-stroke/fonts/*",
+           "app/static/fonts/pe-icon-social/fonts/*",
+           "app/static/fonts/quicksand-dash/fonts/*",
+    ],
     image: ["app/static/img/*"],
-    jade: ["app/modules/**/*.pug"]
+    jade: ["app/modules/**/*.pug"],
+    html: ["app/modules/**/*.html"],
 };
 
 var o = {
@@ -45,7 +69,7 @@ var o = {
     fonts: output + "/fonts",
     css: output + "/css",
     js: output + "/js",
-    image: output + "/img",
+    image: output + "/images",
     appCssName: "app.css",
     vendorCss: "vendor.css",
     appJsName: "app.js",
@@ -53,8 +77,8 @@ var o = {
     watchHtml: output + "/tpls/**/*.html",
     watchCss: output + "/css/**/*.css",
     watchJs: output + "/js/**/*.js",
-    watchImage: output + "/img/**/*",
-    watchFont: output + "/fonts/**/*"
+    watchImage: output + "/images/**/*",
+    watchFont: output + "/fonts/**/*",
 };
 
 // Launch Browser & Watch Files For change
@@ -62,7 +86,7 @@ gulp.task("browser-sync", function() {
     browserSync.init([o.watchCss, o.watchJs, o.watchHtml, o.watchImage, o.watchFont], {
         server: {
             baseDir: output,
-            index: "tpls/home.html"
+            index: "tpls/index.html"
         }
     }, function(err, bs) {
         $.util.log(err + "\n\t" + bs.options.getIn(["urls", "local"]));
@@ -73,6 +97,7 @@ gulp.task("browser-sync", function() {
     gulp.watch(["node_modules/bootstrap/fonts/*"], ["font"]);
     gulp.watch(["app/**/*.js"], ["scripts-app"]);
     gulp.watch(["app/modules/**/*.pug"], ["jade"]);
+    gulp.watch(["app/modules/**/*.html"], ["html"]);
     gulp.watch("*.html").on("change", browserSync.reload);
     // gulp.watch(["app/views/**/*.jade"], ["jade"], function(event) {
     //     $.util.log("File " + event.path + " was " + event.type + ", running tasks...")
@@ -92,6 +117,17 @@ gulp.task("jade", function () {
         .pipe($.plumber())
         .pipe($.changed(o.watchHtml))
         .pipe($.pug())
+        .pipe($.if(production, $.htmlmin(), $.htmlBeautify({indent_size: 4, indent_char: " ", unformatted: true, extra_liners: []})))
+        .pipe($.rename({dirname: ""}))
+        .pipe(gulp.dest(o.jade))
+        .pipe(reload({stream: true}));
+});
+
+// Concatenate Jade
+gulp.task("html", function () {
+    return gulp.src(path.html)
+        .pipe($.plumber())
+        .pipe($.changed(o.watchHtml))
         .pipe($.if(production, $.htmlmin(), $.htmlBeautify({indent_size: 4, indent_char: " ", unformatted: true, extra_liners: []})))
         .pipe($.rename({dirname: ""}))
         .pipe(gulp.dest(o.jade))
@@ -181,7 +217,7 @@ gulp.task("clean", function () {
 
 // Default Task
 gulp.task("default", ["jshint", "clean"], function (cb) {
-    $.sequence(["css", "scripts-vendor","css-min", "scripts-app", "image", "jade", "font"], cb);
+    $.sequence(["css", "scripts-vendor","css-min", "scripts-app", "image", "jade", "font", "html"], cb);
 
     // Watch files changed
     gulp.watch(["app/static/css/**/*.css", "app/static/scss/**/*.scss"], ["css-min"]);
@@ -189,14 +225,15 @@ gulp.task("default", ["jshint", "clean"], function (cb) {
     gulp.watch(["node_modules/bootstrap/fonts/*"], ["font"]);
     gulp.watch(["app/**/*.js"], ["scripts-app"]);
     gulp.watch(["app/modules/**/*.pug"], ["jade"]);
+    gulp.watch(["app/modules/**/*.html"], ["html"]);
 });
 
 // Browser Task
 gulp.task("browser", ["jshint", "clean"], function (cb) {
-    $.sequence(["css", "scripts-vendor","css-min", "scripts-app", "image", "jade", "font"], "browser-sync", cb);
+    $.sequence(["css", "scripts-vendor","css-min", "scripts-app", "image", "jade", "font", "html"], "browser-sync", cb);
 });
 
 // Release Task
 gulp.task("release", ["jshint", "clean"], function (cb) {
-    $.sequence(["css", "scripts-vendor","css-min", "scripts-app", "image", "jade", "font"], cb);
+    $.sequence(["css", "scripts-vendor","css-min", "scripts-app", "image", "jade", "font", "html"], cb);
 });

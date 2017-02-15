@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.runner.RunWith;
-import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 import static com.musicbeat.web.model.constant.Constants.HTTP_UTF8;
-import static com.musicbeat.web.model.constant.Constants.REQUEST_DATA_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_PASSWORD_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_TYPE_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_USERNAME_JSON;

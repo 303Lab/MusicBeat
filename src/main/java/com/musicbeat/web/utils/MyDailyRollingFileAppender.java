@@ -90,7 +90,7 @@ public class MyDailyRollingFileAppender extends FileAppender {
   private String removeSuffix(String name) {
     int loc = name.indexOf(logSuffix);
     if(loc != -1) {
-      name = name.replaceAll(logSuffix, "");
+      name = name.replace(logSuffix, "");
     }
 
     return name;

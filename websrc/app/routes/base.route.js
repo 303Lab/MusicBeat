@@ -18,40 +18,61 @@ function baseRouter($stateProvider, $urlRouterProvider, appConst) {
         .state("app", {
             url: "/",
             views: {
-                "": {
+                "":{
+                    templateUrl: fnBasePath("index.html"),
+                    controller: "indexController"
+                },
+                "authWrapper":{
+                    templateUrl: fnBasePath("authWrapper.html"),
+                    controller: "authWrapperController"
+                },
+                "content":{
                     templateUrl: fnBasePath("home.html"),
                     controller: "homeController"
-                },
-                "navHome@": {
-                    controller: "navHomeController",
-                    templateUrl: fnBasePath("navHome.html")
                 }
             }
         })
-        .state("app.login", {
-            url: "login",
+        .state("app.music", {
+            url: "music",
             views: {
-                "viewContent@":{
-                    controller: "loginController" ,
-                    templateUrl: fnBasePath("login.html")
+                "content@":{
+                    templateUrl: fnBasePath("music.html")
                 }
             }
         })
-        .state("app.user", {
-            url: "user",
+        .state("app.blog", {
+            url: "blog",
             views: {
-                "viewContent@":{
-                    templateUrl: fnBasePath("user.html")
+                "content@":{
+                    templateUrl: fnBasePath("blog.html"),
+                    controller: "blogController"
                 }
             }
         })
-        .state("app.security", {
-            url: "changePassword",
+        .state("app.singer", {
+            url: "singer",
             views: {
-                "viewContent@":{
-                    templateUrl: fnBasePath("userChgPwd.html")
+                "content@":{
+                    templateUrl: fnBasePath("singer.html")
                 }
             }
+        })
+        .state("app.categorySinger", {
+            url: "category/singer",
+            views: {
+                "content@":{
+                    templateUrl: fnBasePath("singer-cart.html")
+                }
+            }
+        })
+        .state("admin", {
+            url: "/admin",
+            templateUrl: fnBasePath("admin.html"),
+            controller: "adminController"
+        })
+        .state("user", {
+            url: "/user",
+            templateUrl: fnBasePath("user.html")
         })
     ;
 
