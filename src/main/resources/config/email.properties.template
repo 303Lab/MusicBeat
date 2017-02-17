@@ -1,0 +1,14 @@
+email.host=smtp.qq.com
+email.account=[email address]
+email.pass=[email password]
+email.from=[email address]
+email.port=25
+email.auth=true
+email.protocol=smtp
+email.timeout=5000
+email.connection.timeout=1000
+email.ssl=false
+email.starttls=false
+email.socket.class=javax.net.ssl.SSLSocketFactory
+email.socket.port=465
+email.socket.fallback=true
