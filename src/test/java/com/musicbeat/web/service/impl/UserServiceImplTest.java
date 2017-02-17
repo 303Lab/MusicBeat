@@ -17,12 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.musicbeat.web.utils.BeatifyUtil.beatifyPassword;
+
 /**
  * UserServiceImpl Tester.
  *
  * @author windawings
- * @time.creation 1/8/2017
  * @version 1.0.0
+ * @time.creation 1/8/2017
  * @since 1.0.0
  */
 @RunWith(JUnit4ClassRunner.class)//表示继承了JUnit4ClassRunner类
@@ -32,134 +34,120 @@ import java.util.List;
 @Rollback(true)
 @Transactional(transactionManager = "transactionManager")
 public class UserServiceImplTest {
-  private static Logger logger = Logger.getLogger(UserServiceImplTest.class);
+    private static Logger logger = Logger.getLogger(UserServiceImplTest.class);
 
-  @Resource
-  private UserService userService;
+    @Resource
+    private UserService userService;
 
-  @Before
-  public void before() throws Exception {
-  }
+    @Before
+    public void before() throws Exception {
+    }
 
-  @After
-  public void after() throws Exception {
-  }
+    @After
+    public void after() throws Exception {
+    }
 
-  /**
-   * Method: add(User user)
-   */
-  @Test
-  public void testAdd() throws Exception {
-    User user = new User(
-      null,
-      "test",
-      "123",
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      "222222222@qq.com",
-      null,
-      "user",
-      null,
-      null
-    );
-    userService.add(user);
-    logger.info(JSON.toJSONString(user));
-  }
+    /**
+     * Method: add(User user)
+     */
+    @Test
+    public void testAdd() throws Exception {
+        User user = new User();
+        user.setUsername("windawings");
+        user.setPassword("123");
+        user.setPrivilege("admin");
+        user.setEmail("windawings@foxmail.com");
+        boolean result = userService.add(user);
+        user.setPassword(beatifyPassword(user));
+        logger.info(JSON.toJSONString(user) + ", " + result);
+    }
 
-  /**
-   * Method: update(User user)
-   */
-  @Test
-  public void testUpdate() throws Exception {
-    User user = new User(
-      1,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      "windaawings@gmail.com",
-      null,
-      null,
-      null
-    );
-    userService.update(user);
-    logger.info(JSON.toJSONString(user));
-  }
+    /**
+     * Method: update(User user)
+     */
+    @Test
+    public void testUpdate() throws Exception {
+        User user = new User();
+        user.setId(2);
+        user.setPicture("images/user.png");
+        boolean result = userService.update(user);
+        user.setPassword(beatifyPassword(user));
+        logger.info(JSON.toJSONString(user) + ", " + result);
+    }
 
-  /**
-   * Method: delete(Integer id)
-   */
-  @Test
-  public void testDelete() throws Exception {
-    userService.delete(2);
-    logger.info("success delete id 2");
-  }
+    /**
+     * Method: delete(Integer id)
+     */
+    @Test
+    public void testDelete() throws Exception {
+        List<User> users = userService.findByUserName("ffbffs", false);
+        boolean result = userService.delete(users.get(0).getId());
+    }
 
-  /**
-   * Method: findById(Integer id)
-   */
-  @Test
-  public void testFindById() throws Exception {
-    List<User> result = userService.findById(2);
-    logger.info(JSON.toJSONString(result));
-  }
+    /**
+     * Method: findById(Integer id)
+     */
+    @Test
+    public void testFindById() throws Exception {
+        List<User> users = userService.findById(2);
+        for (User user: users) {
+            user.setPassword(beatifyPassword(user));
+        }
+        logger.info(JSON.toJSONString(users));
+    }
 
-  /**
-   * Method: findByUserName(String name, Boolean like)
-   */
-  @Test
-  public void testFindByUserName() throws Exception {
-    List<User> result = userService.findByUserName("windawings", true);
-    logger.info(JSON.toJSONString(result));
-    result = userService.findByUserName("windawings", false);
-    logger.info(JSON.toJSONString(result));
-  }
+    /**
+     * Method: findByUserName(String name, Boolean like)
+     */
+    @Test
+    public void testFindByUserName() throws Exception {
+        List<User> users = userService.findByUserName("windawings", true);
+        users = beatifyPassword(users);
+        logger.info(JSON.toJSONString(users));
 
-  /**
-   * Method: findByRealName(String realname)
-   */
-  @Test
-  public void testFindByRealName() throws Exception {
-    List<User> result = userService.findByRealName("www", true);
-    logger.info(JSON.toJSONString(result));
-  }
+        users = userService.findByUserName("windawings", false);
+        users = beatifyPassword(users);
+        logger.info(JSON.toJSONString(users));
+    }
 
-  /**
-   * Method: findAdmin()
-   */
-  @Test
-  public void testFindAdmin() throws Exception {
-    List<User> result = userService.findAdmin();
-    logger.info(JSON.toJSONString(result));
-  }
+    /**
+     * Method: findByRealName(String realname)
+     */
+    @Test
+    public void testFindByRealName() throws Exception {
+        List<User> result = userService.findByRealName("www", true);
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+    }
 
-  /**
-   * Method: findByPhone(String phone)
-   */
-  @Test
-  public void testFindByPhone() throws Exception {
-    List<User> result = userService.findByPhone("13066666666", false);
-    logger.info(JSON.toJSONString(result));
-  }
+    /**
+     * Method: findAdmin()
+     */
+    @Test
+    public void testFindAdmin() throws Exception {
+        List<User> result = userService.findAdmin();
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+    }
 
-  /**
-   * Method: findByEmail(String email)
-   */
-  @Test
-  public void testFindByEmail() throws Exception {
-    List<User> result = userService.findByEmail("windawings@foxmail.com", true);
-    logger.info(JSON.toJSONString(result));
-  }
+    /**
+     * Method: findByPhone(String phone)
+     */
+    @Test
+    public void testFindByPhone() throws Exception {
+        List<User> result = userService.findByPhone("13066666666", false);
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+    }
+
+    /**
+     * Method: findByEmail(String email)
+     */
+    @Test
+    public void testFindByEmail() throws Exception {
+        List<User> result = userService.findByEmail("windawings@foxmail.com", true);
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+    }
 
 }

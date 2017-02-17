@@ -20,3 +20,4 @@ webapp/npm-debug*
 .idea/workspace.xml
 musicbeat.iml
 maven.execute.template
+/src/main/resources/config/email.properties

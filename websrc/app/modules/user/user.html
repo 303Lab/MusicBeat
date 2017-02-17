@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="musicbeat">
-<head>
-    <meta charset="UTF-8">
-    <title>User</title>
-    <link href="css/vendor.css" rel="stylesheet">
-    <link href="css/app.css" rel="stylesheet">
-
-
-</head>
-<body 	background-image="css/b", background-repeat="repeat";>
-
-
 <div class="userbox1 row">
     <!-- 标头-->
     <div class="userbox2 col-md-12">
@@ -27,10 +14,12 @@
             <div class="userinf-group">
                 <div class="tabbable" id="tabs-1">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#userpanel-1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基本资料</a></li>
+                        <li class="active"><a data-toggle="tab" href="#userpanel-1">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基本资料</a></li>
                         <li><a data-toggle="tab" href="#userpanel-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;详细资料</a></li>
                         <li><a data-toggle="tab" href="#userpanel-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;头像设置</a></li>
-                    </ul><br/><br/><br/><br/>
+                    </ul>
+                    <br/><br/><br/><br/>
                 </div>
             </div>
         </div>
@@ -49,10 +38,12 @@
                                 <td>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 男
+                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
+                                                   checked> 男
                                         </label>
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">女
+                                            <input type="radio" name="optionsRadios" id="optionsRadios2"
+                                                   value="option2">女
                                         </label>
                                     </div>
                                 </td>
@@ -62,7 +53,7 @@
                                 <th>生日:</th>
                                 <td>
                                     <form action="/example/html5/demo_form.asp" method="get">
-                                        <input style="size: 30px" type="date" name="user_date" >
+                                        <input style="size: 30px" type="date" name="user_date">
                                     </form>
                                 </td>
                             </tr>
@@ -71,11 +62,16 @@
                                 <th>血型:</th>
                                 <td>
                                     <div class="radio">
-                                        <label><input type="radio" name="xuexing" id="xuexing1" value="option1" checked> A型</label>
-                                        <label><input type="radio" name="xuexing" id="xuexing2" value="option2">B型</label>
-                                        <label><input type="radio" name="xuexing" id="xuexing3" value="option3">O型</label>
-                                        <label><input type="radio" name="xuexing" id="xuexing4" value="option4">AB型</label>
-                                        <label><input type="radio" name="xuexing" id="xuexing5" value="option5">其他</label>
+                                        <label><input type="radio" name="xuexing" id="xuexing1" value="option1" checked>
+                                            A型</label>
+                                        <label><input type="radio" name="xuexing" id="xuexing2"
+                                                      value="option2">B型</label>
+                                        <label><input type="radio" name="xuexing" id="xuexing3"
+                                                      value="option3">O型</label>
+                                        <label><input type="radio" name="xuexing" id="xuexing4"
+                                                      value="option4">AB型</label>
+                                        <label><input type="radio" name="xuexing" id="xuexing5"
+                                                      value="option5">其他</label>
                                     </div>
                                 </td>
                             </tr>
@@ -90,7 +86,8 @@
                             <tr>
                                 <th class="personal-detail-th">个人简介:</th>
                                 <td class="personal-detail-td">
-                                    <textarea name="passport_userdetail" id="passport_userdetail" class="mod-cus-input" style="border: 1px lightgrey solid ;height: 130px;width: 500px"></textarea>
+                                    <textarea name="passport_userdetail" id="passport_userdetail" class="mod-cus-input"
+                                              style="border: 1px lightgrey solid ;height: 130px;width: 500px"></textarea>
                                     <span class="mod-cus-input-tip"></span>
                                 </td>
                             </tr>
@@ -105,36 +102,40 @@
                             <div>
                                 <input type="password" class="form-control" id="newName" placeholder="请输入新用户名">
                             </div>
-                            <div style="text-align: right"><button type="submit" class="btn btn-default">确认</button></div>
+                            <div style="text-align: right">
+                                <button type="submit" class="btn btn-default">确认</button>
+                            </div>
                         </div>
                         <div class="changgepass col-xs-9">
-                        <div>更改用户密码</div>
+                            <div>更改用户密码</div>
                             <div>
                                 <input type="password" class="form-control" id="oldPassword" placeholder="请输入原始密码">
                             </div>
                             <div>
                                 <input type="password" class="form-control" id="newPassword" placeholder="请输入新密码">
                             </div>
-                            <div style="text-align: right"><button type="submit" class="btn btn-default">确认</button></div>
+                            <div style="text-align: right">
+                                <button type="submit" class="btn btn-default">确认</button>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="userpanel-3">
                         <div>用户头像<br/><img src="images/qq.png"></div>
                         <div class="changetx">
                             <div>更改头像</div>
-                                <div class="changgetx row">
-                                    <div class="col-md-4">
+                            <div class="changgetx row">
+                                <div class="col-md-4">
                                     <label class="label"></label>
                                     <input type="text" class="form-control" id="name" placeholder="选择上传头像">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <label class="label" for="inputfile"></label>
-                                        <input type="file" id="inputfile">
-                                    </div>
-                                    <div class="col-md-2" >
-                                        <button type="submit" class="btn btn-default" style="text-align: right">提交</button>
-                                    </div>
                                 </div>
+                                <div class="col-md-8">
+                                    <label class="label" for="inputfile"></label>
+                                    <input type="file" id="inputfile">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-default" style="text-align: right">提交</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,16 +144,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-<script src="js/vendor.js"></script>
-<script src="js/app.js"></script>
-<script type="text/javascript">var test=new Vcity.CitySelector({input:'citySelect'});</script>
-</body>
-</html>
+<script type="text/javascript">
+    var test = new Vcity.CitySelector({input: 'citySelect'});
+</script>

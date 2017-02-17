@@ -8,13 +8,14 @@
 
 angular
     .module("app.services")
-    .factory("authService", ["$http", "$q", "appConst", "authEvent", "$localStorage", "$sessionStorage", authService]);
+    .factory("authService", ["$http", "$q", "appConst", "authEvent", "$sessionStorage", "hashProvider", authService]);
 
-function authService($http, $q, appConst, authEvent, $localStorage, $sessionStorage) {
+function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvider) {
 
     var serviceBaseApi = appConst.apiUrl;
     var loginApi = serviceBaseApi + "/login";
     var logoutApi = serviceBaseApi + "/logout";
+    var registerApi = serviceBaseApi + "/register";
 
     var defaultSession = {
         isAuthed: false, //是否已经过认证
@@ -24,17 +25,11 @@ function authService($http, $q, appConst, authEvent, $localStorage, $sessionStor
 
     $sessionStorage.$default(defaultSession);
 
-    function fnLogOut() {
+    function logOut() {
         var deferred = $q.defer();
         $http.get(logoutApi)
             .then(
                 function (response) {
-                    var logString = {
-                        status: response.data.status,
-                        message: response.data.message
-                    };
-
-                    console.log(angular.toJson(logString));
                     deferred.resolve(response.data);
                 }
             )
@@ -43,41 +38,38 @@ function authService($http, $q, appConst, authEvent, $localStorage, $sessionStor
                     deferred.reject(err.data);
                 }
             );
+
         $sessionStorage.$reset(defaultSession);
+        return deferred.promise;
     }
 
-    function fnLogin(credentials) {
+    function login(credentials) {
+
         var data = {
             username: encodeURIComponent(credentials.userId.trim()),
-            password: encodeURIComponent(credentials.password.trim())
+            password: encodeURIComponent(hashProvider.sha256(credentials.password.trim()))
         };
 
         var deferred = $q.defer();
 
-        var postHeader = {
+        var header = {
             headers: {"Content-Type": "application/json;charset=UTF-8"}
         };
 
-        $http.post(loginApi, angular.toJson(data), postHeader)
+        $http.post(loginApi, angular.toJson(data), header)
             .then(
                 function (response) {
                     $sessionStorage.currentUser = response.data.userData;
-                    $sessionStorage.isAuthed = response.data.status === authEvent.success;
+                    $sessionStorage.isAuthed = response.data.status === authEvent.ok;
                     if (response.data.roleName) {
                         $sessionStorage.roleName = response.data.roleName;
                     }
-
-                    $localStorage.playlist = [
-                        {mid:1, name:"千里之外"},
-                        {mid:2, name:"干物女喂喂"}
-                    ];
 
                     deferred.resolve(response.data);
                 }
             )
             .catch(
                 function (err) {
-                    $localStorage.$reset();
                     $sessionStorage.currentUser = null;
                     $sessionStorage.accessToken = "";
                     $sessionStorage.isAuthed = false;
@@ -89,10 +81,43 @@ function authService($http, $q, appConst, authEvent, $localStorage, $sessionStor
         return deferred.promise;
     }
 
-    return {
-        login: fnLogin,
+    function register(registerMsg) {
+        if (registerMsg.username === undefined || registerMsg.username === null) {
+            registerMsg.username = "";
+        }
 
-        logout: fnLogOut,
+        var data = {
+            username: encodeURIComponent(registerMsg.username.trim()),
+            email: encodeURIComponent(registerMsg.email.trim())
+        };
+
+        var deferred = $q.defer();
+
+        var header = {
+            headers: {"Content-Type": "application/json;charset=UTF-8"}
+        };
+
+        $http.post(registerApi, angular.toJson(data), header)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    return {
+        login: login,
+
+        logout: logOut,
+
+        register: register,
 
         session: $sessionStorage
     };

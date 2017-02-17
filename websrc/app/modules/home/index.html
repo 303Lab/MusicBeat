@@ -7,16 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Beat</title>
 
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
     <link href="css/vendor.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
 
 </head>
 <body>
 
-    <div ng-include="'tpls/header.html'" ng-controller="headerController"></div>
+    <div ui-view="header" ng-controller="headerController"></div>
 
-    <div ui-view="authWrapper"></div>
     <div ui-view="content"></div>
+
+    <div ng-include="'tpls/wrapper.html'" ng-controller="wrapperController"></div>
 
     <div ng-include="'tpls/footer.html'"></div>
 

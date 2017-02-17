@@ -24,21 +24,23 @@ function loginController($scope, authService){
         authService
             .login($scope.credentials)
             .then(
-                function (data) { // 返回了response.data信息体
+                // 返回了response.data信息体
+                function (data) {
                     $scope.credentials.userId = "";
                     $scope.credentials.password = "";
-
                     // 关闭各种Panel
                     jQuery(document).click();
                 },
+
+                // 错误处理
                 function (reason) {
-                    $scope.credentials.userId = "";
-                    $scope.credentials.password = "";
                     if (reason.message !== null && reason.message !== undefined) {
                         $scope.message.text = reason.message;
                     } else {
-                        $scope.message.text = "Internal Error (500)";
+                        $scope.message.text = "Server Internal Error";
                     }
+
+                    console.log(reason);
                 }
             );
     };

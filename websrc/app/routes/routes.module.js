@@ -7,4 +7,4 @@
  */
 
 angular
-    .module("app.routes", ["app.configs", "ui.router"]);
+    .module("app.routes", ["app.configs", "app.providers", "ui.router"]);

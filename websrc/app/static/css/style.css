@@ -42,7 +42,6 @@
    ========================================================================== */
 
 body {
-
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-size: 14px;
@@ -869,7 +868,6 @@ select, .light-inputs select {
 
 .main-nav ul > li {
     display: inline-block;
-    margin: 0;
     margin: 0 24px;
     position: relative;
 }
@@ -936,7 +934,6 @@ select, .light-inputs select {
     padding: 0;
     z-index: 999;
     text-align: left;
-    padding: 0;
 }
 
 .main-nav ul > li ul li {
@@ -1037,7 +1034,6 @@ select, .light-inputs select {
     font-size: 18px;
     color: #fff;
     line-height: 120px;
-    display: inline-block;
     position: relative;
     display: none;
 }
@@ -1448,8 +1444,7 @@ select, .light-inputs select {
     position: relative;
     padding: 0;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: no-repeat center;
 }
 
 .section > .inner {
@@ -1463,8 +1458,7 @@ select, .light-inputs select {
 }
 
 .section.large > .inner {
-    padding: 182px 0;
-    padding-top: 268px;
+    padding: 268px 0 182px;
 }
 
 .section.no-padding > .inner {
@@ -1716,8 +1710,7 @@ select, .light-inputs select {
     position: relative;
     padding: 0;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: no-repeat center;
     font-family: "Poiret One", cursive;
     font-size: 36px;
     line-height: 36px;
@@ -1825,8 +1818,7 @@ select, .light-inputs select {
 }
 
 .directory-slider .directory-item {
-    margin: 0 15px;
-    margin-bottom: 30px;
+    margin: 0 15px 30px;
 }
 
 .directory-item:hover {
@@ -2124,8 +2116,7 @@ select, .light-inputs select {
 }
 
 .sliderNav [class*="owl-"] {
-    margin: 0;
-    margin-left: 40px;
+    margin: 0 0 0 40px;
     padding: 0;
     border-radius: 50%;
     display: inline-block;
@@ -2550,7 +2541,7 @@ select, .light-inputs select {
 .add-review .rating > label:before {
     margin-right: 10px;
     font-size: 20px;
-    font-family: FontAwesome;
+    font-family: FontAwesome, serif;
     display: inline-block;
     content: "\f005";
 }
@@ -2584,347 +2575,6 @@ select, .light-inputs select {
     }
 }
 
-/* ==========================================================================
-   14. Login / Signup / Retrieve
-   ========================================================================== */
-.login-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(23, 36, 52, .9);
-    z-index: 999;
-    visibility: hidden;
-    opacity: 0;
-    -webkit-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    transition: .5s;
-    -webkit-transition-delay: .5s;
-    -ms-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    transition-delay: .5s;
-}
-
-.login-wrapper.open {
-    opacity: 1;
-    visibility: visible;
-    -webkit-transition-delay: 0s;
-    -ms-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.login {
-    background: rgba(23, 36, 52, .5);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: 30px;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 430px;
-    color: #fff;
-    opacity: 0;
-    -webkit-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    transition: .5s;
-    -webkit-transition-delay: 0s;
-    -ms-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.login-wrapper.open .login {
-    opacity: 1;
-    -webkit-transition-delay: .5s;
-    -ms-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    transition-delay: .5s;
-}
-
-.login .form-group {
-    margin-bottom: 30px;
-}
-
-.login .checkbox {
-    margin: 0;
-    float: left;
-}
-
-.login .checkbox label {
-    font-size: 14px;
-    line-height: 28px;
-    letter-spacing: .7px;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-}
-
-.login .button-wrapper {
-    text-align: center;
-    margin-top: 45px;
-    margin-bottom: 28px;
-}
-
-.login .button-wrapper .button {
-    width: 200px;
-}
-
-.login p {
-    margin-bottom: 40px;
-}
-
-.login .social {
-    font-size: 0;
-}
-
-.login .social p {
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.login .social a {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-.signup-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(23, 36, 52, .9);
-    z-index: 999;
-    visibility: hidden;
-    opacity: 0;
-    -webkit-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    transition: .5s;
-    -webkit-transition-delay: .5s;
-    -ms-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    transition-delay: .5s;
-}
-
-.signup-wrapper.open {
-    opacity: 1;
-    visibility: visible;
-    -webkit-transition-delay: 0s;
-    -ms-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.signup {
-    background: rgba(23, 36, 52, .5);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: 30px;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 430px;
-    color: #fff;
-    opacity: 0;
-    -webkit-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    transition: .5s;
-    -webkit-transition-delay: 0s;
-    -ms-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.signup-wrapper.open .signup {
-    opacity: 1;
-    -webkit-transition-delay: .5s;
-    -ms-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    transition-delay: .5s;
-}
-
-.signup .form-group {
-    margin-bottom: 30px;
-}
-
-.signup .checkbox {
-    margin: 0;
-    float: left;
-}
-
-.signup .checkbox label {
-    font-size: 14px;
-    line-height: 28px;
-    letter-spacing: .7px;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-}
-
-.signup .button-wrapper {
-    text-align: center;
-    margin-top: 45px;
-    margin-bottom: 28px;
-}
-
-.signup .button-wrapper .button {
-    width: 200px;
-}
-
-.signup p {
-    margin-bottom: 40px;
-}
-
-.signup .social {
-    font-size: 0;
-}
-
-.signup .social p {
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.signup .social a {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-.zhaohui-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(23, 36, 52, .9);
-    z-index: 999;
-    visibility: hidden;
-    opacity: 0;
-    -webkit-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    transition: .5s;
-    -webkit-transition-delay: .5s;
-    -ms-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    transition-delay: .5s;
-}
-
-.forget-wrapper.open {
-    opacity: 1;
-    visibility: visible;
-    -webkit-transition-delay: 0s;
-    -ms-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.forget {
-    background: rgba(23, 36, 52, .5);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: 30px;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 430px;
-    color: #fff;
-    opacity: 0;
-    -webkit-transition: .5s;
-    -ms-transition: .5s;
-    -moz-transition: .5s;
-    -o-transition: .5s;
-    transition: .5s;
-    -webkit-transition-delay: 0s;
-    -ms-transition-delay: 0s;
-    -moz-transition-delay: 0s;
-    -o-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-.forget-wrapper.open .zhaohui {
-    opacity: 1;
-    -webkit-transition-delay: .5s;
-    -ms-transition-delay: .5s;
-    -moz-transition-delay: .5s;
-    -o-transition-delay: .5s;
-    transition-delay: .5s;
-}
-
-.forget .form-group {
-    margin-bottom: 30px;
-}
-
-.forget .checkbox {
-    margin: 0;
-    float: left;
-}
-
-.forget .checkbox label {
-    font-size: 14px;
-    line-height: 28px;
-    letter-spacing: .7px;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-}
-
-.forget .button-wrapper {
-    text-align: center;
-    margin-top: 45px;
-    margin-bottom: 28px;
-}
-
-.forget .button-wrapper .button {
-    width: 200px;
-}
-
-.forget p {
-    margin-bottom: 40px;
-}
-
-.forget .social {
-    font-size: 0;
-}
-
-.forget .social p {
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.forget .social a {
-    display: inline-block;
-    margin: 0 15px;
-}
 
 /* ==========================================================================
    15. Pricing Table
@@ -4145,7 +3795,7 @@ blockquote {
     margin: 100px 130px;
     border: 5px solid lightgrey;
     background-color: skyblue;
-    font-family: Microsoft YaHei UI;
+    font-family: Microsoft YaHei UI, serif;
     font-size: 25px;
     line-height: 4em;
 
@@ -4154,7 +3804,7 @@ blockquote {
 .userbox2 {
     border: 2px solid #b9b9b9;
     background-color: whitesmoke;
-    font-family: Microsoft YaHei UI;
+    font-family: Microsoft YaHei UI, serif;
     font-size: 20px;
     line-height: 4em;
 }
@@ -4163,7 +3813,7 @@ blockquote {
     padding: 0;
     background-color: whitesmoke;
     border: 2px solid lightgrey;
-    font-family: Microsoft YaHei UI;
+    font-family: Microsoft YaHei UI, serif;
     font-size: 20px;
     line-height: 4em;
 }
@@ -4173,14 +3823,14 @@ blockquote {
     padding: 0px;
     background-color: whitesmoke;
     border: 2px solid lightgrey;
-    font-family: Microsoft YaHei UI;
+    font-family: Microsoft YaHei UI, serif;
     font-size: 20px;
     line-height: 4em;
 }
 
 .userbox6 {
     border-bottom-color: palevioletred;
-    font-family: Microsoft YaHei UI;
+    font-family: Microsoft YaHei UI, serif;
     font-size: 20px;
     line-height: 4em;
 }
@@ -4189,7 +3839,7 @@ blockquote {
     padding: 0;
     background-color: white;
     border-bottom: 2px solid rebeccapurple;
-    font-family: Microsoft YaHei UI;
+    font-family: Microsoft YaHei UI, serif;
     font-size: 20px;
     text-align: center;
     line-height: 4em;
@@ -4333,7 +3983,7 @@ p.tip {
     color: #00a346;
     margin-top: 1px;
     text-indent: 5px;
-    font-family: "Lucida console", "consolas", "courier new";
+    font-family: "Lucida console", "consolas", "courier new", serif;
     line-height: 25px;
     font-size: 14px;
     width: 20px;

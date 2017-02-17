@@ -22,7 +22,7 @@
     <setting name="autoMappingBehavior" value="PARTIAL"/>
 
     <!-- 对于批量更新操作缓存SQL以提高性能,执行器重用REUSE预处理语句 BATCH,REUSE,SIMPLE -->
-     <setting name="defaultExecutorType" value="BATCH" />
+     <setting name="defaultExecutorType" value="REUSE" />
 
     <!-- 数据库超过25000秒仍未响应则超时 -->
     <!-- <setting name="defaultStatementTimeout" value="25000" /> -->

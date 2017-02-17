@@ -2,9 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
   <!-- 第〇种方式: 加载一个properties文件, 看tag应该不是bean注入都行，不过这里还是用spring的 -->
   <!--<context:property-placeholder location="classpath:config/jdbc.properties" ignore-unresolvable="true" />-->
@@ -34,7 +32,7 @@
   <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
     <property name="driverClassName" value="${driverClass}"/>
     <property name="url" value="${jdbcUrl}"/>
-    <property name="username" value="${username}"/>
+    <property name="username" value="${jdbcuser}"/>
     <property name="password" value="${password}"/>
     <!-- 连接池最大数量 -->
     <property name="maxActive" value="${mysql.maxActive}"/>
@@ -107,8 +105,4 @@
       <tx:method name="*" propagation="SUPPORTS" />
     </tx:attributes>
   </tx:advice>
-  <aop:config>
-    <aop:pointcut id="transactionPointcut" expression="execution(* com.musicbeat.web.service..*Impl.*(..))" />
-    <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
-  </aop:config>
 </beans>

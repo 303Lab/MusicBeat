@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/1/13 星期五 10:57:28                       */
+/* Created on:     2017/2/16 星期四 19:36:07                       */
 /*==============================================================*/
 
 
@@ -65,10 +65,10 @@ create table Album_Comment
 create table Billboard
 (
    time                 date not null,
-   mid                  int,
+   mid                  int not null,
    download_amount      bigint,
    play_amount          bigint,
-   primary key (time)
+   primary key (time, mid)
 );
 
 /*==============================================================*/
@@ -90,7 +90,7 @@ create table Label
    lid                  int not null,
    mid                  int not null,
    name                 varchar(32) not null,
-   primary key (id)
+   primary key (id, mid)
 );
 
 /*==============================================================*/
@@ -203,7 +203,7 @@ create table User
 (
    id                   int not null auto_increment,
    username             varchar(20) not null,
-   password             char(32) not null,
+   password             char(64) not null,
    gender               bool,
    realname             varchar(50),
    country              varchar(50),

@@ -43,7 +43,7 @@
     <!--jdbc的数据库连接 -->
     <jdbcConnection driverClass="${driverClass}"
                     connectionURL="${jdbcUrl}"
-                    userId="${username}"
+                    userId="${jdbcuser}"
                     password="${password}">
     </jdbcConnection>
 

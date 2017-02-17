@@ -17,6 +17,7 @@ public class Constants {
     public static final String REQUEST_TYPE_JSON = "json";
     public static final String REQUEST_USERNAME_JSON = "username";
     public static final String REQUEST_PASSWORD_JSON = "password";
+    public static final String REQUEST_EMAIL_JSON = "email";
 
     // === Session ===
     public static final String SESSION_USER = "userData";
@@ -31,17 +32,20 @@ public class Constants {
     public static final String RESPONSE_MESSAGE = "message";
 
     // === Response Login Status ===
-    public static final String RESPONSE_SUCCESS = "success";
-    public static final String RESPONSE_FAIL = "failed";
+    public static final String RESPONSE_SUCCESS = "ok";
+    public static final String RESPONSE_FAIL = "fail";
 
     // === Response Login Error Message ===
-    public static final String RESPONSE_ERROR_CREDENTIAL = "用户名或密码错误!";
-    public static final String RESPONSE_ERROR_EXCEPTION = "服务器出错，请重试!";
-
-    // === Response Login Success Message ===
-    public static final String RESPONSE_MESSAGE_SUCCESS = "OK";
+    public static final String RESPONSE_ERROR_CREDENTIAL = "Username or Password Error!";
+    public static final String RESPONSE_ERROR_EXCEPTION = "Server Error, Try Again!";
+    public static final String RESPONSE_ERROR_LOGOFF_USER_BLANK = "the User has Logged Off!";
+    public static final String RESPONSE_ERROR_REGISTER = "Register Error!";
+    public static final String RESPONSE_ERROR_REGISTER_DUPLICATE_EMAIL = "the Email has already registered!";
+    public static final String RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME = "the UserName has already registered!";
+    public static final String RESPONSE_ERROR_REGISTER_TIMEOUT = "Waiting... Look Out Your Email later.";
 
     // === Log Object ===
     public static final String LOG_USER = "user";
+    public static final String LOG_EMAIL = "email";
     public static final String LOG_PASSWORD = "pass";
 }

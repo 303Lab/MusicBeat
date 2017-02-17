@@ -43,18 +43,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath:config/spring/*.xml"})
 @Rollback(true)
 @Transactional(transactionManager = "transactionManager")
-public class LoginControllerTest {
+public class AuthControllerTest {
 
-    private static Logger logger = Logger.getLogger(LoginControllerTest.class);
+    private static Logger logger = Logger.getLogger(AuthControllerTest.class);
 
     private MockMvc mockMvc;
 
     @Resource
-    private LoginController loginController;
+    private AuthController authController;
 
     @Before
     public void before() throws Exception {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
 
     @After

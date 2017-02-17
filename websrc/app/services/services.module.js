@@ -7,4 +7,4 @@
  */
 
 angular
-    .module("app.services", ["app.configs", "ngStorage"]);
+    .module("app.services", ["app.configs", "app.providers", "ngStorage"]);

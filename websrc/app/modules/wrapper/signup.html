@@ -1,20 +1,20 @@
-<div class="signup-wrapper panel panel-primary">
+<div class="signup-wrapper">
     <div class="signup">
-        <form>
+        <form ng-submit="signup();">
             <div class="form-group">
-                <input type="text" placeholder="Username">
+                <input type="text" ng-model="registerMsg.name" ng-change="inputChange();" placeholder="Username or Only Fill Email Below">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="email" placeholder="Telphone Number or E-mail Address">
+                <input type="email" ng-model="registerMsg.email" ng-change="inputChange();" placeholder="Example@example.com" required>
             </div> <!-- end .form-group -->
-            <div class="text-center">
-                <p>A password will be messaged or e-mailed to you.</p>
-            </div> <!-- end .text-center -->
+            <div class="form-group">
+                <p class="text-center" ng-bind-html="registerMsg.message"  ng-style="registerMsg.color"></p>
+            </div>
             <div class="button-wrapper">
                 <button type="submit" class="button">Register</button>
             </div>
             <div class="text-center">
-                <p>Already have an account? <a ui-sref="auth" class="login-open">Log in</a></p>
+                <p>Already have an account? <a href="" class="login-open" ng-click="openLoginPanel();">Log in</a></p>
                 <div class="social">
                     <p>Connect with Social Networks</p>
                     <a href=""><img src="images/weibo.png" alt="weibo"></a>

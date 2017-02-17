@@ -1,0 +1,112 @@
+.forget-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(23, 36, 52, .9);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+    -webkit-transition-delay: .5s;
+    -ms-transition-delay: .5s;
+    -moz-transition-delay: .5s;
+    -o-transition-delay: .5s;
+    transition-delay: .5s;
+}
+
+.forget-wrapper.open {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.forget {
+    background: rgba(23, 36, 52, .5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 30px;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 430px;
+    color: #fff;
+    opacity: 0;
+    -webkit-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+    -webkit-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.forget-wrapper.open .forget {
+    opacity: 1;
+    -webkit-transition-delay: .5s;
+    -ms-transition-delay: .5s;
+    -moz-transition-delay: .5s;
+    -o-transition-delay: .5s;
+    transition-delay: .5s;
+}
+
+.forget .form-group {
+    margin-bottom: 30px;
+}
+
+.forget .checkbox {
+    margin: 0;
+    float: left;
+}
+
+.forget .checkbox label {
+    font-size: 14px;
+    line-height: 28px;
+    letter-spacing: .7px;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.forget .button-wrapper {
+    text-align: center;
+    margin-top: 45px;
+    margin-bottom: 28px;
+}
+
+.forget .button-wrapper .button {
+    width: 200px;
+}
+
+.forget p {
+    margin-bottom: 40px;
+}
+
+.forget .social {
+    font-size: 0;
+}
+
+.forget .social p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.forget .social a {
+    display: inline-block;
+    margin: 0 15px;
+}

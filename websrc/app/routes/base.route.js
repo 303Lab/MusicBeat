@@ -16,64 +16,27 @@ function baseRouter($stateProvider, $urlRouterProvider, appConst) {
 
     $stateProvider
         .state("app", {
-            url: "/",
+            abstract: true,
             views: {
-                "":{
+                "": {
                     templateUrl: fnBasePath("index.html"),
                     controller: "indexController"
                 },
-                "authWrapper":{
-                    templateUrl: fnBasePath("authWrapper.html"),
-                    controller: "authWrapperController"
-                },
-                "content":{
-                    templateUrl: fnBasePath("home.html"),
-                    controller: "homeController"
-                }
-            }
-        })
-        .state("app.music", {
-            url: "music",
-            views: {
-                "content@":{
-                    templateUrl: fnBasePath("music.html")
-                }
-            }
-        })
-        .state("app.blog", {
-            url: "blog",
-            views: {
-                "content@":{
-                    templateUrl: fnBasePath("blog.html"),
-                    controller: "blogController"
-                }
-            }
-        })
-        .state("app.singer", {
-            url: "singer",
-            views: {
-                "content@":{
-                    templateUrl: fnBasePath("singer.html")
-                }
-            }
-        })
-        .state("app.categorySinger", {
-            url: "category/singer",
-            views: {
-                "content@":{
-                    templateUrl: fnBasePath("singer-cart.html")
+                "header": {
+                    templateUrl: fnBasePath("header.html"),
+                    controller: "headerController"
                 }
             }
         })
         .state("admin", {
-            url: "/admin",
-            templateUrl: fnBasePath("admin.html"),
-            controller: "adminController"
-        })
-        .state("user", {
-            url: "/user",
-            templateUrl: fnBasePath("user.html")
-        })
+            abstract: true,
+            views: {
+                "": {
+                    templateUrl: fnBasePath("admin.html"),
+                    controller: "adminController"
+                }
+            }
+    })
     ;
 
     function fnBasePath(uri) {

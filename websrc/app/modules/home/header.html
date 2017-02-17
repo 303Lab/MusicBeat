@@ -11,6 +11,7 @@
             <button type="submit"><i class="pe-7s-search"></i></button>
         </form>
     </div> <!-- end .left -->
+
     <div class="navigation clearfix">
         <nav class="main-nav">
             <ul class="music-unstyled">
@@ -111,39 +112,36 @@
         </nav> <!-- end .main-nav -->
         <a href="" class="responsive-menu-open"><i class="fa fa-bars"></i></a>
     </div> <!-- end .navigation -->
-    <div class="right" ng-controller="authWrapperController">
+
+    <div class="right" ng-controller="wrapperController">
         <div ng-hide="session.isAuthed">
-            <a href="" class="button login-open">Log In</a>
+            <a href="" class="button login-open" ng-click="clearMessage();openLoginPanel();">Log In</a>
         </div>
         <div ng-if="session.roleName === 'user'">
             <img class="userImg" ng-src="{{session.currentUser.picture}}">
-            <span class="button user-wrapper" ng-bind-html="session.currentUser.username"></span>
+            <span class="button" ng-bind-html="session.currentUser.username"></span>
             <a href="" class="button login-out" ng-click="logout();">LogOut</a>
         </div>
         <div ng-if="session.roleName === 'admin'">
-            <div class="container-fluid">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <div class="btn-group">
-                            <button class="btn">
-                                <img class="userImg" ng-src="{{session.currentUser.picture}}">
-                            </button>
-                            <button data-toggle="dropdown" class="btn dropdown-toggle">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a><span class="button user-wrapper" ng-bind-html="session.currentUser.username"></span></a>
-                                </li>
-                                <li>
-                                    <a href="" class="button login-out" ng-click="logout();">LogOut</a>
-                                </li>
+            <img class="userImg" ng-src="{{session.currentUser.picture}}">
+            <div class="navigation clearfix">
+                <nav class="main-nav">
+                    <ul class="music-unstyled">
+                        <!--用户信息-->
+                        <li class="menu-item-has-children">
+                            <div class="button-wrapper">
+                                <a href="" ui-sref="user" class="button"
+                                   ng-bind-html="session.currentUser.username"></a>
+                            </div>
+                            <ul>
+                                <li><a ui-sref="app.user">User Info</a></li>
+                                <li><a target="_blank" ui-sref="admin.home">Admin</a></li>
+                                <li><a href="" class="button login-out" ng-click="logout();">LogOut</a></li>
                             </ul>
-                        </div>
-                    </div>
-                </div>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div> <!-- end .left -->
-
 </header>

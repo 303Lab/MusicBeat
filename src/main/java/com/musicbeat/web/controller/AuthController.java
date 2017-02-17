@@ -2,36 +2,54 @@ package com.musicbeat.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.musicbeat.web.model.User;
+import com.musicbeat.web.service.EmailService;
 import com.musicbeat.web.service.UserService;
+import com.musicbeat.web.utils.RandomUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 import static com.musicbeat.web.model.constant.Constants.AUTH_ROLE;
 import static com.musicbeat.web.model.constant.Constants.HTTP_UTF8;
+import static com.musicbeat.web.model.constant.Constants.LOG_EMAIL;
 import static com.musicbeat.web.model.constant.Constants.LOG_PASSWORD;
 import static com.musicbeat.web.model.constant.Constants.LOG_USER;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_EMAIL_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_PASSWORD_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_USERNAME_JSON;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_CREDENTIAL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_EXCEPTION;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_LOGOFF_USER_BLANK;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER_DUPLICATE_EMAIL;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER_TIMEOUT;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_FAIL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_MESSAGE;
-import static com.musicbeat.web.model.constant.Constants.RESPONSE_MESSAGE_SUCCESS;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_STATUS;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_SUCCESS;
 import static com.musicbeat.web.model.constant.Constants.SESSION_USER;
 import static com.musicbeat.web.utils.ModelConvertUtil.convert2ViewModelIgnoreNull;
+import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static javax.servlet.http.HttpServletResponse.SC_CONFLICT;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+import static javax.servlet.http.HttpServletResponse.SC_REQUEST_TIMEOUT;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 /**
@@ -42,8 +60,8 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
  * @time.creation 2017/01/20 17:13
  * @since 1.0.0
  */
-@Controller("LoginController")
-public class LoginController extends BaseController {
+@Controller("AuthController")
+public class AuthController extends BaseController {
 
     @Resource
     private UserService userService;
@@ -85,7 +103,6 @@ public class LoginController extends BaseController {
                 model.put(SESSION_USER, userViewModel);
                 model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
                 model.put(AUTH_ROLE, user.getPrivilege());
-                model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
 
                 // 存入Session
                 session.setAttribute(SESSION_USER, user);
@@ -127,15 +144,20 @@ public class LoginController extends BaseController {
             if (user != null) {
                 logObj.put(LOG_USER, user.getUsername());
                 session.removeAttribute(SESSION_USER);
+
+                // 返回视图
+                model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+
+                // 日志记录
+                logger.info(logObj.toJSONString() + " Log out");
             }
+            else{
+                model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_LOGOFF_USER_BLANK);
+                response.setStatus(SC_BAD_REQUEST);
 
-            // 返回视图
-            model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-            model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
-
-            // 日志记录
-            logger.info(logObj.toJSONString() + " Log out");
-
+                logger.info(logObj.toJSONString() + " Logoff nothing");
+            }
         }catch (Exception e) {
             model.put(RESPONSE_STATUS, RESPONSE_FAIL);
             model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
@@ -149,23 +171,64 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ModelMap register(@RequestBody JSONObject jsonObject) {
+    public @ResponseBody Callable<ModelMap> register(@RequestBody JSONObject jsonObject) {
 
-        ModelMap model = new ModelMap();
         JSONObject logObj = new JSONObject();
+        ModelMap model = new ModelMap();
 
         try {
+            // 解析Json对象
+            String email = URLDecoder.decode(jsonObject.getString(REQUEST_EMAIL_JSON), HTTP_UTF8);
+            String username = URLDecoder.decode(jsonObject.getString(REQUEST_USERNAME_JSON), HTTP_UTF8);
 
-        }catch (Exception e) {
+            User user = new User();
+            user.setUsername(username);
+            user.setEmail(email);
+            user.setPrivilege("user");
+
+            List<User> emails = userService.findByEmail(email, false);
+            List<User> users = new ArrayList<>();
+
+            if (username != null && !username.isEmpty()) {
+                users = userService.findByUserName(username, false);
+            }
+
+            logObj.put(LOG_EMAIL, email);
+            logObj.put(LOG_USER, username);
+
+            if (emails.size() != 0) {
+
+                model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_REGISTER_DUPLICATE_EMAIL);
+                logger.info(logObj.toJSONString() + ", Register Error - duplicate email");
+                response.setStatus(SC_CONFLICT);
+
+            } else if (users.size() != 0) {
+
+                model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME);
+                logger.info(logObj.toJSONString() + ", Register Error - duplicate username");
+                response.setStatus(SC_CONFLICT);
+
+            } else {
+
+                if (userService.register(user)) {
+                    model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+                } else {
+                    throw new Exception(RESPONSE_ERROR_EXCEPTION);
+                }
+            }
+
+        } catch (Exception e) {
             model.put(RESPONSE_STATUS, RESPONSE_FAIL);
             model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
             response.setStatus(SC_INTERNAL_SERVER_ERROR);
 
-            logger.error(logObj.toJSONString() + " Register Error");
+            logger.error(logObj.toJSONString() + ", Register Error");
             logger.error(e, e.fillInStackTrace());
         }
 
-        return model;
+        return () -> model;
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.GET)
@@ -181,5 +244,10 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/forget", method = RequestMethod.GET)
     public ModelAndView forget() {
         return null;
+    }
+
+    @ExceptionHandler
+    public void handleException(IllegalStateException e) {
+        logger.error(e, e.fillInStackTrace());
     }
 }

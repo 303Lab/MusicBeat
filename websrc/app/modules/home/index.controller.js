@@ -8,8 +8,13 @@
 
 angular
     .module("app.ctrls")
-    .controller("indexController", ["$scope", "authService", indexController]);
+    .controller("indexController", ["$scope", "$state", "authService", indexController]);
 
-function indexController($scope, authService) {
+function indexController($scope, $state, authService) {
+    $state.go("app.home");
     $scope.session = authService.session;
+    $scope.credentials = {userId: "", password: ""};
+    $scope.registerMsg = {name: "", email: "", message: "A password will be e-mailed to you.", color: {"color": "#FFFFFF"}};
+    $scope.retrieve = {email: ""};
+    $scope.message = {text: ""};
 }

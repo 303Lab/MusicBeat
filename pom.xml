@@ -32,8 +32,6 @@
     <!-- JSON -->
     <jackson.version>2.8.6</jackson.version>
 
-    <aop.version>1.8.10</aop.version>
-
     <!--  MyBatis Generator  -->
     <!--  Java接口和实体类  -->
     <targetJavaProject>${basedir}/src/main/java</targetJavaProject>
@@ -88,11 +86,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
-      <version>${spring.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-aop</artifactId>
       <version>${spring.version}</version>
     </dependency>
 

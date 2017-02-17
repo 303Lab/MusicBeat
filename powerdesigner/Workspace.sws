@@ -4,7 +4,7 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{9A354C60-C0A4-40DF-8F31-FB4192173965}" Name="MusicBeat" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="MusicBeat.cdm"/>
+		<Model Expanded="Yes" ID="{9A354C60-C0A4-40DF-8F31-FB4192173965}" Name="MusicBeat" Selected="Yes" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="MusicBeat.cdm"/>
 		<Model Expanded="Yes" ID="{1AFE7E8A-6E76-4189-B2A9-6600AC035F40}" Name="MusicBeat" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="MusicBeat.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>

@@ -61,6 +61,8 @@ public class User implements Serializable{
       return list.toString();
     }
 
+    public User(){}
+
     public User(Integer id, String username, String password, Boolean gender, String realname, String country, String province, String city, String qq, String phone, String email, String picture, String privilege, Boolean isRealPublic, String address) {
         this.id = id;
         this.username = username == null ? null : username.trim();
@@ -139,5 +141,27 @@ public class User implements Serializable{
         return address;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPrivilege(String privilege) {
+        this.privilege = privilege;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 }

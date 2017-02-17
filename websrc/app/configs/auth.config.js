@@ -8,6 +8,9 @@
 
 angular.module("app.configs")
     .constant("authEvent", {
-        success: "success",
-        failed: "failed",
+        ok: "ok",
+        fail: "fail",
+        notOk: "Server Error, Try Again!",
+        registerOk: "Success! Look Out Your Email Please.",
+        registerWait: "Waiting... Look Out Your Email later.",
 });

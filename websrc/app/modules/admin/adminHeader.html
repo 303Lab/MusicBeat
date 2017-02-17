@@ -1,0 +1,44 @@
+<header class="header clearfix">
+    <div class="left">
+        <div class="logo">
+            <a ng-href="#">
+                <img src="images/logo4.gif" class="img-responsive">
+            </a>
+        </div>
+        <!-- end .logo -->
+        <form class="header-search">
+            <input type="text" placeholder="Searching">
+            <button type="submit"><i class="pe-7s-search"></i></button>
+        </form>
+    </div> <!-- end .left -->
+
+    <div class="right" ng-controller="authWrapperController">
+        <div ng-hide="session.isAuthed">
+            <a href="" class="button login-open">Log In</a>
+        </div>
+        <div ng-if="session.roleName === 'user'">
+            <img class="userImg" ng-src="{{session.currentUser.picture}}">
+            <span class="button" ng-bind-html="session.currentUser.username"></span>
+            <a href="" class="button login-out" ng-click="logout();">LogOut</a>
+        </div>
+        <div ng-if="session.roleName === 'admin'">
+            <img class="userImg" ng-src="{{session.currentUser.picture}}">
+            <div class="navigation clearfix">
+                <nav class="main-nav">
+                    <ul class="music-unstyled">
+                        <!--用户信息-->
+                        <li class="menu-item-has-children">
+                            <a href="" ui-sref="user" class="button"
+                               ng-bind-html="session.currentUser.username"></a>
+                            <ul>
+                                <li><a ui-sref="user">User Info</a></li>
+                                <li><a href="" class="button login-out" ng-click="logout();">LogOut</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div> <!-- end .left -->
+
+</header>
