@@ -13,7 +13,7 @@ angular
         "app.routes",
         "app.services",
         "app.filters",
-        "app.ctrls"
+        "app.ctrls",
     ])
     .run(["$rootScope", "$state", "$stateParams", function ($scope, $rootScope, $state, $stateParams) {
         $rootScope.$state = $state;

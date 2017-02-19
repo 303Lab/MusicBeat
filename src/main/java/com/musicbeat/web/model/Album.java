@@ -23,9 +23,9 @@ public class Album implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(id.toString());
+        list.add(id == null ? null : id.toString());
         list.add(name);
-        list.add(releaseTime.toString());
+        list.add(releaseTime == null ? null : releaseTime.toString());
         list.add(picture);
         list.add(introduction);
 

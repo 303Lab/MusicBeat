@@ -2,10 +2,10 @@
     <div class="login">
         <form ng-submit="login(credentials);">
             <div class="form-group">
-                <input type="text" placeholder="Username or Phonenumber or E-mail" ng-model="credentials.userId" ng-change="inputChange();">
+                <input class="text-center" type="text" placeholder="Username or Phonenumber or E-mail" ng-model="credentials.userId" ng-change="inputChange();">
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Password *" ng-model="credentials.password" ng-change="inputChange();">
+                <input class="text-center" type="password" placeholder="Password *" ng-model="credentials.password" ng-change="inputChange();">
             </div>
             <div class="form-group" ng-if="message.text != undefined && message.text != null">
                 <p class="text-center" ng-bind-html="message.text" style="color:#EE3D3D"></p>

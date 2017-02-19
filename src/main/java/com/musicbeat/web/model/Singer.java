@@ -12,12 +12,12 @@ public class Singer implements Serializable{
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(id.toString());
+        list.add(id == null ? null : id.toString());
         list.add(name);
         list.add(gender == null ? "嬲" : gender ? "男" : "女");
         list.add(lang);
         list.add(picture);
-        list.add(isBand ? "组合" : "个人");
+        list.add(isBand == null ? "个人" : isBand ? "组合" : "个人");
         list.add(introduction);
 
         return list.toString();

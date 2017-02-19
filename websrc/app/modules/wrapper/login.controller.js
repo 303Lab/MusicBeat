@@ -8,9 +8,16 @@
 
 angular
     .module("app.ctrls")
-    .controller("loginController", ["$scope", "authService", loginController]);
+    .controller("loginController", [
+        "$scope",
+        "toastr",
+        "toastrProvider",
+        "authService",
+        "authEvent",
+        loginController
+    ]);
 
-function loginController($scope, authService){
+function loginController($scope, toastr, toastrProvider, authService, authEvent){
 
     // 监听文本
     $scope.inputChange = function () {
@@ -30,6 +37,11 @@ function loginController($scope, authService){
                     $scope.credentials.password = "";
                     // 关闭各种Panel
                     jQuery(document).click();
+
+                    if (!jQuery(".login-wrapper").hasClass("open")) {
+                        var text =  toastrProvider.textCenter("Welcome " + data.userData.username + " !");
+                        toastr.success(text);
+                    }
                 },
 
                 // 错误处理
@@ -40,14 +52,13 @@ function loginController($scope, authService){
                         $scope.message.text = "Server Internal Error";
                     }
 
+                    if (!jQuery(".login-wrapper").hasClass("open")) {
+                        var text = toastrProvider.textCenter($scope.message.text);
+                        toastr.error(text);
+                    }
+
                     console.log(reason);
                 }
             );
-    };
-
-    /*==========  Validate Email  ==========*/
-    $scope.validateEmail = function ($validate_email) {
-        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-        return emailReg.test($validate_email);
     };
 }

@@ -2,10 +2,10 @@
     <div class="signup">
         <form ng-submit="signup();">
             <div class="form-group">
-                <input type="text" ng-model="registerMsg.name" ng-change="inputChange();" placeholder="Username or Only Fill Email Below">
+                <input class="text-center" type="text" ng-model="registerMsg.name" ng-change="inputChange();" placeholder="Username or Only Fill Email Below" aria-required="false">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="email" ng-model="registerMsg.email" ng-change="inputChange();" placeholder="Example@example.com" required>
+                <input class="text-center" type="email" ng-model="registerMsg.email" ng-change="inputChange();" placeholder="Example@example.com" required aria-required="true">
             </div> <!-- end .form-group -->
             <div class="form-group">
                 <p class="text-center" ng-bind-html="registerMsg.message"  ng-style="registerMsg.color"></p>

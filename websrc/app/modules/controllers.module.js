@@ -6,4 +6,12 @@
  */
 
 angular
-    .module("app.ctrls", ["app.services", "app.configs", "ngDialog", "ngSanitize", "ngStorage"]);
+    .module("app.ctrls", [
+        "app.providers",
+        "app.services",
+        "app.configs",
+        "ngDialog",
+        "ngSanitize",
+        "ngStorage",
+        "toastr"
+    ]);

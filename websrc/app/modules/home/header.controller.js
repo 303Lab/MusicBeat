@@ -8,9 +8,9 @@
 
 angular
     .module("app.ctrls")
-    .controller("headerController", ["$scope", "$state", "authService", headerController]);
+    .controller("headerController", ["$scope", "$state", "authService", "authEvent", headerController]);
 
-function headerController($scope, $state, authService) {
+function headerController($scope, $state, authService, authEvent) {
 
     // 注销
     $scope.logout = function () {
@@ -36,9 +36,11 @@ function headerController($scope, $state, authService) {
         $scope.credentials.password = "";
         $scope.registerMsg.name = "";
         $scope.registerMsg.email = "";
-        $scope.registerMsg.message = "A password will be e-mailed to you.";
+        $scope.registerMsg.message = authEvent.registerDefault;
         $scope.registerMsg.color = {"color": "#FFFFFF"};
         $scope.retrieve.email = "";
+        $scope.retrieve.message = authEvent.retrieveDefault;
+        $scope.retrieve.color = {"color": "#FFFFFF"};
         $scope.message.text = "";
     };
 }

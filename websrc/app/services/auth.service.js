@@ -8,14 +8,25 @@
 
 angular
     .module("app.services")
-    .factory("authService", ["$http", "$q", "appConst", "authEvent", "$sessionStorage", "hashProvider", authService]);
+    .factory("authService", [
+        "$http",
+        "$q",
+        "appConst",
+        "authEvent",
+        "$sessionStorage",
+        "hashProvider",
+        "urlParamsProvider",
+        authService
+    ]);
 
-function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvider) {
+function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvider, urlParamsProvider) {
 
     var serviceBaseApi = appConst.apiUrl;
     var loginApi = serviceBaseApi + "/login";
     var logoutApi = serviceBaseApi + "/logout";
     var registerApi = serviceBaseApi + "/register";
+    var retrieveApi = serviceBaseApi + "/retrieve";
+    var changeApi = "retrieveChange";
 
     var defaultSession = {
         isAuthed: false, //是否已经过认证
@@ -112,12 +123,70 @@ function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvid
         return deferred.promise;
     }
 
+    function forget(retrieve) {
+        var data = {
+            email: encodeURIComponent(retrieve.email.trim())
+        };
+
+        var deferred = $q.defer();
+
+        var header = {
+            headers: {"Content-Type": "application/json;charset=UTF-8"}
+        };
+
+        $http.post(retrieveApi, angular.toJson(data), header)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function change(changeModel) {
+        var data = {
+            password: encodeURIComponent(hashProvider.sha256(changeModel.password.trim()))
+        };
+
+        var deferred = $q.defer();
+
+        var header = {
+            headers: {"Content-Type": "application/json;charset=UTF-8"}
+        };
+
+        var requestUrl = changeApi + "?u=" + urlParamsProvider.getParam("u") + "&" + "c=" + urlParamsProvider.getParam("c");
+
+        $http.post(requestUrl, angular.toJson(data), header)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
     return {
         login: login,
 
         logout: logOut,
 
         register: register,
+
+        forget: forget,
+
+        change: change,
 
         session: $sessionStorage
     };

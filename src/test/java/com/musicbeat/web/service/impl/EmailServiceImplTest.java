@@ -55,7 +55,7 @@ public class EmailServiceImplTest {
     @Test
     public void testSendRetrieveEmail() throws Exception {
         user.setEmail("windawings@foxmail.com");
-        emailService.sendRetrieveEmail("localhost", user);
+        emailService.sendRetrieveEmail(user, "localhost");
     }
 
 } 

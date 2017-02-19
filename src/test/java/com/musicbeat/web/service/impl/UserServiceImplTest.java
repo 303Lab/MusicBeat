@@ -31,7 +31,7 @@ import static com.musicbeat.web.utils.BeatifyUtil.beatifyPassword;
 @ContextConfiguration(locations = {"classpath:config/spring/*.xml"}) //指定Spring配置文件的位置
 //很多情况下单元测试离不开事务，下面的注解指明使用的事务管理器
 //如果defaultRollback为true，测试运行结束后，默认回滚事务，不影响数据库
-@Rollback(true)
+@Rollback(false)
 @Transactional(transactionManager = "transactionManager")
 public class UserServiceImplTest {
     private static Logger logger = Logger.getLogger(UserServiceImplTest.class);
@@ -39,12 +39,55 @@ public class UserServiceImplTest {
     @Resource
     private UserService userService;
 
+    private User user = null;
+    private List<User> users = null;
+
     @Before
     public void before() throws Exception {
+        user = new User();
     }
 
     @After
     public void after() throws Exception {
+        if (users != null) {
+            users.clear();
+        }
+    }
+
+    /**
+     * Method: register(User user)
+     */
+    @Test
+    public void testRegister() throws Exception {
+        user.setEmail("windawings@foxmail.com");
+        boolean result = userService.register(user);
+        users = userService.findByEmail(user.getEmail(), false);
+        if (!users.isEmpty()) {
+            users = beatifyPassword(users);
+            logger.info(JSON.toJSONString(users.get(0)) + ", " + result);
+        } else {
+            logger.info(JSON.toJSONString(user) + ", " + result);
+        }
+    }
+
+    /**
+     * Method: deleteByEmail(String email)
+     */
+    @Test
+    public void testDeleteByEmail() throws Exception {
+        user.setEmail("windawings@foxmail.com");
+        boolean result = userService.deleteByEmail(user.getEmail());
+        logger.info(JSON.toJSONString(user) + ", " + result);
+    }
+
+    /**
+     * Method: deleteByUserName(String username)
+     */
+    @Test
+    public void testDeleteByUserName() throws Exception {
+        user.setUsername("windawings");
+        boolean result = userService.deleteByUserName(user.getUsername());
+        logger.info(JSON.toJSONString(user) + ", " + result);
     }
 
     /**
@@ -52,7 +95,6 @@ public class UserServiceImplTest {
      */
     @Test
     public void testAdd() throws Exception {
-        User user = new User();
         user.setUsername("windawings");
         user.setPassword("123");
         user.setPrivilege("admin");
@@ -67,7 +109,6 @@ public class UserServiceImplTest {
      */
     @Test
     public void testUpdate() throws Exception {
-        User user = new User();
         user.setId(2);
         user.setPicture("images/user.png");
         boolean result = userService.update(user);
@@ -80,8 +121,13 @@ public class UserServiceImplTest {
      */
     @Test
     public void testDelete() throws Exception {
-        List<User> users = userService.findByUserName("ffbffs", false);
-        boolean result = userService.delete(users.get(0).getId());
+        users = userService.findByUserName("windawings", false);
+        boolean result = false;
+        if (!users.isEmpty()) {
+            users = beatifyPassword(users);
+            result = userService.delete(users.get(0).getId());
+        }
+        logger.info(JSON.toJSONString(users) + ", " + result);
     }
 
     /**

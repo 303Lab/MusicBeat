@@ -12,8 +12,8 @@ public class SingerBand implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(sid.toString());
-        list.add(bid.toString());
+        list.add(sid == null ? null : sid.toString());
+        list.add(bid == null ? null : bid.toString());
 
         return list.toString();
     }

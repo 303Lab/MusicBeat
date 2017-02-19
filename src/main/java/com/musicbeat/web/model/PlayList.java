@@ -12,8 +12,8 @@ public class PlayList implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(mid.toString());
-        list.add(uid.toString());
+        list.add(mid == null ? null : mid.toString());
+        list.add(uid == null ? null : uid.toString());
 
         return list.toString();
     }

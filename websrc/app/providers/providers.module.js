@@ -7,4 +7,7 @@
  */
 
 angular
-    .module("app.providers", ["app.configs"]);
+    .module("app.providers", [
+        "app.configs",
+        "toastr"
+    ]);

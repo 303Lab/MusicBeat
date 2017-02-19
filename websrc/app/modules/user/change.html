@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="musicbeat" ng-controller="indexController">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Music Beat</title>
+
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <link href="../css/vendor.css" rel="stylesheet">
+    <link href="../css/app.css" rel="stylesheet">
+
+</head>
+<body>
+    <div ng-include="'../tpls/changeHeader.html'" ng-controller="headerController"></div>
+
+    <div class="change-wrapper open" ng-controller="changeController">
+        <div class="change">
+            <form ng-submit="change();">
+                <div class="form-group">
+                    <input class="text-center form-control" type="password" ng-model="changeModel.password" ng-change="inputChange();"
+                           placeholder="Please Input Your New Password" required aria-required="true">
+                </div> <!-- end .form-group -->
+                <div class="form-group">
+                    <input class="text-center form-control" type="password" ng-model="changeModel.confirm" ng-change="inputChange();check();" ng-style="changeModel.buttonColor" placeholder="Input again to confirm the password" required aria-required="true">
+                </div> <!-- end .form-group -->
+                <div class="form-group" ng-if="message.text != undefined && message.text != null">
+                    <p class="text-center" ng-bind-html="changeModel.message" ng-style="changeModel.color"></p>
+                </div>
+                <div class="button-wrapper">
+                    <button type="submit" class="button" ng-disabled="changeModel.password.trim() === '' && changeModel.password.trim() === '' && (changeModel.password.trim() !== changeModel.confirm.trim())">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/vendor.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

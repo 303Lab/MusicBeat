@@ -62,24 +62,23 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public boolean sendRetrieveEmail(String url, User user) {
+    public boolean sendRetrieveEmail(User user, String url) {
         try {
             mimeMessageHelper.setSubject(MAIL_RETRIEVE_SUBJECT);
             mimeMessageHelper.setTo(user.getEmail());
 
             String hash = "233";
-            String address = url + hash;
 
             //装配邮件内容
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer
-              .append("<html><head></head><body><h1>")
+              .append("<html><head></head><body><h3>")
               .append("Hello ")
               .append(user.getUsername())
-              .append("!</h1><h1>Change Password:</h1> <a href=\"")
-              .append(address)
-              .append("\">")
-              .append(address)
+              .append("!</h3><p>Change Password Link: <a href=\"")
+              .append(url)
+              .append("\"></p>")
+              .append(url)
               .append("</a></body></html>");
 
             mimeMessageHelper.setText(stringBuffer.toString(), true);

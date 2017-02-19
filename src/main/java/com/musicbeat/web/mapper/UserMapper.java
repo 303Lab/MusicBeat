@@ -6,6 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface UserMapper {
+    int deleteByUserName(@Param("username") String username);
+
+    int deleteByEmail(@Param("email") String email);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);

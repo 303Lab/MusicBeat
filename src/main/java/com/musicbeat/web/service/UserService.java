@@ -25,6 +25,10 @@ public interface UserService {
 
     boolean delete(Integer id);
 
+    boolean deleteByUserName(String username);
+
+    boolean deleteByEmail(String email);
+
     List<User> findById(Integer id);
 
     List<User> findByUserName(String username, Boolean like);
@@ -40,4 +44,12 @@ public interface UserService {
     List<User> checkPassword(String identify, String password);
 
     boolean register(User user);
+
+    String retrieve(User user, String url);
+
+    boolean retrieveWithoutTimeCheck(User user, String code);
+
+    boolean retrieveVerify(User user, String code);
+
+    boolean changePassword(User user, String newPassword);
 }

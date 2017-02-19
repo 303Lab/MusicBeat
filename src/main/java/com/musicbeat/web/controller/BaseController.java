@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 @Controller("BaseController")
 @RequestMapping(value = "/api")
 public class BaseController {
-  protected Logger logger = Logger.getLogger(this.getClass());
+  protected final Logger logger = Logger.getLogger(this.getClass());
   protected HttpServletRequest request;
   protected HttpServletResponse response;
   protected HttpSession session;

@@ -20,9 +20,9 @@ public class AlbumComment implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(id.toString());
-        list.add(uid.toString());
-        list.add(aid.toString());
+        list.add(id == null ? null : id.toString());
+        list.add(uid == null ? null : uid.toString());
+        list.add(aid == null ? null : aid.toString());
         list.add(comment);
 
         return list.toString();

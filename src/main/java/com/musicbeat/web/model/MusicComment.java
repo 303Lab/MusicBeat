@@ -12,9 +12,9 @@ public class MusicComment implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(id.toString());
-        list.add(uid.toString());
-        list.add(mid.toString());
+        list.add(id == null ? null : id.toString());
+        list.add(uid == null ? null : uid.toString());
+        list.add(mid == null ? null : mid.toString());
         list.add(comment);
 
         return list.toString();

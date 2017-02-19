@@ -13,11 +13,11 @@ public class Music implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(id.toString());
+        list.add(id == null ? null : id.toString());
         list.add(name);
         list.add(lyrics);
         list.add(link);
-        list.add(duration.toString());
+        list.add(duration == null ? null : duration.toString());
 
         return list.toString();
     }

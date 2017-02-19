@@ -12,9 +12,9 @@ public class Label implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(id.toString());
-        list.add(lid.toString());
-        list.add(mid.toString());
+        list.add(id == null ? null : id.toString());
+        list.add(lid == null ? null : lid.toString());
+        list.add(mid == null ? null : mid.toString());
         list.add(name);
 
         return list.toString();

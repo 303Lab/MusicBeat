@@ -21,4 +21,17 @@ function pathProvider($provide, appConst) {
             return service;
         };
     });
+
+    $provide.provider("urlParamsProvider", function () {
+        this.$get = function () {
+            var service={};
+            service.getParam = function (name) {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if(r!==null)return  unescape(r[2]); return null;
+            };
+
+            return service;
+        };
+    });
 }

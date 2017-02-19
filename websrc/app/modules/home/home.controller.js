@@ -8,30 +8,22 @@
 
 angular
     .module("app.ctrls")
-    .controller("homeController", ["$scope", "$state", homeController]);
+    .controller("homeController", ["$scope", "$state", "$timeout", homeController]);
 
-function homeController($scope, $state) {
+function homeController($scope, $state, $timeout) {
     $scope.changeStateSinger = function () {
         $state.go("app.singer");
     };
 
     /*==========  Highlights Slider  ==========*/
-    jQuery(".highlight-slider").owlCarousel({
-        loop: true,
-        nav: true,
-        dots: false,
-        navText: ['<i class="pe-7s-angle-left"></i>', '<i class="pe-7s-angle-right"></i>'],
-        items: 6,
-        responsive: {
-            0: {
-                items: 2
-            },
-            480: {
-                items: 6
-            },
-            769: {
-                items: 6
-            }
-        }
-    });
+    $timeout(function() {
+        jQuery(".highlight-slider").owlCarousel({
+            loop: true,
+            nav: true,
+            dots: false,
+            navText: ['<i class="pe-7s-angle-left"></i>', '<i class="pe-7s-angle-right"></i>'],
+            items: 6,
+            responsive: {0: {items: 2}, 480: {items: 6}, 769: {items: 6}}
+        });
+     });
 }

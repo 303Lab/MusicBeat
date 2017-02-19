@@ -21,10 +21,10 @@ public class Billboard implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(time.toString());
-        list.add(mid.toString());
-        list.add(downloadAmount.toString());
-        list.add(playAmount.toString());
+        list.add(time == null ? null : time.toString());
+        list.add(mid == null ? null : mid.toString());
+        list.add(downloadAmount == null ? null : downloadAmount.toString());
+        list.add(playAmount == null ? null : playAmount.toString());
 
         return list.toString();
     }

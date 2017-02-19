@@ -17,8 +17,8 @@ public class Flow implements Serializable {
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(time.toString());
-        list.add(amount.toString());
+        list.add(time == null ? null : time.toString());
+        list.add(amount == null ? null : amount.toString());
 
         return list.toString();
     }

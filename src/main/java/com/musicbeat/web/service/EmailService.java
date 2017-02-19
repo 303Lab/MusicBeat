@@ -17,7 +17,7 @@ public interface EmailService {
 
     static final int MAIL_ACTIVE_CODE_LENGTH = 8;
 
-    static final int MAIL_Retrieve_CODE_LENGTH = 6;
+    static final int MAIL_RETRIEVE_CODE_LENGTH = 6;
 
     static final String MAIL_ACTIVE_SUBJECT = "[Music Beat] Account Active Email";
 
@@ -25,5 +25,5 @@ public interface EmailService {
 
     public boolean sendActiveEmail(User user, String randomString);
 
-    public boolean sendRetrieveEmail(String url, User user);
+    public boolean sendRetrieveEmail(User user, String url);
 }

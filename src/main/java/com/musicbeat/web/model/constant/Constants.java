@@ -35,17 +35,37 @@ public class Constants {
     public static final String RESPONSE_SUCCESS = "ok";
     public static final String RESPONSE_FAIL = "fail";
 
+    // === Response Server Error Message
+    public static final String RESPONSE_ERROR_EXCEPTION = "Server Error, Try Again!";
+
     // === Response Login Error Message ===
     public static final String RESPONSE_ERROR_CREDENTIAL = "Username or Password Error!";
-    public static final String RESPONSE_ERROR_EXCEPTION = "Server Error, Try Again!";
+
+    // === Response Log Off Error Message ===
     public static final String RESPONSE_ERROR_LOGOFF_USER_BLANK = "the User has Logged Off!";
-    public static final String RESPONSE_ERROR_REGISTER = "Register Error!";
+
+    // === Response Register Error Message ===
+    public static final String RESPONSE_ERROR_REGISTER = "Register Error, Try Again!";
     public static final String RESPONSE_ERROR_REGISTER_DUPLICATE_EMAIL = "the Email has already registered!";
     public static final String RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME = "the UserName has already registered!";
     public static final String RESPONSE_ERROR_REGISTER_TIMEOUT = "Waiting... Look Out Your Email later.";
+
+    // === Response Retrieve Error Message ===
+    public static final long RETRIEVE_EXPIRE_TIME = 30 * 60 * 1000;
+    public static final String RESPONSE_ERROR_RETRIEVE = "Retrieve Error, Try Again!";
+    public static final String RESPONSE_ERROR_RETRIEVE_NONE_USER = " doesn't be registered.";
+    public static final String RESPONSE_ERROR_RETRIEVE_NONE = "None Params Found.";
+    public static final String RESPONSE_ERROR_RETRIEVE_NOW_EXPIRE = "Retrieve Email has sent, try again after 30m.";
+    public static final String RESPONSE_ERROR_RETRIEVE_TIMEOUT = "Retrieve Expired.";
 
     // === Log Object ===
     public static final String LOG_USER = "user";
     public static final String LOG_EMAIL = "email";
     public static final String LOG_PASSWORD = "pass";
+    public static final String LOG_NEW_PASSWORD = "newPass";
+
+    // === Service Error Message ===
+    public static final String USERSERVICE_ERROR_DELETE = "Internal Error - Delete Failed";
+    public static final String USERSERVICE_ERROR_INSERT = "Internal Error - Insert Failed";
+    public static final String USERSERVICE_ERROR_RETRIEVE = "Internal Error - Retrieve Failed";
 }

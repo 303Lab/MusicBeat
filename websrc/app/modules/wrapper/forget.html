@@ -1,11 +1,11 @@
 <div class="forget-wrapper">
     <div class="forget">
-        <form>
+        <form ng-submit="forget();">
             <div class="form-group">
-                <input type="email" placeholder="Telphone Number or E-mail Address">
+                <input class="text-center" type="email" ng-model="retrieve.email" ng-change="inputChange();" placeholder="Please Input Your E-mail Address Registered" required aria-required="true">
             </div> <!-- end .form-group -->
             <div class="text-center">
-                <p>Your password will be messaged or e-mailed to you.</p>
+                <p ng-bind-html="retrieve.message" ng-style="retrieve.color"></p>
             </div> <!-- end .text-center -->
             <div class="button-wrapper">
                 <button type="submit" class="button">Retrieve</button>

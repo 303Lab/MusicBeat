@@ -12,8 +12,8 @@ public class MusicAlbum implements Serializable{
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(mid.toString());
-        list.add(aid.toString());
+        list.add(mid == null ? null : mid.toString());
+        list.add(aid == null ? null : aid.toString());
 
         return list.toString();
     }
