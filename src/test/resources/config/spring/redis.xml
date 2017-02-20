@@ -66,20 +66,11 @@
     <property name="usePool" value="${redis.usePool}" />
   </bean>
 
-  <bean id="jedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+  <bean id="stringSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+
+  <bean id="redisTemplate" name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
     <property name="connectionFactory" ref="jedisConnectionFactory" />
-    <property name="keySerializer">
-      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-    </property>
-    <property name="valueSerializer">
-      <!-- <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" /> -->
-      <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
-    </property>
-    <property name="hashKeySerializer">
-      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-    </property>
-    <property name="hashValueSerializer">
-      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-    </property>
+    <property name="keySerializer" ref="stringSerializer" />
+    <property name="enableTransactionSupport" value="true" />
   </bean>
 </beans>

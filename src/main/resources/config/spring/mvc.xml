@@ -17,8 +17,8 @@
   <mvc:annotation-driven />
 
   <!-- 自动扫描  @Controller @Service-->
-  <context:component-scan base-package="com.musicbeat.web.controller"/>
   <context:component-scan base-package="com.musicbeat.web.service"/>
+  <context:component-scan base-package="com.musicbeat.web.controller"/>
 
   <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
   <bean id="mappingJacksonHttpMessageConverter"

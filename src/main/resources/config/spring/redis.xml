@@ -69,7 +69,7 @@
 
   <bean id="stringSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
 
-  <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+  <bean id="redisTemplate" name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
     <property name="connectionFactory" ref="jedisConnectionFactory" />
     <property name="keySerializer" ref="stringSerializer" />
     <property name="enableTransactionSupport" value="true" />

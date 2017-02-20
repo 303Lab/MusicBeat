@@ -5,6 +5,7 @@ import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
 import com.musicbeat.web.utils.JUnit4ClassRunner;
 
+import com.musicbeat.web.utils.PaginationContextUtil;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.Before;
@@ -31,7 +32,7 @@ import static com.musicbeat.web.utils.BeatifyUtil.beatifyPassword;
 @ContextConfiguration(locations = {"classpath:config/spring/*.xml"}) //指定Spring配置文件的位置
 //很多情况下单元测试离不开事务，下面的注解指明使用的事务管理器
 //如果defaultRollback为true，测试运行结束后，默认回滚事务，不影响数据库
-@Rollback(false)
+@Rollback(true)
 @Transactional(transactionManager = "transactionManager")
 public class UserServiceImplTest {
     private static Logger logger = Logger.getLogger(UserServiceImplTest.class);
@@ -196,4 +197,16 @@ public class UserServiceImplTest {
         logger.info(JSON.toJSONString(result));
     }
 
+    /**
+     * Method: findAdminByPage(PaginationContextUtil page)
+     */
+    @Test
+    public void testFindAdminByPage() throws Exception {
+        PaginationContextUtil page = new PaginationContextUtil();
+        page.setPageNum(1);
+        page.setPageSize(2);
+        List<User> result = userService.findAdminByPage(page);
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+    }
 }

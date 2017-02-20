@@ -50,6 +50,7 @@ var path = {
         $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-default.min.css", "node_modules/ng-dialog/css/ngDialog-theme-default.css"),
         $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-plain.min.css", "node_modules/ng-dialog/css/ngDialog-theme-plain.css"),
         $.if(production, "node_modules/angular-*/**/angular-*.min.css", "node_modules/angular-*/**/angular-*.css"),
+        $.if(production, "node_modules/aplayer/dist/APlayer.min.js", "node_modules/aplayer/dist/APlayer.js"),
         "app/lib/css/owl.carousel.css",
         "app/lib/css/owl.theme.default.css",
         "app/lib/css/animate.min.css",

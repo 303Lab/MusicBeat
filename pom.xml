@@ -42,7 +42,7 @@
     <targetXMLPackage>mapper</targetXMLPackage>
 
     <!-- Mybatis Generator配置文件 -->
-    <targetMybatisGeneratorConfigFile>src/main/resources/config/mybatis/generatorConfig.xml</targetMybatisGeneratorConfigFile>
+    <targetMybatisGeneratorConfigFile>src/main/resources/config/mybatis/generator.xml</targetMybatisGeneratorConfigFile>
   </properties>
 
   <dependencies>
@@ -165,6 +165,20 @@
       <version>${slf4j.version}</version>
     </dependency>
 
+    <!-- 获取歌曲时长插件 -->
+    <dependency>
+      <groupId>org.jaudiotagger</groupId>
+      <artifactId>jaudiotagger</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+
+    <!-- MyBatis 分页插件 -->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.0.0</version>
+    </dependency>
+
     <!-- 引入JSON -->
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
@@ -238,20 +252,6 @@
       <scope>provided</scope>
     </dependency>-->
     <!--servlet/jsp api end-->
-
-    <!-- aop -->
-    <!--aspectj start-->
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjweaver</artifactId>
-      <version>${aop.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.aspectj</groupId>
-      <artifactId>aspectjrt</artifactId>
-      <version>${aop.version}</version>
-    </dependency>
-    <!--aspectj end-->
 
     <!-- 添加数据库连接池依赖 -->
     <!--Tomcat JDBC-->

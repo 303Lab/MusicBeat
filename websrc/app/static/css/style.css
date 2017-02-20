@@ -882,7 +882,7 @@ select, .light-inputs select {
     font-weight: 400;
 }
 
-.main-nav ul > li.menu-item-has-children > a:after {
+.main-nav ul > li.menu-item-has-children > a > p:after {
     content: '';
     display: inline-block;
     width: 10px;
@@ -951,7 +951,7 @@ select, .light-inputs select {
     line-height: 48px;
     padding: 0 20px;
     color: #646e7b;
-    min-width: 250px;
+    min-width: 150px;
     display: block;
     border-bottom: none;
     border-radius: 48px;
