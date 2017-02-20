@@ -69,7 +69,7 @@
     <!-- 自动扫描mapping.xml文件 -->
     <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
     <!-- MyBatis with Redis Cache & PageHelper -->
-    <property name="configurationProperties" value="classpath:config/mybatis/redis.xml;classpath:config/mybatis/pagehelper.xml"/>
+    <property name="configLocation" value="classpath:config/mybatis/config.xml" />
 
   </bean>
 

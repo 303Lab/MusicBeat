@@ -1,11 +1,11 @@
 package com.musicbeat.web.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
 import com.musicbeat.web.utils.JUnit4ClassRunner;
 
-import com.musicbeat.web.utils.PaginationContextUtil;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.Before;
@@ -202,10 +202,8 @@ public class UserServiceImplTest {
      */
     @Test
     public void testFindAdminByPage() throws Exception {
-        PaginationContextUtil page = new PaginationContextUtil();
-        page.setPageNum(1);
-        page.setPageSize(2);
-        List<User> result = userService.findAdminByPage(page);
+        PageHelper.startPage(1,1);
+        List<User> result = userService.findAdmin();
         result = beatifyPassword(result);
         logger.info(JSON.toJSONString(result));
     }

@@ -1,9 +1,6 @@
 package com.musicbeat.web.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.musicbeat.web.mapper.UserMapper;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.model.cache.RetrieveCache;
@@ -12,14 +9,12 @@ import com.musicbeat.web.service.RedisService;
 import com.musicbeat.web.service.UserService;
 
 import com.musicbeat.web.utils.EncryptUtil;
-import com.musicbeat.web.utils.PaginationContextUtil;
 import com.musicbeat.web.utils.RandomUtil;
 import com.musicbeat.web.utils.RegexValidateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.musicbeat.web.model.constant.Constants.HTTP_UTF8;
@@ -27,7 +22,6 @@ import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_EXCEPTIO
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE_NONE_USER;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE_NOW_EXPIRE;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_SUCCESS;
-import static com.musicbeat.web.model.constant.Constants.RETRIEVE_EXPIRE_TIME;
 import static com.musicbeat.web.model.constant.Constants.USERSERVICE_ERROR_DELETE;
 import static com.musicbeat.web.model.constant.Constants.USERSERVICE_ERROR_INSERT;
 import static com.musicbeat.web.model.constant.Constants.USERSERVICE_ERROR_RETRIEVE;
@@ -306,18 +300,6 @@ public class UserServiceImpl implements UserService {
             if (users.get(0).getPassword().equals(password)) {
                 return users;
             }
-        } catch (Exception e) {
-            logger.error(e, e.fillInStackTrace());
-        }
-
-        return null;
-    }
-
-    @Override
-    public List<User> findAdminByPage(PaginationContextUtil page) {
-        try {
-            PageHelper.startPage(page.getPageNum(), page.getPageSize());
-            return userMapper.selectAdmin();
         } catch (Exception e) {
             logger.error(e, e.fillInStackTrace());
         }

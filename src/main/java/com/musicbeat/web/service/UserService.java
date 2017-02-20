@@ -1,11 +1,7 @@
 package com.musicbeat.web.service;
 
-import com.github.pagehelper.PageInfo;
 import com.musicbeat.web.model.User;
-import com.musicbeat.web.utils.PaginationContextUtil;
 import org.apache.log4j.Logger;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -45,8 +41,6 @@ public interface UserService {
     List<User> findByEmail(String email, Boolean like);
 
     List<User> checkPassword(String identify, String password);
-
-    List<User> findAdminByPage(PaginationContextUtil page);
 
     boolean register(User user);
 
