@@ -18,4 +18,5 @@ angular.module("app.configs")
         retrieveDefault: "Your Retrieve Web Page Will Be E-Mailed To You.",
         changeDefault: "Change Password & Confirm.",
         changeOk: "Success! Redirect: Home Page...",
+        changeCheckFailed: "Password Input Above Doesn't Match!"
 });

@@ -20,13 +20,12 @@
         <div class="change">
             <form ng-submit="change();">
                 <div class="form-group">
-                    <input class="text-center form-control" type="password" ng-model="changeModel.password" ng-change="inputChange();"
-                           placeholder="Please Input Your New Password" required aria-required="true">
+                    <input class="text-center form-control" type="password" ng-model="changeModel.password" ng-change="inputChange();" placeholder="Please Input Your New Password" autofocus="" required aria-required="true">
                 </div> <!-- end .form-group -->
-                <div class="form-group">
+                <div class="form-group has-feedback" ng-class="{'has-success' : !changeModel.confirm.$pristine && changeModel.confirm.$valid,'has-error' : !changeModel.confirm.$pristine && changeModel.confirm.$invalid }">
                     <input class="text-center form-control" type="password" ng-model="changeModel.confirm" ng-change="inputChange();check();" ng-style="changeModel.buttonColor" placeholder="Input again to confirm the password" required aria-required="true">
                 </div> <!-- end .form-group -->
-                <div class="form-group" ng-if="message.text != undefined && message.text != null">
+                <div class="form-group" ng-if="changeModel.message != undefined && changeModel.message != null">
                     <p class="text-center" ng-bind-html="changeModel.message" ng-style="changeModel.color"></p>
                 </div>
                 <div class="button-wrapper">

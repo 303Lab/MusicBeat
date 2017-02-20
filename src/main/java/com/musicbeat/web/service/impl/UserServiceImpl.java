@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
         try {
             // 用户未注册
             List<User> emails = this.findByEmail(user.getEmail(), false);
-            if (emails.isEmpty()) return RESPONSE_ERROR_RETRIEVE_NONE_USER;
+            if (emails.isEmpty()) return user.getEmail() + RESPONSE_ERROR_RETRIEVE_NONE_USER;
 
 
             RetrieveCache cache = redisService.findRetrieveCode(user);

@@ -23,7 +23,7 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
     $scope.changeModel = {
         password: "",
         confirm: "",
-        message: "",
+        message: authEvent.changeDefault,
         color: {"color": "#FFFFFF"},
         buttonColor: {"border": "0px"}
     };
@@ -46,6 +46,11 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
 
     $scope.change = function () {
         if (!$scope.changeModel.password.trim() || !$scope.changeModel.confirm.trim()) return;
+        if ($scope.changeModel.password.trim() !== $scope.changeModel.confirm.trim()) {
+            $scope.changeModel.message = authEvent.changeCheckFailed;
+            $scope.changeModel.color = {"color": "#EE3D3D"};
+            return;
+        }
 
         $scope.changeModel.message = authEvent.changeDefault;
         $scope.changeModel.color = {"color": "#5d8730"};

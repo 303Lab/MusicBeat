@@ -62,6 +62,7 @@ var path = {
         "app/**/*.route.js",
         "app/**/*.filter.js",
         "app/**/*.service.js",
+        "app/**/*.directive.js",
         "app/**/*.controller.js",
         "app/**/*.script.js",
         "!app/lib/**/*.js",

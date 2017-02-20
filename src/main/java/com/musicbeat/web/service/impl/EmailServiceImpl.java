@@ -79,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
               .append(url)
               .append("\"></p>")
               .append(url)
-              .append("</a></body></html>");
+              .append("</a><div><p>Click Link To Change Your Password in 30 minutes Please</p></div></body></html>");
 
             mimeMessageHelper.setText(stringBuffer.toString(), true);
 

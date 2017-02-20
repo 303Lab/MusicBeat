@@ -13,11 +13,10 @@ angular
         "toastr",
         "toastrProvider",
         "authService",
-        "authEvent",
         loginController
     ]);
 
-function loginController($scope, toastr, toastrProvider, authService, authEvent){
+function loginController($scope, toastr, toastrProvider, authService){
 
     // 监听文本
     $scope.inputChange = function () {
