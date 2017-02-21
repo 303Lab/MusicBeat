@@ -37,6 +37,7 @@ var path = {
         "app/lib/js/scripts.js",
         "app/lib/js/html5shiv.min.js",
         "app/lib/js/respond.min.js",
+        "app/lib/js/APlayer.min.js"
     ],
     vendorCss: [
         "app/static/fonts/font-awesome/css/font-awesome.min.css",
@@ -50,7 +51,6 @@ var path = {
         $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-default.min.css", "node_modules/ng-dialog/css/ngDialog-theme-default.css"),
         $.if(production, "node_modules/ng-dialog/css/ngDialog-theme-plain.min.css", "node_modules/ng-dialog/css/ngDialog-theme-plain.css"),
         $.if(production, "node_modules/angular-*/**/angular-*.min.css", "node_modules/angular-*/**/angular-*.css"),
-        $.if(production, "node_modules/aplayer/dist/APlayer.min.js", "node_modules/aplayer/dist/APlayer.js"),
         "app/lib/css/owl.carousel.css",
         "app/lib/css/owl.theme.default.css",
         "app/lib/css/animate.min.css",
@@ -156,13 +156,6 @@ gulp.task("html", function () {
         .pipe(reload({stream: true}));
 });
 
-gulp.task("temp", function () {
-   return gulp.src(["app/temp/modernizr.js", "app/temp/jquery-2.1.3.min.js", "app/temp/plugins.js", "app/temp/main.js"])
-       .pipe($.concat("404.js"))
-       .pipe($.uglify({outSourceMap: false}))
-       .pipe(gulp.dest(o.js))
-});
-
 gulp.task("404", function() {
 
     gulp.src("app/lib/css/404.css")
@@ -176,6 +169,15 @@ gulp.task("404", function() {
             .pipe($.changed(o.watchJs))
             .pipe(gulp.dest(o.js))
             .pipe(reload({stream: true}));
+});
+
+gulp.task("temp", function () {
+    return gulp.src("app/lib/css/APlayer.scss")
+        .pipe($.sass(), $.sass.logError)
+        .pipe($.concat("APlayer.css"))
+        .pipe($.minifyCss())
+        .pipe($.rename({dirname: ""}))
+        .pipe(gulp.dest("app/lib/css/"));
 });
 
 // Concatenate CSS

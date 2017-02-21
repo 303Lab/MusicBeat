@@ -93,12 +93,12 @@ function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvid
     }
 
     function register(registerMsg) {
-        if (registerMsg.username === undefined || registerMsg.username === null) {
-            registerMsg.username = "";
+        if (registerMsg.name === undefined || registerMsg.name === null) {
+            registerMsg.name = "";
         }
 
         var data = {
-            username: encodeURIComponent(registerMsg.username.trim()),
+            username: encodeURIComponent(registerMsg.name.trim()),
             email: encodeURIComponent(registerMsg.email.trim())
         };
 

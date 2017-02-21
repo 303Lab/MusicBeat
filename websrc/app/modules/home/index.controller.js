@@ -8,9 +8,9 @@
 
 angular
     .module("app.ctrls")
-    .controller("indexController", ["$scope", "$state", "authService", "authEvent", indexController]);
+    .controller("indexController", ["$scope", "$state", "$document", "authService", "authEvent", indexController]);
 
-function indexController($scope, $state, authService, authEvent) {
+function indexController($scope, $state, $document, authService, authEvent) {
     $state.go("app.home");
     $scope.session = authService.session;
     $scope.credentials = {userId: "", password: ""};
@@ -19,14 +19,13 @@ function indexController($scope, $state, authService, authEvent) {
     $scope.message = {text: ""};
 
     $scope.player = new APlayer({
-        element: document.getElementById('player'),
+        element: $document[0].getElementById("player"),
         narrow: false,
         autoplay: false,
         showlrc: 3,
         mutex: true,
-        theme: '#ad7a86',
-        mode: 'random',
-        listmaxheight: '80px',
+        theme: '#b7daff',
+        mode: 'circulation',
         music: [
             {
                 title: 'あっちゅ～ま青春!',
