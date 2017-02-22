@@ -484,7 +484,7 @@ select, .light-inputs select {
     -moz-appearance: none;
     -ms-appearance: none;
     appearance: none;
-    background: url(../images/dropdown.png) no-repeat right 18px center;
+    background: url(images//dropdown.png) no-repeat right 18px center;
 }
 
 ::-webkit-input-placeholder {
@@ -882,7 +882,7 @@ select, .light-inputs select {
     font-weight: 400;
 }
 
-.main-nav ul > li.menu-item-has-children > a > p:after {
+.main-nav ul > li.menu-item-has-children > a >p:after {
     content: '';
     display: inline-block;
     width: 10px;
@@ -1307,6 +1307,8 @@ select, .light-inputs select {
     letter-spacing: .8px;
 }
 
+
+
 .page-title > .inner {
     padding-top: 10px;
     padding-bottom: 260px;
@@ -1324,13 +1326,31 @@ select, .light-inputs select {
     color: #9199a4;
 }
 
+
 .page-title > .shinner {
+    padding-top: 10px;
+    padding-bottom: 600px;
+    background: rgba(23, 36, 52, .9);
+    position: relative;
+}
+
+.page-titlesinger {
+    position: relative;
+    padding: 0;
+    background-size: cover;
+    background: no-repeat center;
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: .8px;
+}
+
+.page-title > .innersinger {
     padding-top: 10px;
     padding-bottom: 300px;
     background: rgba(23, 36, 52, .9);
     position: relative;
 }
-
 /* ==========================================================================
    05. Footer
    ========================================================================== */
@@ -1533,8 +1553,8 @@ select, .light-inputs select {
     padding: 80px 30px;
     background: #fff;
     position: relative;
-    margin-top: -160px;
-    margin-bottom: 80px;
+    margin-top: -500px;
+    margin-bottom: 50px;
 }
 
 .boxed-section > .inner .box.no-side-padding {
@@ -1849,7 +1869,7 @@ select, .light-inputs select {
     position: absolute;
     top: 20px;
     left: 20px;
-    background: url("../images/directory-star.png") no-repeat center center;
+    background: url("images//directory-star.png") no-repeat center center;
     width: 40px;
     height: 40px;
     line-height: 40px;
@@ -2053,7 +2073,7 @@ select, .light-inputs select {
 
 .directory-single-info .meta .rating {
     display: inline-block;
-    background: url("../images/rating.png") no-repeat center center;
+    background: url("images//rating.png") no-repeat center center;
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -3430,7 +3450,8 @@ blockquote {
    31. singer Page
    ========================================================================== */
 .singer-sidebar {
-    background: #fff;
+    filter:alpha(opacity=90);
+    font-color:write;
     padding: 50px 30px;
 }
 
@@ -3443,7 +3464,7 @@ blockquote {
     -moz-appearance: none;
     -ms-appearance: none;
     appearance: none;
-    background: url(../images/dropdown.png) no-repeat right 18px center;
+    background: url(images//dropdown.png) no-repeat right 18px center;
 }
 
 .singer-sidebar .sidebar-widget {
@@ -3453,7 +3474,7 @@ blockquote {
 }
 
 .singer-sidebar .sidebar-widget h5 {
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
@@ -4011,7 +4032,7 @@ p.tip {
 .cityinput {
     font-size: 12px;
     padding-left: 2px;
-    background: url(../images/T1EPyLXm0hXXXXXXXX-200-100.png) no-repeat 150px 5px;
+    background: url(images//T1EPyLXm0hXXXXXXXX-200-100.png) no-repeat 150px 5px;
     border: 1px solid #D8D8D8;
 }
 

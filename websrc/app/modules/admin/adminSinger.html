@@ -1,0 +1,221 @@
+<!--歌手-->
+<div class="tab-pane" id="panel-singer">
+    <div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8"
+                 style="font-family:'Microsoft YaHei';font-size: 20px;margin-top:20px;font-color:black">
+                <!-- 歌手输入查找框-->
+                <li>查找歌手的信息</li>
+                <br/>
+                <div class="row">
+                    <!-- 歌曲输入查找框-->
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control">
+                            <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">查找</button>
+                                    </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12"></div>
+                </div>
+                <br/>
+                <!--添加歌手信息-->
+                <li style="font-family:'Microsoft YaHei UI'">直接添加歌手的信息</li>
+                <div class="container col-md-12" style="background-color:transparent "><br/>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="singer">
+                                <form class="form-horizontal" role="form">
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" class="form-control" id="id" placeholder="ID">
+                                    </div>
+                                </form>
+                                <div class="col-xs-1 form-group"></div>
+                                <form class="form-horizontal" role="form">
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" class="form-control" id="name" placeholder="歌手姓名">
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-md-6 xuanze">
+                                        <div class="radio">
+                                            <div class="col-md-12"><span>直接选择歌手的性别</span></div>
+                                            <div class="col-md-3 form-group">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios1"
+                                                           value="option1" checked> 男
+                                                </label>
+                                            </div>
+                                            <div class="col-md-1 form-group"></div>
+                                            <div class="col-md-3 form-group">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="optionsRadios2"
+                                                           value="option2">女
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 xuanze">
+                                        <div class="radio">
+                                            <div class="col-md-12"><span style="font-size: 20px">歌手是否属于某个乐队</span>
+                                            </div>
+                                            <div class="col-md-3 form-group">
+                                                <label>
+                                                    <input type="radio" name="bond" id="bong1" value="option1"
+                                                           checked> 是
+                                                </label>
+                                            </div>
+                                            <div class="col-md-1 form-group"></div>
+                                            <div class="col-md-3 form-group">
+                                                <label>
+                                                    <input type="radio" name="bond" id="bond2" value="option2">否
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form class="form-horizontal" role="form">
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" class="form-control" id="language" placeholder="歌手语种">
+                                    </div>
+                                </form>
+                                <div class="col-xs-1 form-group"></div>
+                                <form class="form-horizontal" role="form">
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" class="form-control" id="introduction"
+                                               placeholder="歌手简介">
+                                    </div>
+                                </form>
+                                <div class="col-xs-1 form-group"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="photo-item">
+                                <div class="changgetx row">
+                                    <div class="col-md-6">
+                                        <label class="label"></label>
+                                        <input type="text" class="form-control" id="singerpicture"
+                                               placeholder="选择上传头像">
+                                    </div>
+                                    <div class="col-md-4" style="text-align: right">
+                                        <label class="label" for="inputfile"></label>
+                                        <input type="file" id="inputfile">
+                                    </div>
+                                    <div class="col-md-2" style="text-align: right">
+                                        <button type="submit" class="btn btn-default" style="text-align: right">提交
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align:right">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-default">添加</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 歌手显示表-->
+                <li style="font-family:'Microsoft YaHei UI'">查看歌手信息列表</li>
+                <div id="edit_line">
+                    <table class="table"
+                           style="font-size: 15px;margin-top: 10px;margin-bottom: 30px;border-color:darkslategray">
+                        <th>
+                            <tr>
+                                <th>歌手ID</th>
+                                <th>歌手姓名</th>
+                                <th>歌手性别</th>
+                                <th>歌手语种</th>
+                                <th style="width: 20%">歌手简介</th>
+                                <th>是否为乐队</th>
+                            </tr>
+                        </th>
+                        <tbody>
+                        <tr>
+                            <td class="caname">139852</td>
+                            <td class="caname">薛之谦</td>
+                            <td class="caname">男</td>
+                            <td class="caname">华语</td>
+                            <td class="table-intro"><span class="caname">
+                                    薛之谦，1983年7月17日出生于上海，华语流行乐男歌手、音乐制作人、演员、商人，毕业于格里昂酒店管理学院[1]  。
+                                    2005年，参加选秀节目《我型我秀》。2006年，发行首张同名专辑《薛之谦》正式出道，并凭借歌曲《认真的雪》获得一定的关注度[2-3]  。
+                                    2007年，推出第二张个人原创专辑《你过得好吗》[4]  。2008年，发行第三张音乐专辑《深深爱过你》；同年，举行了个人首场演唱会“谦年传说”[5]  。
+                                    2012年，发行专辑《几个薛之谦》；同年，薛之谦第一家连锁火锅店“上上谦”开业，随后，薛之谦又自创了UUJULY品牌女装、UUJULYKIDS品牌童装、Dangerous People品牌男装[6]  。
+                                    2013年，发行专辑《意外》[7]  。2015年5月，发行首张个人EP《绅士》并首次担当制作人，包揽了这张EP的所有词曲；6月10日，正式签约海蝶音乐公司，升为制作人[8]  ；
+                                    10月19日，发行EP《一半》[9]  ；同年，主演了都市励志剧《妈妈像花儿一样》[10]  。2016年，凭借歌曲《演员》获得Music Radio年度金曲；同年，获得第二十届榜中榜“最受欢迎唱作歌手”[11-13]  ；
+                                    7月，发行专辑《初学者》并在北京五棵松体育馆举行免费首唱会[14-15]  。2016年9月，由导演冯小刚执导的电影《我不是潘金莲》的推广曲《来日方长》确认由薛之谦与黄龄共同演绎。[16]
+                                    2016年11月，薛之谦宣布代言《问道》全品牌。</span></td>
+                            <td class="caname">否</td>
+                            <th>
+                                <button>删除</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="caname">139852</td>
+                            <td class="caname">薛之谦</td>
+                            <td class="caname">男</td>
+                            <td class="caname">华语</td>
+                            <td class="table-intro"><span class="caname">
+                                    薛之谦，1983年7月17日出生于上海，华语流行乐男歌手、音乐制作人、演员、商人，毕业于格里昂酒店管理学院[1]  。
+                                    2005年，参加选秀节目《我型我秀》。2006年，发行首张同名专辑《薛之谦》正式出道，并凭借歌曲《认真的雪》获得一定的关注度[2-3]  。
+                                    2007年，推出第二张个人原创专辑《你过得好吗》[4]  。2008年，发行第三张音乐专辑《深深爱过你》；同年，举行了个人首场演唱会“谦年传说”[5]  。
+                                    2012年，发行专辑《几个薛之谦》；同年，薛之谦第一家连锁火锅店“上上谦”开业，随后，薛之谦又自创了UUJULY品牌女装、UUJULYKIDS品牌童装、Dangerous People品牌男装[6]  。
+                                    2013年，发行专辑《意外》[7]  。2015年5月，发行首张个人EP《绅士》并首次担当制作人，包揽了这张EP的所有词曲；6月10日，正式签约海蝶音乐公司，升为制作人[8]  ；
+                                    10月19日，发行EP《一半》[9]  ；同年，主演了都市励志剧《妈妈像花儿一样》[10]  。2016年，凭借歌曲《演员》获得Music Radio年度金曲；同年，获得第二十届榜中榜“最受欢迎唱作歌手”[11-13]  ；
+                                    7月，发行专辑《初学者》并在北京五棵松体育馆举行免费首唱会[14-15]  。2016年9月，由导演冯小刚执导的电影《我不是潘金莲》的推广曲《来日方长》确认由薛之谦与黄龄共同演绎。[16]
+                                    2016年11月，薛之谦宣布代言《问道》全品牌。</span></td>
+                            <td class="caname">否</td>
+                            <th>
+                                <button>删除</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="caname">139852</td>
+                            <td class="caname">薛之谦</td>
+                            <td class="caname">男</td>
+                            <td class="caname">华语</td>
+                            <td class="table-intro"><span class="caname">
+                                    薛之谦，1983年7月17日出生于上海，华语流行乐男歌手、音乐制作人、演员、商人，毕业于格里昂酒店管理学院[1]  。
+                                    2005年，参加选秀节目《我型我秀》。2006年，发行首张同名专辑《薛之谦》正式出道，并凭借歌曲《认真的雪》获得一定的关注度[2-3]  。
+                                    2007年，推出第二张个人原创专辑《你过得好吗》[4]  。2008年，发行第三张音乐专辑《深深爱过你》；同年，举行了个人首场演唱会“谦年传说”[5]  。
+                                    2012年，发行专辑《几个薛之谦》；同年，薛之谦第一家连锁火锅店“上上谦”开业，随后，薛之谦又自创了UUJULY品牌女装、UUJULYKIDS品牌童装、Dangerous People品牌男装[6]  。
+                                    2013年，发行专辑《意外》[7]  。2015年5月，发行首张个人EP《绅士》并首次担当制作人，包揽了这张EP的所有词曲；6月10日，正式签约海蝶音乐公司，升为制作人[8]  ；
+                                    10月19日，发行EP《一半》[9]  ；同年，主演了都市励志剧《妈妈像花儿一样》[10]  。2016年，凭借歌曲《演员》获得Music Radio年度金曲；同年，获得第二十届榜中榜“最受欢迎唱作歌手”[11-13]  ；
+                                    7月，发行专辑《初学者》并在北京五棵松体育馆举行免费首唱会[14-15]  。2016年9月，由导演冯小刚执导的电影《我不是潘金莲》的推广曲《来日方长》确认由薛之谦与黄龄共同演绎。[16]
+                                    2016年11月，薛之谦宣布代言《问道》全品牌。</span></td>
+                            <td class="caname">否</td>
+                            <th>
+                                <button>删除</button>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 歌手导航-->
+                <div class="container" style="text-indent: 2.2em">
+                    <div class="row clearfix">
+                        <div class="col-md-12 column">
+                            <ul class="pagination">
+                                <li><a href="#">Prev</a></li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">6</a></li>
+                                <li><a href="#">7</a></li>
+                                <li><a href="#">8</a></li>
+                                <li><a href="#">9</a></li>
+                                <li><a href="#">10</a></li>
+                                <li><a href="#">Next</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</div> <!-- end .page-title -->

@@ -73,9 +73,6 @@ public class AuthController extends BaseController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private RedisService redisService;
-
     /**
      * 用户登录Controller
      *
@@ -195,11 +192,16 @@ public class AuthController extends BaseController {
             user.setUsername(username);
             user.setEmail(email);
             user.setPrivilege("user");
+            user.setPicture("images/user.png");
 
             List<User> emails = userService.findByEmail(email, false);
-            List<User> users = new ArrayList<>();
+            List<User> users;
 
             if (username != null && !username.isEmpty()) {
+                users = userService.findByUserName(username, false);
+            } else {
+                // 默认用户名
+                user.setUsername(user.getEmail().split("@")[0]);
                 users = userService.findByUserName(username, false);
             }
 
@@ -213,7 +215,7 @@ public class AuthController extends BaseController {
                 logger.info(logObj.toJSONString() + ", Register Error - Duplicate Email");
                 response.setStatus(SC_CONFLICT);
 
-            } else if (!users.isEmpty()) {
+            } else if (users == null || !users.isEmpty()) {
 
                 model.put(RESPONSE_STATUS, RESPONSE_FAIL);
                 model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME);
@@ -316,7 +318,7 @@ public class AuthController extends BaseController {
             model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_RETRIEVE);
 
             response.setStatus(SC_NOT_FOUND);
-            mav.setViewName("404api");
+            mav.setStatus(HttpStatus.NOT_FOUND);
 
             logger.error(logObj.toJSONString() + ", Get Retrieve Page Error");
             logger.error(e, e.fillInStackTrace());

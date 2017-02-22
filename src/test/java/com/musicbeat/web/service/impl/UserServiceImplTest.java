@@ -202,8 +202,18 @@ public class UserServiceImplTest {
      */
     @Test
     public void testFindAdminByPage() throws Exception {
-        PageHelper.startPage(1,1);
+        PageHelper.startPage(1,2);
         List<User> result = userService.findAdmin();
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+
+        PageHelper.startPage(2,2);
+        result = userService.findAdmin();
+        result = beatifyPassword(result);
+        logger.info(JSON.toJSONString(result));
+
+        PageHelper.startPage(3,2);
+        result = userService.findAdmin();
         result = beatifyPassword(result);
         logger.info(JSON.toJSONString(result));
     }

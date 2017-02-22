@@ -15,7 +15,7 @@ function appRouter($stateProvider, appConst) {
         .state("app.home", {
             url: "/",
             views: {
-                "content@":{
+                "content@": {
                     templateUrl: fnBasePath("home.html"),
                     controller: "homeController"
                 }
@@ -60,6 +60,55 @@ function appRouter($stateProvider, appConst) {
                 "content@":{
                     templateUrl: fnBasePath("user.html"),
                     controller: "userController"
+                }
+            }
+        })
+        .state("admin", {
+            url: "/admin",
+            abstract: true,
+            views: {
+                "": {
+                    templateUrl: fnBasePath("admin.html"),
+                    controller: "adminController"
+                },
+                "header": {
+                    templateUrl: fnBasePath("adminHeader.html")
+                },
+                "content@":{
+                    templateUrl: fnBasePath("adminSinger.html")
+                }
+            }
+
+        })
+        .state("admin.singer", {
+            url: "/singer",
+            views: {
+                "content@":{
+                    templateUrl: fnBasePath("adminSinger.html")
+                }
+            }
+        })
+        .state("admin.data", {
+            url: "/data",
+            views: {
+                "content@":{
+                    templateUrl: fnBasePath("adminData.html")
+                }
+            }
+        })
+        .state("admin.label", {
+            url: "/label",
+            views: {
+                "content@":{
+                    templateUrl: fnBasePath("adminLabel.html")
+                }
+            }
+        })
+        .state("admin.song", {
+            url: "/song",
+            views: {
+                "content@":{
+                    templateUrl: fnBasePath("adminSong.html")
                 }
             }
         })

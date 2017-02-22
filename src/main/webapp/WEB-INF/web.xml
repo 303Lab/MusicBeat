@@ -108,6 +108,10 @@
   </welcome-file-list>
 
   <error-page>
+    <error-code>400</error-code>
+    <location>/WEB-INF/resources/tpls/404.html</location>
+  </error-page>
+  <error-page>
     <error-code>403</error-code>
     <location>/WEB-INF/resources/tpls/404.html</location>
   </error-page>

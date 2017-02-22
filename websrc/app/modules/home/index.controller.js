@@ -18,36 +18,49 @@ function indexController($scope, $state, $document, authService, authEvent) {
     $scope.retrieve = {email: "", message: authEvent.retrieveDefault, color: {"color": "#FFFFFF"}};
     $scope.message = {text: ""};
 
-    $scope.player = new APlayer({
-        element: $document[0].getElementById("player"),
+    $scope.playerOptions = {
+        element: $document[0].getElementsByClassName("aplayer")[0],
         narrow: false,
         autoplay: false,
         showlrc: 3,
         mutex: true,
-        theme: '#b7daff',
-        mode: 'circulation',
+        theme: "#b7daff",
+        mode: "circulation",
+        listmaxheight: "379.5px",
         music: [
             {
-                title: 'あっちゅ～ま青春!',
-                author: '七森中☆ごらく部',
-                url: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.mp3',
-                pic: 'http://devtest.qiniudn.com/あっちゅ～ま青春!.jpg',
-                lrc: 'あっちゅ～ま青春!.lrc'
+                id: 0,
+                title: 'Preparation',
+                author: 'Hans Zimmer/Richard Harvey',
+                url: 'music/Preparation.mp3',
+                pic: 'music/Preparation.jpg'
             },
             {
-                title: 'secret base~君がくれたもの~',
-                author: '茅野愛衣',
-                url: 'http://devtest.qiniudn.com/secret base~.mp3',
-                pic: 'http://devtest.qiniudn.com/secret base~.jpg',
-                lrc: 'secret base~君がくれたもの~.lrc'
+                id: 1,
+                title: "あっちゅ～ま青春!",
+                author: "七森中☆ごらく部",
+                url: "music/あっちゅ～ま青春!.mp3",
+                pic: "music/あっちゅ～ま青春!.jpg",
+                lrc: "music/あっちゅ～ま青春!.lrc"
             },
             {
-                title: '回レ！雪月花',
-                author: '小倉唯',
-                url: 'http://devtest.qiniudn.com/回レ！雪月花.mp3',
-                pic: 'http://devtest.qiniudn.com/回レ！雪月花.jpg',
-                lrc: '回レ！雪月花.lrc'
+                id: 2,
+                title: "secret base~君がくれたもの~",
+                author: "茅野愛衣",
+                url: "music/secret base~.mp3",
+                pic: "music/secret base~.jpg",
+                lrc: "music/secret base~君がくれたもの~.lrc"
+            },
+            {
+                id: 3,
+                title: "回レ！雪月花",
+                author: "小倉唯",
+                url: "music/回レ！雪月花.mp3",
+                pic: "music/回レ！雪月花.jpg",
+                lrc: "music/回レ！雪月花.lrc"
             }
         ]
-    });
+    };
+
+    $scope.player = new APlayer($scope.playerOptions);
 }

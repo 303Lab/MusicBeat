@@ -99,7 +99,7 @@
   <mvc:interceptors>
     <!-- 用户登录拦截 -->
     <mvc:interceptor>
-      <mvc:mapping path="/api/changePassword"/>
+      <mvc:mapping path="/api/interceptor"/>
       <!--<mvc:exclude-mapping path="/admin/login.do"/>-->
       <bean class="com.musicbeat.web.interceptor.UserInterceptor"/>
     </mvc:interceptor>

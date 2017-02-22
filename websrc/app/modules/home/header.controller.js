@@ -12,6 +12,49 @@ angular
 
 function headerController($scope, $state, authService, authEvent) {
 
+    var music = [
+        {
+            id: 0,
+            title: 'Preparation',
+            author: 'Hans Zimmer/Richard Harvey',
+            url: 'music/Preparation.mp3',
+            pic: 'music/Preparation.jpg'
+        },
+        {
+            id: 1,
+            title: "あっちゅ～ま青春!",
+            author: "七森中☆ごらく部",
+            url: "music/あっちゅ～ま青春!.mp3",
+            pic: "music/あっちゅ～ま青春!.jpg",
+            lrc: "music/あっちゅ～ま青春!.lrc"
+        },
+        {
+            id: 2,
+            title: "secret base~君がくれたもの~",
+            author: "茅野愛衣",
+            url: "music/secret base~.mp3",
+            pic: "music/secret base~.jpg",
+            lrc: "music/secret base~君がくれたもの~.lrc"
+        },
+        {
+            id: 3,
+            title: "回レ！雪月花",
+            author: "小倉唯",
+            url: "music/回レ！雪月花.mp3",
+            pic: "music/回レ！雪月花.jpg",
+            lrc: "music/回レ！雪月花.lrc"
+        }
+    ];
+
+    $scope.remove = function () {
+        $scope.player.delMusic(music[Math.round(Math.random()*3)]);
+    };
+
+    $scope.add = function () {
+        // add and play
+        $scope.player.addPlayMusic(music[Math.round(Math.random()*3)]);
+    };
+
     // 注销
     $scope.logout = function () {
         authService

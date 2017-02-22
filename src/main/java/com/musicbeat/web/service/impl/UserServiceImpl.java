@@ -56,11 +56,6 @@ public class UserServiceImpl implements UserService {
             String hashPassword = EncryptUtil.SHA256(random);
             user.setPassword(hashPassword);
 
-            // 默认用户名
-            if (user.getUsername().isEmpty()) {
-                user.setUsername(user.getEmail().split("@")[0]);
-            }
-
             if (this.add(user)) {
                 if (emailService.sendActiveEmail(user, random)) {
                     return true;
@@ -218,6 +213,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean add(User user) {
+        if (user.getPassword() != null && user.getPassword().length() != EncryptUtil.SHA256LENGTH) {
+            user.setPassword(EncryptUtil.SHA256(user.getPassword()));
+        }
         return userMapper.insertSelective(user) == 1;
     }
 

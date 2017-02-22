@@ -9,9 +9,9 @@
     </div> <!-- end .container -->
 </div> <!-- end .page-header -->
 
-<div class="page-title" style="background-image: url('images/background16.jpg');">
+<div class="page-title" style="background-image: url('images/singer2.gif');">
     <div class="shinner">
-    </div> <!-- end .inner -->
+    </div> <!-- end .shinner-->
 </div> <!-- end .page-title -->
 
 <div class="section boxed-section light">
@@ -22,31 +22,64 @@
                     <div class="col-md-4">
                         <div class="singer-sidebar">
                             <div class="sidebar-widget">
-                                <h5>查找歌手</h5>
+                                <h3 style="color: whitesmoke">查找歌手</h3>
                                 <form class="searchform">
                                     <input type="text" placeholder="Type here ...">
                                     <button><i class="pe-7s-search"></i></button>
                                 </form>
                             </div> <!-- 歌手查找 -->
                             <div class="sidebar-widget">
-                                <h5>歌手分类</h5>
+                                <h3 style="color:whitesmoke;">歌手分类</h3>
                                 <div class="categories">
-                                    <a href="" class="active">All<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">华语男歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">华语女歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">华语乐队组合<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">日本男歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">日本女歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">日本乐队组合<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">韩国男歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">韩国女歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">韩国乐队组合<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">欧美男歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">欧美女歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">欧美乐队组合<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">其他男歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">其他女歌手<i class="pe-7s-right-arrow"></i></a>
-                                    <a href="">其他乐队组合<i class="pe-7s-right-arrow"></i></a>
+                                    <nav class="main-nav">
+                                        <ul class="music-unstyled">
+                                            <!-- 歌手分类 -->
+                                            <li class="menu-item-has-children" style="width: 250px">
+                                                <a>华语歌手<i class="pe-7s-right-arrow"></i></a>
+                                                <ul>
+                                                    <li class="menu-item-has-children" style="margin-left: 300px; margin-top:-95px; width: 200px;">
+                                                        <a ui-sref="app.music">华语男歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">华语女歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">华语乐队组合<i class="pe-7s-right-arrow"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="menu-item-has-children" style="width: 250px">
+                                                <a>日韩歌手<i class="pe-7s-right-arrow"></i></a>
+                                                <ul>
+                                                    <li class="menu-item-has-children">
+                                                        <a>日本男歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">日本男歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">日本女歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">日本乐队组合<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">韩国男歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">韩国女歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">韩国乐队组合<i class="pe-7s-right-arrow"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="menu-item-has-children" style="width: 250px">
+                                                <a>欧美歌手<i class="pe-7s-right-arrow"></i></a>
+                                                <ul>
+                                                    <li class="menu-item-has-children">
+                                                        <a ui-sref="app.music">欧美男歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">欧美女歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">欧美乐队组合<i class="pe-7s-right-arrow"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="menu-item-has-children" style="width: 250px">
+                                                <a>其他歌手<i class="pe-7s-right-arrow"></i></a>
+                                                <ul>
+                                                    <li class="menu-item-has-children">
+                                                        <a ui-sref="app.music">其他男歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">其他女歌手<i class="pe-7s-right-arrow"></i></a>
+                                                        <a ui-sref="app.music">其他乐队组合<i class="pe-7s-right-arrow"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav> <!-- end .main-nav -->
                                 </div>
                             </div> <!-- 歌手分类 -->
                         </div> <!-- end .singer-sidebar -->

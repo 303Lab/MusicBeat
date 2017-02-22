@@ -11,7 +11,7 @@
 
 var gulp        = require("gulp");
 var $           = require("gulp-load-plugins")();
-var browserSync = require("browser-sync")
+var browserSync = require("browser-sync");
 var del         = require("del");
 var reload      = browserSync.reload;
 var production  = false;
@@ -20,7 +20,6 @@ var output = $.if(production, "../src/main/webapp/WEB-INF/resources", "../src/ma
 
 var path = {
     vendorJs: [
-        "app/lib/js/modernizr.js",
         $.if(production, "node_modules/jquery/dist/jquery.min.js", "node_modules/jquery/dist/jquery.js"),
         $.if(production, "node_modules/bootstarp/dist/js/bootstrap.min.js", "node_modules/bootstarp/dist/js/bootstrap.js"),
         $.if(production, "node_modules/angular/angular.min.js", "node_modules/angular/angular.js"),
@@ -156,28 +155,20 @@ gulp.task("html", function () {
         .pipe(reload({stream: true}));
 });
 
+// Concatenate 404 Page
 gulp.task("404", function() {
 
-    gulp.src("app/lib/css/404.css")
+    gulp.src(["app/lib/css/404.css"])
         .pipe($.plumber())
         .pipe($.changed(o.watchCss))
         .pipe(gulp.dest(o.css))
         .pipe(reload({stream: true}));
 
-    return gulp.src("app/lib/js/404.js")
+    return gulp.src(["app/lib/js/modernizr.js", "app/lib/js/404.js"])
             .pipe($.plumber())
             .pipe($.changed(o.watchJs))
             .pipe(gulp.dest(o.js))
             .pipe(reload({stream: true}));
-});
-
-gulp.task("temp", function () {
-    return gulp.src("app/lib/css/APlayer.scss")
-        .pipe($.sass(), $.sass.logError)
-        .pipe($.concat("APlayer.css"))
-        .pipe($.minifyCss())
-        .pipe($.rename({dirname: ""}))
-        .pipe(gulp.dest("app/lib/css/"));
 });
 
 // Concatenate CSS

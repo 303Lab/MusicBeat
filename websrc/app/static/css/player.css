@@ -1,0 +1,17 @@
+.player {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 5;
+    background: transparent;
+    pointer-events: none;
+}
+
+.player .aplayer {
+    margin: 0 auto;
+    max-width: 765px;
+    position: relative;
+    pointer-events: auto;
+    background: #FFFFFF;
+}
+

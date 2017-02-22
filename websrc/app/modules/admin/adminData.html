@@ -1,0 +1,66 @@
+<!-- 数据 -->
+<div class="tab-pane" id="panel-data">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>数据处理中心</h2>
+                        </div>
+                        <!--下载量-->
+                        <div class="col-md-12">
+                            <div class="panel panel-default" style="background-color: transparent">
+                                <div class="panel-heading font-bold">下载量</div>
+                                <div class="panel-body">
+                                    <div ui-jq="plot" ui-options="
+                                          [
+                                            { data: {{d0_1}}, label: 'Unique Visits', points: { show: true } },
+                                            { data: {{d0_2}}, label: 'Page Views', bars: { show: true, barWidth: 0.6, fillColor: { colors: [{ opacity: 0.2 }, { opacity: 0.4}] } } }
+                                          ],
+                                          {
+                                            colors: [ '{{app.color.info}}','{{app.color.success}}' ],
+                                            series: { shadowSize: 2 },
+                                            xaxis:{ font: { color: '#ccc' } },
+                                            yaxis:{ font: { color: '#ccc' } },
+                                            grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                            tooltip: true,
+                                            tooltipOpts: { content: '%s of %x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+                                          }
+                                        " style="height:120px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--点击量-->
+                        <div class="col-md-12">
+                            <div class="panel panel-default" style="background-color: transparent">
+                                <div class="panel-heading font-bold">点击量</div>
+                                <div class="panel-body">
+                                    <div ui-jq="plot" ui-options="
+                                          [
+                                            { data: {{d0_1}}, label: 'Unique Visits', points: { show: true } },
+                                            { data: {{d0_2}}, label: 'Page Views', bars: { show: true, barWidth: 0.6, fillColor: { colors: [{ opacity: 0.2 }, { opacity: 0.4}] } } }
+                                          ],
+                                          {
+                                            colors: [ '{{app.color.info}}','{{app.color.success}}' ],
+                                            series: { shadowSize: 2 },
+                                            xaxis:{ font: { color: '#ccc' } },
+                                            yaxis:{ font: { color: '#ccc' } },
+                                            grid: { hoverable: true, clickable: true, borderWidth: 0, color: '#ccc' },
+                                            tooltip: true,
+                                            tooltipOpts: { content: '%s of %x.1 is %y.4',  defaultTheme: false, shifts: { x: 0, y: 20 } }
+                                          }
+                                        " style="height:120px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
