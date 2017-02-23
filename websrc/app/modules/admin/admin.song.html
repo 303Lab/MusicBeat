@@ -3,11 +3,9 @@
     <div>
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="col-md-8"
-                 style="font-family:'Microsoft YaHei';font-size: 20px;margin-top:20px;font-color:black">
+            <div class="col-md-8" style="font-family:'Microsoft YaHei';font-size: 20px;margin-top:20px;font-color:black">
                 <!-- 歌曲查找与添加-->
-                <li>查找歌曲的信息</li>
-                <br/>
+                <li>查找歌曲的信息</li><br/>
                 <div class="row">
                     <!-- 歌曲输入查找框-->
                     <div class="col-md-12">
@@ -18,44 +16,49 @@
                                     </span>
                         </div>
                     </div>
-                    <div class="col-md-12"></div>
-                </div>
-                <br/>
+                </div><br/>
                 <!--添加歌曲信息-->
                 <li style="font-family:'Microsoft YaHei UI'">直接添加歌曲的信息</li>
                 <div class="container col-xs-12" style="background-color:transparent "><br/>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-md-12">
                             <div class="singer">
                                 <form class="form-horizontal" role="form">
-                                    <div class="col-md-4 form-group">
-                                        <input type="text" class="form-control" id="songid" placeholder="歌曲ID">
-                                    </div>
-                                </form>
-                                <div class="col-md-1 form-group"></div>
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-7 form-group">
+                                    <div class="col-md-3 form-group">
                                         <input type="text" class="form-control" id="songname" placeholder="歌曲名">
                                     </div>
-                                </form>
-                                <div class="col-md-1 form-group"></div>
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-12 form-group">
-                                        <input type="text" class="form-control" id="lysic" placeholder="上传歌词">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-3 form-group">
+                                        <input type="text" class="form-control" id="singername" placeholder="歌手名">
                                     </div>
-                                </form>
-                                <div class="col-md-12 form-group"></div>
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-5 form-group">
-                                        <input type="text" class="form-control" id="songlink" placeholder="歌曲地址">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-4 form-group">
+                                        <input type="text" class="form-control" id="albumname" placeholder="专辑名">
                                     </div>
                                 </form>
                                 <div class="col-md-1 form-group"></div>
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-5 form-group">
-                                        <input type="text" class="form-control" id="songtime" placeholder="歌曲时长">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="music-item">
+                                <div class="changgetx row">
+                                    <div class="col-md-4"><p>选择音乐</p></div>
+                                    <div class="col-md-8" style="text-align: right">
+                                        <label class="label" for="inputfile"></label>
+                                        <input type="file" id="inputmusic">
                                     </div>
-                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="lyric-item">
+                                <div class="changgetx row">
+                                    <div class="col-md-4"><p>选择歌词</p></div>
+                                    <div class="col-md-8" style="text-align: right">
+                                        <label class="label" for="inputfile"></label>
+                                        <input type="file" id="inputlyric">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div style="text-align:right">
@@ -67,8 +70,7 @@
                 </div>
                 <!-- 歌曲显示表-->
                 <li style="font-family:'Microsoft YaHei UI'">查看歌曲信息列表</li>
-                <table class="table"
-                       style="font-size:15px;margin-top: 10px;margin-right: 20px;margin-bottom: 30px;margin-left: 20px;border-color: deepskyblue;">
+                <table class="table" style="font-size:15px;margin-top: 10px;margin-right: 20px;margin-bottom: 30px;margin-left: 20px;border-color: deepskyblue;">
                     <th>
                         <tr>
                             <th>歌曲ID</th>
@@ -86,9 +88,7 @@
                         <td class="caname">演员.lry</td>
                         <td class="caname">yanyuan.mp3</td>
                         <th class="caname">04:21</th>
-                        <th>
-                            <button>删除</button>
-                        </th>
+                        <th><button>删除</button></th>
                     </tr>
                     <tr>
                         <td class="caname">341253</td>
@@ -96,9 +96,7 @@
                         <td class="caname">演员.lry</td>
                         <td class="caname">yanyuan.mp3</td>
                         <th class="caname">04:21</th>
-                        <th>
-                            <button>删除</button>
-                        </th>
+                        <th><button>删除</button></th>
                     </tr>
                     <tr>
                         <td class="caname">341253</td>
@@ -106,9 +104,7 @@
                         <td class="caname">演员.lry</td>
                         <td class="caname">yanyuan.mp3</td>
                         <th class="caname">04:21</th>
-                        <th>
-                            <button>删除</button>
-                        </th>
+                        <th><button>删除</button></th>
                     </tr>
                     </tbody>
                 </table>
@@ -138,3 +134,4 @@
         </div>
     </div>
 </div>
+       

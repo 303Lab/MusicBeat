@@ -94,14 +94,20 @@
   <mvc:resources mapping="tpls/**" location="/WEB-INF/resources/tpls/**"/>
   <mvc:resources mapping="fonts/**" location="/WEB-INF/resources/fonts/**"/>
   <mvc:resources mapping="images/**" location="/WEB-INF/resources/images/**"/>
+  <mvc:resources mapping="music/**" location="/WEB-INF/resources/music/**"/>
 
   <!--配置拦截器, 多个拦截器,顺序执行 -->
   <mvc:interceptors>
-    <!-- 用户登录拦截 -->
+    <!-- 用户功能拦截 -->
     <mvc:interceptor>
-      <mvc:mapping path="/api/interceptor"/>
+      <mvc:mapping path="/api/user/*"/>
       <!--<mvc:exclude-mapping path="/admin/login.do"/>-->
       <bean class="com.musicbeat.web.interceptor.UserInterceptor"/>
+    </mvc:interceptor>
+    <!-- 管理员功能拦截 -->
+    <mvc:interceptor>
+      <mvc:mapping path="/api/admin/*"/>
+      <bean class="com.musicbeat.web.interceptor.AdminInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>
 

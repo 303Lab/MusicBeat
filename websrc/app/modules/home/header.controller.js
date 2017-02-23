@@ -12,7 +12,7 @@ angular
 
 function headerController($scope, $state, authService, authEvent) {
 
-    var music = [
+    var musics = [
         {
             id: 0,
             title: 'Preparation',
@@ -45,15 +45,6 @@ function headerController($scope, $state, authService, authEvent) {
             lrc: "music/回レ！雪月花.lrc"
         }
     ];
-
-    $scope.remove = function () {
-        $scope.player.delMusic(music[Math.round(Math.random()*3)]);
-    };
-
-    $scope.add = function () {
-        // add and play
-        $scope.player.addPlayMusic(music[Math.round(Math.random()*3)]);
-    };
 
     // 注销
     $scope.logout = function () {

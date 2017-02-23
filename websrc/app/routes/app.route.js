@@ -50,7 +50,7 @@ function appRouter($stateProvider, appConst) {
             url: "/category/singer",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("singer-cart.html")
+                    templateUrl: fnBasePath("singer.cart.html")
                 }
             }
         })
@@ -72,10 +72,10 @@ function appRouter($stateProvider, appConst) {
                     controller: "adminController"
                 },
                 "header": {
-                    templateUrl: fnBasePath("adminHeader.html")
+                    templateUrl: fnBasePath("admin.header.html")
                 },
                 "content@":{
-                    templateUrl: fnBasePath("adminSinger.html")
+                    templateUrl: fnBasePath("admin.singer.html")
                 }
             }
 
@@ -84,15 +84,15 @@ function appRouter($stateProvider, appConst) {
             url: "/singer",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("adminSinger.html")
+                    templateUrl: fnBasePath("admin.singer.html")
                 }
             }
         })
-        .state("admin.data", {
-            url: "/data",
+        .state("admin.album", {
+            url: "/album",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("adminData.html")
+                    templateUrl: fnBasePath("admin.album.html")
                 }
             }
         })
@@ -100,7 +100,7 @@ function appRouter($stateProvider, appConst) {
             url: "/label",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("adminLabel.html")
+                    templateUrl: fnBasePath("admin.label.html")
                 }
             }
         })
@@ -108,7 +108,7 @@ function appRouter($stateProvider, appConst) {
             url: "/song",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("adminSong.html")
+                    templateUrl: fnBasePath("admin.song.html")
                 }
             }
         })

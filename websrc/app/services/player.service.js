@@ -8,8 +8,22 @@
 
 angular
     .module("app.services")
-    .factory("playerService", playerService);
+    .factory("playerService", ["$scope", playerService]);
 
-function playerService() {
+function playerService($scope) {
 
+    function addPlayList(musics) {
+        $scope.player.addPlayList(musics);
+    }
+
+    function addMusic(music) {
+        return $scope.player.addMusic(music);
+    }
+
+    return {
+
+        addPlayList: addPlayList,
+
+        addMusic: addMusic,
+    };
 }

@@ -1,5 +1,6 @@
 package com.musicbeat.web.interceptor;
 
+import com.musicbeat.web.model.User;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,19 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import static com.musicbeat.web.model.constant.Constants.SESSION_USER;
 
 /**
- * 用户API拦截器
+ * 管理员API拦截器
  *
  * @author windawings
  * @version 1.0.0
- * @time.creation 2017/02/13 11:34
+ * @time.creation 2017/02/23 9:16
  * @since 1.0.0
  */
-public class UserInterceptor implements HandlerInterceptor {
+public class AdminInterceptor implements HandlerInterceptor {
 
     //拦截前处理
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
-        Object sessionObj = request.getSession().getAttribute(SESSION_USER);
-        if(sessionObj != null) {
+        User user = (User) request.getSession().getAttribute(SESSION_USER);
+        if(user != null && user.getPrivilege().equals("admin")) {
             return true;
         }
         response.sendRedirect(request.getContextPath()
