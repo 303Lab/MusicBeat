@@ -28,40 +28,10 @@
                     <div class="col-md-8 col-md-offset-2">
                         <p class="lead">曲风选择</p>
                         <div class="highlight-slider">
-                            <div class="item">
-                                <a href="" class="icon">
-                                    <img src="images/highlight-food.png" alt="安静">
-                                    <div class="overlay">安静</div>
-                                </a> <!-- end .icon -->
-                            </div> <!-- end .item -->
-                            <div class="item">
-                                <a href="" class="icon">
-                                    <img src="images/highlight-lodging.png" alt="古典">
-                                    <div class="overlay">古典</div>
-                                </a> <!-- end .icon -->
-                            </div> <!-- end .item -->
-                            <div class="item">
-                                <a href="" class="icon">
-                                    <img src="images/highlight-culture.png" alt="运动">
-                                    <div class="overlay">运动</div>
-                                </a> <!-- end .icon -->
-                            </div> <!-- end .item -->
-                            <div class="item">
-                                <a href="" class="icon">
-                                    <img src="images/highlight-shopping.png" alt="电子">
-                                    <div class="overlay">电子</div>
-                                </a> <!-- end .icon -->
-                            </div> <!-- end .item -->
-                            <div class="item">
-                                <a href="" class="icon">
-                                    <img src="images/highlight-nightlife.png" alt="青春">
-                                    <div class="overlay">青春</div>
-                                </a> <!-- end .icon -->
-                            </div> <!-- end .item -->
-                            <div class="item">
-                                <a href="" class="icon">
-                                    <img src="images/highlight-drink.png" alt="治愈">
-                                    <div class="overlay">治愈</div>
+                            <div class="item" ng-repeat="(key, value) in freeTypes">
+                                <a href="" ng-click="getMusicByCasualLabel($event);" class="icon">
+                                    <img ng-src="images/highlight-{{key}}.png" alt="{{value}}">
+                                    <div class="overlay" ng-bind-html="value"></div>
                                 </a> <!-- end .icon -->
                             </div> <!-- end .item -->
                         </div> <!-- end .highlight-slider -->
@@ -79,72 +49,17 @@
                 <small>Explore some of the best music all over the world</small>
             </h2>
             <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category01.jpg');">
+                <div class="col-md-3 col-sm-6" ng-repeat="item in current.singer.recommend">
+                    <a ui-sref="app.singer.category({sid:item.id})" class="category-box" style="{{item.img}}">
                         <div class="inner">
-                            <img src="images/category-icon01.png" alt="薛之谦">
-                            <span class="number">8</span>
-                            <span class="title">薛之谦</span>
-                        </div> <!-- end .inner -->
-                    </a> <!-- end .category-box -->
-                </div> <!-- end .col-md-3 -->
-                <div class="col-md-3 col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category02.jpg');">
-                        <div class="inner">
-                            <img src="images/category-icon02.png" alt="周杰伦">
-                            <span class="number">36</span>
-                            <span class="title">周杰伦</span>
-                        </div> <!-- end .inner -->
-                    </a> <!-- end .category-box -->
-                </div> <!-- end .col-md-3 -->
-                <div class="col-md-3 col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category03.jpg');">
-                        <div class="inner">
-                            <img src="images/category-icon03.png" alt="李宇春">
-                            <span class="number">26</span>
-                            <span class="title">李宇春</span>
-                        </div> <!-- end .inner -->
-                    </a> <!-- end .category-box -->
-                </div> <!-- end .col-md-3 -->
-                <div class="col-md-3 col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category04.jpg');">
-                        <div class="inner">
-                            <img src="images/category-icon04.png" alt="林俊杰">
-                            <span class="number">16</span>
-                            <span class="title">林俊杰</span>
-                        </div> <!-- end .inner -->
-                    </a> <!-- end .category-box -->
-                </div> <!-- end .col-md-3 -->
-                <div class="col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category05.jpg');">
-                        <div class="inner">
-                            <img src="images/category-icon05.png" alt="许嵩">
-                            <span class="number">12</span>
-                            <span class="title">许嵩</span>
-                        </div> <!-- end .inner -->
-                    </a> <!-- end .category-box -->
-                </div> <!-- end .col-sm-6 -->
-                <div class="col-md-3 col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category06.jpg');">
-                        <div class="inner">
-                            <img src="images/category-icon06.png" alt="田馥甄">
-                            <span class="number">4</span>
-                            <span class="title">田馥甄</span>
-                        </div> <!-- end .inner -->
-                    </a> <!-- end .category-box -->
-                </div> <!-- end .col-md-3 -->
-                <div class="col-md-3 col-sm-6">
-                    <a href="" class="category-box" style="background-image: url('images/category07.jpg');">
-                        <div class="inner">
-                            <img src="images/category-icon07.png" alt="那英">
-                            <span class="number">39</span>
-                            <span class="title">那英</span>
+                            <span class="number" ng-bind-html="item.number"></span>
+                            <span class="title" ng-bind-html="item.title"></span>
                         </div> <!-- end .inner -->
                     </a> <!-- end .category-box -->
                 </div> <!-- end .col-md-3 -->
             </div> <!-- end .row -->
             <div class="text-center">
-                <a class="button" ui-sref="app.singer" href="#!/singer">所有歌手</a>
+                <a class="button" href="" ui-sref="app.singer">所有歌手</a>
             </div> <!-- end .text-center -->
         </div> <!-- end .container -->
     </div> <!-- end .inner -->

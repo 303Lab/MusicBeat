@@ -6,10 +6,17 @@
   <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
 
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.PlayList">
-    <constructor>
-      <idArg column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <idArg column="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
+    <id column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    <id column="uid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="PlayListMusicMap" type="com.musicbeat.web.model.PlayList" extends="BaseResultMap">
+    <collection property="musics" ofType="com.musicbeat.web.model.Music">
+      <id property="id" column="m_id"/>
+      <result property="name" column="m_name"/>
+      <result property="lyrics" column="m_lyrics"/>
+      <result property="link" column="m_link"/>
+    </collection>
   </resultMap>
 
   <delete id="deleteByPrimaryKey" flushCache="true" parameterType="map">
@@ -18,12 +25,12 @@
       and uid = #{uid,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.PlayList">
+  <insert id="insert" flushCache="true" parameterType="map">
     insert into playlist (mid, uid)
     values (#{mid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER})
   </insert>
 
-  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.PlayList">
+  <insert id="insertSelective" flushCache="true" parameterType="map">
     insert into playlist
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="mid != null">
@@ -42,4 +49,12 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectByUserId" parameterType="Integer" useCache="true" resultMap="PlayListMusicMap">
+    select pl.uid,pl.mid,m.id as m_id,m.name as m_name,m.lyrics as m_lyrics,m.link as m_link
+     from playlist pl left join music m on pl.mid = m.id
+    where uid = #{uid,jdbcType=INTEGER};
+  </select>
+
+
 </mapper>

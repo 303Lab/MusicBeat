@@ -16,7 +16,7 @@
     id, name
   </sql>
 
-  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" useCache="true" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from label_group

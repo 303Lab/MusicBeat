@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Serializable{
+public class User implements Serializable {
 
     private static final long serialVersionUID = 4799602879543296825L;
 
@@ -40,30 +40,46 @@ public class User implements Serializable{
 
     @Override
     public String toString() {
-      List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
-      list.add(id == null ? null : id.toString());
-      list.add(username);
-      list.add(password);
-      list.add(gender == null ? "嬲" : gender ? "男" : "女");
-      list.add(realname);
-      list.add(country);
-      list.add(province);
-      list.add(city);
-      list.add(qq);
-      list.add(phone);
-      list.add(email);
-      list.add(picture);
-      list.add(privilege);
-      list.add(isRealPublic == null ? "资料非公开" : isRealPublic ? "资料公开" : "资料非公开");
-      list.add(address);
+        list.add(id == null ? null : id.toString());
+        list.add(username);
+        list.add(password);
+        list.add(gender == null ? "嬲" : gender ? "男" : "女");
+        list.add(realname);
+        list.add(country);
+        list.add(province);
+        list.add(city);
+        list.add(qq);
+        list.add(phone);
+        list.add(email);
+        list.add(picture);
+        list.add(privilege);
+        list.add(isRealPublic == null ? "资料非公开" : isRealPublic ? "资料公开" : "资料非公开");
+        list.add(address);
 
-      return list.toString();
+        return list.toString();
     }
 
-    public User(){}
+    public User() {}
 
-    public User(Integer id, String username, String password, Boolean gender, String realname, String country, String province, String city, String qq, String phone, String email, String picture, String privilege, Boolean isRealPublic, String address) {
+    public User(
+      Integer id,
+      String username,
+      String password,
+      Boolean gender,
+      String realname,
+      String country,
+      String province,
+      String city,
+      String qq,
+      String phone,
+      String email,
+      String picture,
+      String privilege,
+      Boolean isRealPublic,
+      String address
+    ) {
         this.id = id;
         this.username = username == null ? null : username.trim();
         this.password = password == null ? null : password.trim();

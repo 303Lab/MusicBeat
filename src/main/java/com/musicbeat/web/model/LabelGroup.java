@@ -6,7 +6,7 @@ import java.util.List;
 
 public class LabelGroup implements Serializable {
 
-    private static final long serialVersionUID = 367252987540421164L;
+    private static final long serialVersionUID = 8453631193675517103L;
 
     private Integer id;
 

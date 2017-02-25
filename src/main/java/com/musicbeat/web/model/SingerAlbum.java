@@ -4,34 +4,39 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingerAlbum implements Serializable{
+public class SingerAlbum implements Serializable {
 
     private static final long serialVersionUID = 7031856981307468540L;
 
-    private Integer sid;
+    private Singer singer;
 
-    private Integer aid;
+    private Album album;
 
     @Override
     public String toString() {
         List<String> list = new ArrayList<>();
 
-        list.add(sid.toString());
-        list.add(aid.toString());
+        list.add(singer.toString());
+        list.add(album.toString());
 
         return list.toString();
     }
 
-    public SingerAlbum(Integer sid, Integer aid) {
-        this.sid = sid;
-        this.aid = aid;
+    public SingerAlbum() {}
+
+    public Singer getSinger() {
+        return singer;
     }
 
-    public Integer getSid() {
-        return sid;
+    public void setSinger(Singer singer) {
+        this.singer = singer;
     }
 
-    public Integer getAid() {
-        return aid;
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 }

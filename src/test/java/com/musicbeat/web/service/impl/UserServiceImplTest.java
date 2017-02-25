@@ -5,11 +5,10 @@ import com.github.pagehelper.PageHelper;
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.UserService;
 import com.musicbeat.web.utils.JUnit4ClassRunner;
-
 import org.apache.log4j.Logger;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -58,7 +57,7 @@ public class UserServiceImplTest {
     /**
      * Method: register(User user)
      */
-    @Test
+    /*@Test
     public void testRegister() throws Exception {
         user.setEmail("windawings@foxmail.com");
         boolean result = userService.register(user);
@@ -69,7 +68,7 @@ public class UserServiceImplTest {
         } else {
             logger.info(JSON.toJSONString(user) + ", " + result);
         }
-    }
+    }*/
 
     /**
      * Method: deleteByEmail(String email)
@@ -96,10 +95,11 @@ public class UserServiceImplTest {
      */
     @Test
     public void testAdd() throws Exception {
-        user.setUsername("windawings");
+        user.setUsername("test");
         user.setPassword("123");
         user.setPrivilege("admin");
-        user.setEmail("windawings@foxmail.com");
+        user.setEmail("test@test.com");
+        user.setPicture("images/user.png");
         boolean result = userService.add(user);
         user.setPassword(beatifyPassword(user));
         logger.info(JSON.toJSONString(user) + ", " + result);
@@ -137,7 +137,7 @@ public class UserServiceImplTest {
     @Test
     public void testFindById() throws Exception {
         List<User> users = userService.findById(2);
-        for (User user: users) {
+        for (User user : users) {
             user.setPassword(beatifyPassword(user));
         }
         logger.info(JSON.toJSONString(users));
@@ -202,17 +202,17 @@ public class UserServiceImplTest {
      */
     @Test
     public void testFindAdminByPage() throws Exception {
-        PageHelper.startPage(1,2);
+        PageHelper.startPage(1, 2);
         List<User> result = userService.findAdmin();
         result = beatifyPassword(result);
         logger.info(JSON.toJSONString(result));
 
-        PageHelper.startPage(2,2);
+        PageHelper.startPage(2, 2);
         result = userService.findAdmin();
         result = beatifyPassword(result);
         logger.info(JSON.toJSONString(result));
 
-        PageHelper.startPage(3,2);
+        PageHelper.startPage(3, 2);
         result = userService.findAdmin();
         result = beatifyPassword(result);
         logger.info(JSON.toJSONString(result));

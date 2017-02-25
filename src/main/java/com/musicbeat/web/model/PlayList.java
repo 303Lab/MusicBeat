@@ -11,24 +11,29 @@ public class PlayList implements Serializable {
     @Override
     public String toString() {
         List<String> list = new ArrayList<>();
-
-        list.add(mid == null ? null : mid.toString());
         list.add(uid == null ? null : uid.toString());
-
+        for (Music music : musics) {
+            list.add(music.toString());
+        }
         return list.toString();
     }
 
-    private Integer mid;
-
     private Integer uid;
 
-    public PlayList(Integer mid, Integer uid) {
-        this.mid = mid;
+    private List<Music> musics;
+
+    public PlayList() {}
+
+    public PlayList(Integer uid) {
         this.uid = uid;
     }
 
-    public Integer getMid() {
-        return mid;
+    public List<Music> getMusics() {
+        return musics;
+    }
+
+    public void setMusics(List<Music> musics) {
+        this.musics = musics;
     }
 
     public Integer getUid() {

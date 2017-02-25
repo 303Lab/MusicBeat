@@ -22,7 +22,7 @@ public class BeatifyUtil {
     }
 
     public static List<User> beatifyPassword(List<User> users) {
-        for (User user: users) {
+        for (User user : users) {
             user.setPassword(beatifyPassword(user));
         }
 

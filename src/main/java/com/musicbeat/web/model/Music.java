@@ -2,7 +2,6 @@ package com.musicbeat.web.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Music implements Serializable {
@@ -17,7 +16,10 @@ public class Music implements Serializable {
         list.add(name);
         list.add(lyrics);
         list.add(link);
-        list.add(duration == null ? null : duration.toString());
+        list.add(album.toString());
+        for (Label label : labels) {
+            list.add(label.toString());
+        }
 
         return list.toString();
     }
@@ -30,15 +32,18 @@ public class Music implements Serializable {
 
     private String link;
 
-    private Date duration;
+    private Album album;
 
-    public Music(Integer id, String name, String lyrics, String link, Date duration) {
+    private List<Label> labels;
+
+    public Music(Integer id, String name, String lyrics, String link) {
         this.id = id;
         this.name = name == null ? null : name.trim();
         this.lyrics = lyrics == null ? null : lyrics.trim();
         this.link = link == null ? null : link.trim();
-        this.duration = duration;
     }
+
+    public Music() {}
 
     public Integer getId() {
         return id;
@@ -56,7 +61,35 @@ public class Music implements Serializable {
         return link;
     }
 
-    public Date getDuration() {
-        return duration;
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public List<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
     }
 }

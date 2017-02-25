@@ -13,16 +13,16 @@ angular
         "toastr",
         "toastrProvider",
         "authService",
-        "authEvent",
+        "appEvent",
         signupController
     ]);
 
-function signupController($scope, toastr, toastrProvider, authService, authEvent) {
+function signupController($scope, toastr, toastrProvider, authService, appEvent) {
 
     // 监听文本
     $scope.inputChange = function () {
         if (($scope.registerMsg.name !== undefined && $scope.registerMsg.name.trim() !== "") || ($scope.registerMsg.email !== undefined && $scope.registerMsg.email.trim() !== "")){
-            $scope.registerMsg.message = authEvent.registerDefault;
+            $scope.registerMsg.message = appEvent.registerDefault;
             $scope.registerMsg.color = {"color": "#FFFFFF"};
         }
     };
@@ -30,7 +30,7 @@ function signupController($scope, toastr, toastrProvider, authService, authEvent
     $scope.signup = function () {
         if (!$scope.registerMsg.email.trim()) return;
 
-        $scope.registerMsg.message = authEvent.registerWait;
+        $scope.registerMsg.message = appEvent.registerWait;
         $scope.registerMsg.color = {"color": "#5d8730"};
 
         authService
@@ -39,8 +39,8 @@ function signupController($scope, toastr, toastrProvider, authService, authEvent
                 function (data) {
                     $scope.registerMsg.name = "";
                     $scope.registerMsg.email = "";
-                    var result = data.status === authEvent.ok;
-                    $scope.registerMsg.message = result ? authEvent.registerOk : authEvent.notOk;
+                    var result = data.status === appEvent.ok;
+                    $scope.registerMsg.message = result ? appEvent.registerOk : appEvent.notOk;
                     var text = toastrProvider.textCenter($scope.registerMsg.message);
 
                     if (jQuery(".signup-wrapper").hasClass("open")) {
@@ -59,10 +59,10 @@ function signupController($scope, toastr, toastrProvider, authService, authEvent
                 },
                 function (reason) {
                     if (jQuery(".signup-wrapper").hasClass("open")) {
-                        if (reason.message !== null && reason.message !== undefined) {
+                        if (typeof(reason.message) !== "undefined" && reason.message !== null) {
                             $scope.registerMsg.message = reason.message;
                         } else {
-                            $scope.registerMsg.message = "Server Internal Error";
+                            $scope.registerMsg.message = appEvent.error;
                         }
                         $scope.registerMsg.color = {"color": "#EE3D3D"};
                     } else {

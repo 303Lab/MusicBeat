@@ -6,26 +6,23 @@
   <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
 
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Singer">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="lang" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="is_band" javaType="java.lang.Boolean" jdbcType="BIT" />
-    </constructor>
+      <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="gender" property="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <result column="lang" property="lang" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="picture" property="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="is_band" property="isBand" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <result column="introduction" property="introduction" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
   </resultMap>
 
-  <resultMap id="ResultMapWithBLOBs" type="com.musicbeat.web.model.Singer">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="gender" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="lang" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="is_band" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="introduction" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
-    </constructor>
+  <resultMap id="SingerAlbumMap" type="com.musicbeat.web.model.Singer" extends="BaseResultMap">
+    <collection property="albums" ofType="com.musicbeat.web.model.Album">
+      <id property="id" column="a_id"/>
+      <result property="name" column="a_name"/>
+      <result property="introduction" column="a_introduction"/>
+      <result property="releaseTime" column="a_releaseTime"/>
+      <result property="picture" column="a_picture"/>
+    </collection>
   </resultMap>
 
   <sql id="Base_Column_List">
@@ -36,13 +33,48 @@
     introduction
   </sql>
 
-  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="SingerAlbumMap">
+    select s.id,s.name,s.gender,s.lang,s.picture,s.introduction,s.is_band,a.id as a_id,a.name as a_name,
+    a.introduction as a_introduction,a.release_time as a_releaseTime,a.picture as a_picture
+    from singer s left join singer_album sa on s.id =sa.sid
+    left join album a on sa.aid = a.id
+    where s.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectSingerIdByName" useCache="true" parameterType="java.lang.String" resultType="Integer">
+    select id from singer
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectSingersBySingerName" useCache="true" parameterType="String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from singer
-    where id = #{id,jdbcType=INTEGER}
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
@@ -154,4 +186,36 @@
       is_band = #{isBand,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAlbumsById" useCache="true" parameterType="Integer" resultMap="SingerAlbumMap">
+    select s.id,s.name,s.gender,s.lang,s.picture,s.introduction,s.is_band,a.id as a_id,a.name as a_name,
+    a.introduction as a_introduction,a.release_time as a_releaseTime,a.picture as a_picture
+    from singer s left join singer_album sa on s.id =sa.sid
+    left join album a on sa.aid = a.id
+    where s.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" useCache="true" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from singer
+  </select>
+
+  <select id="selectByLangGenderBand" useCache="true" parameterType="Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from singer
+    <where>
+    <if test="lang != null ">
+      lang = #{lang}
+    </if>
+    <if test="gender != null">
+      and gender = #{gender}
+    </if>
+      <if test="isBand != null">
+        and is_band = #{isBand}
+      </if>
+    </where>
+  </select>
+
 </mapper>

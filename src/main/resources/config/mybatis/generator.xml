@@ -95,44 +95,20 @@
     </javaClientGenerator>
 
     <!--生成对应表及类名-->
-    <table tableName="album" domainObjectName="Album" enableCountByExample="false" enableUpdateByExample="false"
+    <!--<table tableName="album" domainObjectName="Album" enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-      <!-- 参考 javaModelGenerator 的 constructorBased属性-->
+      &lt;!&ndash; 参考 javaModelGenerator 的 constructorBased属性&ndash;&gt;
       <property name="constructorBased" value="false"/>
-      <!-- 默认为false，如果设置为true，在生成的SQL中，table名字不会加上catalog或schema； -->
+      &lt;!&ndash; 默认为false，如果设置为true，在生成的SQL中，table名字不会加上catalog或schema； &ndash;&gt;
       <property name="ignoreQualifiersAtRuntime" value="false"/>
-      <!-- 参考 javaModelGenerator 的 immutable 属性 -->
+      &lt;!&ndash; 参考 javaModelGenerator 的 immutable 属性 &ndash;&gt;
       <property name="immutable" value="false"/>
-      <!-- 指定是否只生成domain类，如果设置为true，只生成domain类，如果还配置了sqlMapGenerator，那么在mapper XML文件中，只生成resultMap元素 -->
+      &lt;!&ndash; 指定是否只生成domain类，如果设置为true，只生成domain类，如果还配置了sqlMapGenerator，那么在mapper XML文件中，只生成resultMap元素 &ndash;&gt;
       <property name="modelOnly" value="false"/>
-      <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+      &lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;
       <property name="useActualColumnNames" value="false"/>
       <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="music" domainObjectName="Music" enableCountByExample="false" enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="singer" domainObjectName="Singer" enableCountByExample="false" enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="album_comment" domainObjectName="AlbumComment" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="music_comment" domainObjectName="MusicComment" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="playlist" domainObjectName="PlayList" enableCountByExample="false" enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    </table>-->
     <table tableName="label" domainObjectName="Label" enableCountByExample="false" enableUpdateByExample="false"
            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <generatedKey column="id" sqlStatement="MySql" identity="true"/>
@@ -142,23 +118,8 @@
            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
       <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>
-    <table tableName="flow" domainObjectName="Flow" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-    <table tableName="traffic" domainObjectName="Traffic" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-    <table tableName="billboard" domainObjectName="Billboard" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-    <table tableName="music_album" domainObjectName="MusicAlbum" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-    <table tableName="singer_album" domainObjectName="SingerAlbum" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-    <table tableName="singer_band" domainObjectName="SingerBand" enableCountByExample="false"
-           enableUpdateByExample="false"
-           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+    <table tableName="music_label" domainObjectName="MusicLabel" enableCountByExample="false" enableUpdateByExample="false"
+           enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+    </table>
   </context>
 </generatorConfiguration>

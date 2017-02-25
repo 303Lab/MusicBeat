@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Singer implements Serializable{
+public class Singer implements Serializable {
 
     private static final long serialVersionUID = 8704081907096194569L;
 
@@ -37,7 +37,11 @@ public class Singer implements Serializable{
 
     private String introduction;
 
-    public Singer(Integer id, String name, Boolean gender, String lang, String picture, Boolean isBand, String introduction) {
+    private List<Album> albums;
+
+    public Singer() {}
+
+    public Singer(Integer id, String name, Boolean gender, String lang, String picture, Boolean isBand, String introduction, List<Album> albums) {
         this.id = id;
         this.name = name == null ? null : name.trim();
         this.gender = gender;
@@ -45,33 +49,70 @@ public class Singer implements Serializable{
         this.picture = picture == null ? null : picture.trim();
         this.isBand = isBand;
         this.introduction = introduction == null ? null : introduction.trim();
+        this.albums = albums;
     }
 
     public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getGender() {
         return gender;
     }
 
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
     public String getLang() {
         return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     public String getPicture() {
         return picture;
     }
 
-    public Boolean getIsBand() {
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public Boolean getBand() {
         return isBand;
+    }
+
+    public void setBand(Boolean band) {
+        isBand = band;
     }
 
     public String getIntroduction() {
         return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
 }

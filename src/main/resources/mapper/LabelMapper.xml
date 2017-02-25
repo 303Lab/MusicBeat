@@ -6,23 +6,29 @@
   <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
 
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Label">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="lid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-    </constructor>
+    <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    <result column="gid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    <result column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="MusicLabelMap" type="com.musicbeat.web.model.Label" extends="BaseResultMap">
+    <collection property="musics" ofType="com.musicbeat.web.model.Music">
+      <id property="id" column="m_id"/>
+      <result property="name" column="m_name"/>
+      <result property="lyrics" column="m_lyrics"/>
+      <result property="link" column="m_link"/>
+    </collection>
   </resultMap>
 
   <sql id="Base_Column_List">
     id, lid, mid, name
   </sql>
 
-  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from label
-    where id = #{id,jdbcType=INTEGER}
+  <select id="selectById" useCache="true" parameterType="Integer" resultMap="MusicLabelMap">
+    select l.id,l.name,l.gid,m.id as m_id,m.name as m_name,m.lyrics as m_lyrics,m.link as m_link
+    from label l left join music_label ml on l.id = ml.lid
+    left join music m on ml.mid = m.id
+    where l.id = #{id,jdbcType=INTEGER}
   </select>
 
   <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
@@ -92,4 +98,45 @@
       name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByName" parameterType="String" resultType="Integer">
+    select id from label
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectLabelByName" parameterType="String" resultMap="MusicLabelMap">
+    select l.id,l.name,l.gid,m.id as m_id,m.name as m_name,m.lyrics as m_lyrics,m.link as m_link
+    from label l left join music_label ml on l.id = ml.lid
+    left join music m on ml.mid = m.id
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and l.name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and l.name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectAll" useCache="true" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from label
+  </select>
+
 </mapper>

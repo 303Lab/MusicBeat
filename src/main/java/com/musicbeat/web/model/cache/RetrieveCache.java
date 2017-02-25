@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @time.creation 2017/02/18 18:33
  * @since 1.0.0
  */
-public class RetrieveCache implements Serializable{
+public class RetrieveCache implements Serializable {
 
     private static final long serialVersionUID = 8813564170509570068L;
 

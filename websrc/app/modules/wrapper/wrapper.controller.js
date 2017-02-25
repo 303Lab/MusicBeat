@@ -8,9 +8,9 @@
 
 angular
     .module("app.ctrls")
-    .controller("wrapperController", ["$scope", wrapperController]);
+    .controller("wrapperController", ["$scope", "$document", wrapperController]);
 
-function wrapperController($scope) {
+function wrapperController($scope, $document) {
 
     // login signup forget Panel
     $scope.openLoginPanel = function () {
@@ -28,7 +28,7 @@ function wrapperController($scope) {
         jQuery(".login-wrapper").removeClass("open");
     };
 
-    jQuery(document).on("click", function (event) {
+    $document.on("click", function (event) {
         if (!jQuery(event.target).closest(".login").length && !jQuery(event.target).closest(".login-open").length) {
             jQuery(".login-wrapper").removeClass("open");
         }

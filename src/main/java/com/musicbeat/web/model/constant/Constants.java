@@ -4,8 +4,8 @@ package com.musicbeat.web.model.constant;
  * 常量类
  *
  * @author windawings
- * @time.creation 2017/01/26 13:30
  * @version 1.0.0
+ * @time.creation 2017/01/26 13:30
  * @since 1.0.0
  */
 public class Constants {
@@ -18,6 +18,8 @@ public class Constants {
     public static final String REQUEST_USERNAME_JSON = "username";
     public static final String REQUEST_PASSWORD_JSON = "password";
     public static final String REQUEST_EMAIL_JSON = "email";
+
+    public static final String REQUEST_COMMENT_JSON = "comment";
 
     // === Session ===
     public static final String SESSION_USER = "userData";
@@ -68,4 +70,7 @@ public class Constants {
     public static final String USERSERVICE_ERROR_DELETE = "Internal Error - Delete Failed";
     public static final String USERSERVICE_ERROR_INSERT = "Internal Error - Insert Failed";
     public static final String USERSERVICE_ERROR_RETRIEVE = "Internal Error - Retrieve Failed";
+
+    //=== Find Error Message ===
+    public static final String SEARCH_ERROR = "Failed Searching";
 }

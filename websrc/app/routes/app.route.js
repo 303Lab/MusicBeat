@@ -12,6 +12,7 @@ angular
 
 function appRouter($stateProvider, appConst) {
     $stateProvider
+        // app
         .state("app.home", {
             url: "/",
             views: {
@@ -22,10 +23,11 @@ function appRouter($stateProvider, appConst) {
             }
         })
         .state("app.music", {
-            url: "/music",
+            url: "/music/{name}",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("music.html")
+                    templateUrl: fnBasePath("music.html"),
+                    controller: "musicController"
                 }
             }
         })
@@ -38,16 +40,25 @@ function appRouter($stateProvider, appConst) {
                 }
             }
         })
-        .state("app.singer", {
-            url: "/singer",
+        .state("app.blog.category", {
+            url: "/category/{name}",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("singer.html")
+                    templateUrl: fnBasePath("blog.cart.html")
                 }
             }
         })
-        .state("app.categorySinger", {
-            url: "/category/singer",
+        .state("app.singer", {
+            url: "/singer/{type}",
+            views: {
+                "content@":{
+                    templateUrl: fnBasePath("singer.html"),
+                    controller: "singerController"
+                }
+            }
+        })
+        .state("app.singer.category", {
+            url: "/category/{sid:int}",
             views: {
                 "content@":{
                     templateUrl: fnBasePath("singer.cart.html")
@@ -63,28 +74,14 @@ function appRouter($stateProvider, appConst) {
                 }
             }
         })
-        .state("admin", {
-            url: "/admin",
-            abstract: true,
-            views: {
-                "": {
-                    templateUrl: fnBasePath("admin.html"),
-                    controller: "adminController"
-                },
-                "header": {
-                    templateUrl: fnBasePath("admin.header.html")
-                },
-                "content@":{
-                    templateUrl: fnBasePath("admin.singer.html")
-                }
-            }
 
-        })
+        // admin
         .state("admin.singer", {
             url: "/singer",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("admin.singer.html")
+                    templateUrl: fnBasePath("admin.singer.html"),
+                    controller: "adminSingerController"
                 }
             }
         })
@@ -108,7 +105,8 @@ function appRouter($stateProvider, appConst) {
             url: "/song",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("admin.song.html")
+                    templateUrl: fnBasePath("admin.song.html"),
+                    controller: "adminSongController"
                 }
             }
         })

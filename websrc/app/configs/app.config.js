@@ -11,5 +11,5 @@ angular
     .constant("appConst", {
         version: "1.0.0",
         htmlLoc: "tpls/",
-        apiUrl: "api"
+        apiUrl: "api",
     });

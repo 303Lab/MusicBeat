@@ -8,43 +8,19 @@
 
 angular
     .module("app.ctrls")
-    .controller("headerController", ["$scope", "$state", "authService", "authEvent", headerController]);
+    .controller("headerController", [
+        "$scope",
+        "$state",
+        "authService",
+        "appEvent",
+        "baseConst",
+        headerController
+    ]);
 
-function headerController($scope, $state, authService, authEvent) {
+function headerController($scope, $state, authService, appEvent, baseConst) {
 
-    var musics = [
-        {
-            id: 0,
-            title: 'Preparation',
-            author: 'Hans Zimmer/Richard Harvey',
-            url: 'music/Preparation.mp3',
-            pic: 'music/Preparation.jpg'
-        },
-        {
-            id: 1,
-            title: "あっちゅ～ま青春!",
-            author: "七森中☆ごらく部",
-            url: "music/あっちゅ～ま青春!.mp3",
-            pic: "music/あっちゅ～ま青春!.jpg",
-            lrc: "music/あっちゅ～ま青春!.lrc"
-        },
-        {
-            id: 2,
-            title: "secret base~君がくれたもの~",
-            author: "茅野愛衣",
-            url: "music/secret base~.mp3",
-            pic: "music/secret base~.jpg",
-            lrc: "music/secret base~君がくれたもの~.lrc"
-        },
-        {
-            id: 3,
-            title: "回レ！雪月花",
-            author: "小倉唯",
-            url: "music/回レ！雪月花.mp3",
-            pic: "music/回レ！雪月花.jpg",
-            lrc: "music/回レ！雪月花.lrc"
-        }
-    ];
+    // singer category
+    $scope.menu = baseConst.menu;
 
     // 注销
     $scope.logout = function () {
@@ -70,11 +46,51 @@ function headerController($scope, $state, authService, authEvent) {
         $scope.credentials.password = "";
         $scope.registerMsg.name = "";
         $scope.registerMsg.email = "";
-        $scope.registerMsg.message = authEvent.registerDefault;
+        $scope.registerMsg.message = appEvent.registerDefault;
         $scope.registerMsg.color = {"color": "#FFFFFF"};
         $scope.retrieve.email = "";
-        $scope.retrieve.message = authEvent.retrieveDefault;
+        $scope.retrieve.message = appEvent.retrieveDefault;
         $scope.retrieve.color = {"color": "#FFFFFF"};
         $scope.message.text = "";
+    };
+
+    $scope.getMusicByLabel = function ($event) {
+
+        musicService
+            .findMusicByLabel($event.target.innerHTML)
+            .then(
+                function (data)
+                {
+                    if (!jQuery.isEmptyObject(data) && data.length > 0) {
+                        $scope.current.musics.splice(0, $scope.musics.length - 1);
+                        for (var i = 0; i < data.length; i++) {
+                            var music = {};
+                            music.id = data[i].id;
+                            music.title = data[i].name;
+                            music.author = data[i].author;
+                            music.url = data[i].link;
+                            music.pic = data[i].picture;
+                            music.album = data[i].album;
+                            music.lrc = data[i].lyrics;
+
+                            $scope.current.musics.splice(i, 0, music);
+                        }
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.noneMusic));
+                    }
+                },
+
+                // 错误处理
+                function (reason)
+                {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
+                        toastr.error(toastrProvider.textCenter(reason.message));
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.error));
+                    }
+
+                    console.log(reason);
+                }
+            );
     };
 }

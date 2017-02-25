@@ -12,14 +12,14 @@ angular
         "$http",
         "$q",
         "appConst",
-        "authEvent",
+        "appEvent",
         "$sessionStorage",
         "hashProvider",
         "urlParamsProvider",
         authService
     ]);
 
-function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvider, urlParamsProvider) {
+function authService($http, $q, appConst, appEvent, $sessionStorage, hashProvider, urlParamsProvider) {
 
     var serviceBaseApi = appConst.apiUrl;
     var loginApi = serviceBaseApi + "/login";
@@ -71,7 +71,7 @@ function authService($http, $q, appConst, authEvent, $sessionStorage, hashProvid
             .then(
                 function (response) {
                     $sessionStorage.currentUser = response.data.userData;
-                    $sessionStorage.isAuthed = response.data.status === authEvent.ok;
+                    $sessionStorage.isAuthed = response.data.status === appEvent.ok;
                     if (response.data.roleName) {
                         $sessionStorage.roleName = response.data.roleName;
                     }

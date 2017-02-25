@@ -8,7 +8,7 @@ public interface MusicCommentMapper {
 
     int insert(MusicComment record);
 
-    int insertSelective(MusicComment record);
+    Integer insertSelective(MusicComment record);
 
     MusicComment selectByPrimaryKey(@Param("id") Integer id, @Param("uid") Integer uid, @Param("mid") Integer mid);
 

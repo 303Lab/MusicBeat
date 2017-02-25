@@ -13,10 +13,11 @@ angular
         "toastr",
         "toastrProvider",
         "authService",
+        "appEvent",
         loginController
     ]);
 
-function loginController($scope, toastr, toastrProvider, authService){
+function loginController($scope, toastr, toastrProvider, authService, appEvent){
 
     // 监听文本
     $scope.inputChange = function () {
@@ -45,10 +46,10 @@ function loginController($scope, toastr, toastrProvider, authService){
 
                 // 错误处理
                 function (reason) {
-                    if (reason.message !== null && reason.message !== undefined) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
                         $scope.message.text = reason.message;
                     } else {
-                        $scope.message.text = "Server Internal Error";
+                        $scope.message.text = appEvent.error;
                     }
 
                     if (!jQuery(".login-wrapper").hasClass("open")) {

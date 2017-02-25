@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * 解决Spring-Session Cookie跨域问题
  * 关键方法: getCookiePath
- *
+ * <p>
  * <a href="http://blog.csdn.net/alaska_bibi/article/details/53126456?locationNum=3&fps=1">参考网址1</a>
  * <a href="http://www.cnblogs.com/interdrp/p/5596563.html">参考网址2</a>
  *
@@ -105,14 +105,15 @@ public final class CustomCookieHttpSessionStrategy
     private long safeParse(String hex) {
         try {
             return Long.decode("0x" + hex);
-        }
-        catch (NumberFormatException notNumber) {
+        } catch (NumberFormatException notNumber) {
             return 0;
         }
     }
 
-    public void onNewSession(Session session, HttpServletRequest request,
-                             HttpServletResponse response) {
+    public void onNewSession(
+      Session session, HttpServletRequest request,
+      HttpServletResponse response
+    ) {
         Set<String> sessionIdsWritten = getSessionIdsWritten(request);
         if (sessionIdsWritten.contains(session.getId())) {
             return;
@@ -161,8 +162,10 @@ public final class CustomCookieHttpSessionStrategy
         return buffer.toString();
     }
 
-    public void onInvalidateSession(HttpServletRequest request,
-                                    HttpServletResponse response) {
+    public void onInvalidateSession(
+      HttpServletRequest request,
+      HttpServletResponse response
+    ) {
         Map<String, String> sessionIds = getSessionIds(request);
         String requestedAlias = getCurrentSessionAlias(request);
         sessionIds.remove(requestedAlias);
@@ -177,7 +180,7 @@ public final class CustomCookieHttpSessionStrategy
      * the value is null, then only a single session is supported per browser.
      *
      * @param sessionAliasParamName the name of the HTTP parameter used to specify the
-     * session alias. If null, then ony a single session is supported per browser.
+     *                              session alias. If null, then ony a single session is supported per browser.
      */
     public void setSessionAliasParamName(String sessionAliasParamName) {
         this.sessionParam = sessionAliasParamName;
@@ -195,6 +198,7 @@ public final class CustomCookieHttpSessionStrategy
 
     /**
      * Sets the name of the cookie to be used.
+     *
      * @param cookieName the name of the cookie to be used
      * @deprecated use {@link #setCookieSerializer(CookieSerializer)}
      */
@@ -212,7 +216,7 @@ public final class CustomCookieHttpSessionStrategy
      * which doesn't allow for spaces in the cookie values.
      *
      * @param delimiter the delimiter to set (i.e. "_ " will try a delimeter of either "_"
-     * or " ")
+     *                  or " ")
      */
     public void setDeserializationDelimiter(String delimiter) {
         this.deserializationDelimiter = delimiter;
@@ -235,8 +239,10 @@ public final class CustomCookieHttpSessionStrategy
         String sessionCookieValue = cookieValues.isEmpty() ? ""
                                                            : cookieValues.iterator().next();
         Map<String, String> result = new LinkedHashMap<String, String>();
-        StringTokenizer tokens = new StringTokenizer(sessionCookieValue,
-                                                     this.deserializationDelimiter);
+        StringTokenizer tokens = new StringTokenizer(
+          sessionCookieValue,
+          this.deserializationDelimiter
+        );
         if (tokens.countTokens() == 1) {
             result.put(DEFAULT_ALIAS, tokens.nextToken());
             return result;
@@ -252,14 +258,18 @@ public final class CustomCookieHttpSessionStrategy
         return result;
     }
 
-    public HttpServletRequest wrapRequest(HttpServletRequest request,
-                                          HttpServletResponse response) {
+    public HttpServletRequest wrapRequest(
+      HttpServletRequest request,
+      HttpServletResponse response
+    ) {
         request.setAttribute(HttpSessionManager.class.getName(), this);
         return request;
     }
 
-    public HttpServletResponse wrapResponse(HttpServletRequest request,
-                                            HttpServletResponse response) {
+    public HttpServletResponse wrapResponse(
+      HttpServletRequest request,
+      HttpServletResponse response
+    ) {
         return new MultiSessionHttpServletResponse(response, request);
     }
 
@@ -274,10 +284,13 @@ public final class CustomCookieHttpSessionStrategy
         String path = url.substring(0, queryStart);
         String query = url.substring(queryStart + 1, url.length());
         String replacement = isDefaultAlias ? "" : "$1" + encodedSessionAlias;
-        query = query.replaceFirst("((^|&)" + this.sessionParam + "=)([^&]+)?",
-                                   replacement);
+        query = query.replaceFirst(
+          "((^|&)" + this.sessionParam + "=)([^&]+)?",
+          replacement
+        );
         String sessionParamReplacement = String.format("%s=%s", this.sessionParam,
-                                                       encodedSessionAlias);
+                                                       encodedSessionAlias
+        );
 
         if (!isDefaultAlias && !query.contains(sessionParamReplacement)
             && url.endsWith(query)) {
@@ -294,8 +307,7 @@ public final class CustomCookieHttpSessionStrategy
     private String urlEncode(String value) {
         try {
             return URLEncoder.encode(value, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -306,8 +318,10 @@ public final class CustomCookieHttpSessionStrategy
     class MultiSessionHttpServletResponse extends HttpServletResponseWrapper {
         private final HttpServletRequest request;
 
-        MultiSessionHttpServletResponse(HttpServletResponse response,
-                                        HttpServletRequest request) {
+        MultiSessionHttpServletResponse(
+          HttpServletResponse response,
+          HttpServletRequest request
+        ) {
             super(response);
             this.request = request;
         }
@@ -319,8 +333,10 @@ public final class CustomCookieHttpSessionStrategy
             if (queryStart >= 0) {
                 String query = url.substring(queryStart + 1);
                 Matcher matcher = Pattern
-                  .compile(String.format("%s=([^&]+)",
-                                         CustomCookieHttpSessionStrategy.this.sessionParam))
+                  .compile(String.format(
+                    "%s=([^&]+)",
+                    CustomCookieHttpSessionStrategy.this.sessionParam
+                  ))
                   .matcher(query);
 
                 if (matcher.find()) {
@@ -400,8 +416,10 @@ class CustomerCookieSerializer implements CookieSerializer {
                         continue;
                     }
                     if (this.jvmRoute != null && sessionId.endsWith(this.jvmRoute)) {
-                        sessionId = sessionId.substring(0,
-                                                        sessionId.length() - this.jvmRoute.length());
+                        sessionId = sessionId.substring(
+                          0,
+                          sessionId.length() - this.jvmRoute.length()
+                        );
                     }
                     matchingCookieValues.add(sessionId);
                 }
@@ -439,14 +457,12 @@ class CustomerCookieSerializer implements CookieSerializer {
 
         if ("".equals(requestedCookieValue)) {
             sessionCookie.setMaxAge(0);
-        }
-        else if (this.rememberMeRequestAttribute != null
-                 && request.getAttribute(this.rememberMeRequestAttribute) != null) {
+        } else if (this.rememberMeRequestAttribute != null
+                   && request.getAttribute(this.rememberMeRequestAttribute) != null) {
             // the cookie is only written at time of session creation, so we rely on
             // session expiration rather than cookie expiration if remember me is enabled
             sessionCookie.setMaxAge(Integer.MAX_VALUE);
-        }
-        else {
+        } else {
             sessionCookie.setMaxAge(this.cookieMaxAge);
         }
 
@@ -455,6 +471,7 @@ class CustomerCookieSerializer implements CookieSerializer {
 
     /**
      * Decode the value using Base64.
+     *
      * @param base64Value the Base64 String to decode
      * @return the Base64 decoded value
      * @since 1.2.2
@@ -463,14 +480,14 @@ class CustomerCookieSerializer implements CookieSerializer {
         try {
             byte[] decodedCookieBytes = Base64.decode(base64Value.getBytes());
             return new String(decodedCookieBytes);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * Encode the value using Base64.
+     *
      * @param value the String to Base64 encode
      * @return the Base64 encoded value
      * @since 1.2.2
@@ -516,7 +533,7 @@ class CustomerCookieSerializer implements CookieSerializer {
      * {@link HttpServletRequest}.
      *
      * @param cookiePath the path of the Cookie. If null, the default of the context path
-     * will be used.
+     *                   will be used.
      */
     public void setCookiePath(String cookiePath) {
         this.cookiePath = cookiePath;
@@ -564,7 +581,7 @@ class CustomerCookieSerializer implements CookieSerializer {
      * like <a href= "https://www.owasp.org/index.php/HTTP_Response_Splitting">HTTP
      * Response Splitting</a>.
      * </p>
-     *
+     * <p>
      * <p>
      * If the pattern does not match, then no domain will be set. This is useful to ensure
      * the domain is not set during development when localhost might be used.
@@ -573,7 +590,7 @@ class CustomerCookieSerializer implements CookieSerializer {
      * An example value might be "^.+?\\.(\\w+\\.[a-z]+)$". For the given input, it would
      * provide the following explicit domain (null means no domain name is set):
      * </p>
-     *
+     * <p>
      * <ul>
      * <li>example.com - null</li>
      * <li>child.sub.example.com - example.com</li>
@@ -582,7 +599,7 @@ class CustomerCookieSerializer implements CookieSerializer {
      * </ul>
      *
      * @param domainNamePattern the case insensitive pattern to extract the domain name
-     * with
+     *                          with
      * @throws IllegalStateException if the domainName is also set
      */
     public void setDomainNamePattern(String domainNamePattern) {
@@ -590,8 +607,10 @@ class CustomerCookieSerializer implements CookieSerializer {
             throw new IllegalStateException(
               "Cannot set both domainName and domainNamePattern");
         }
-        this.domainNamePattern = Pattern.compile(domainNamePattern,
-                                                 Pattern.CASE_INSENSITIVE);
+        this.domainNamePattern = Pattern.compile(
+          domainNamePattern,
+          Pattern.CASE_INSENSITIVE
+        );
     }
 
     /**
@@ -629,6 +648,7 @@ class CustomerCookieSerializer implements CookieSerializer {
     /**
      * Set the request attribute name that indicates remember-me login. If specified, the
      * cookie will be written as Integer.MAX_VALUE.
+     *
      * @param rememberMeRequestAttribute the remember-me request attribute name
      * @since 1.3.0
      */
@@ -673,8 +693,7 @@ class CustomerCookieSerializer implements CookieSerializer {
         try {
             ServletRequest.class.getMethod("startAsync");
             return true;
-        }
-        catch (NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
         }
         return false;
     }
@@ -708,16 +727,24 @@ class CustomerCookieSerializer implements CookieSerializer {
  */
 final class Base64 {
 
-    /** No options specified. Value is zero. */
+    /**
+     * No options specified. Value is zero.
+     */
     public final static int NO_OPTIONS = 0;
 
-    /** Specify encoding in first bit. Value is one. */
+    /**
+     * Specify encoding in first bit. Value is one.
+     */
     public final static int ENCODE = 1;
 
-    /** Specify decoding in first bit. Value is zero. */
+    /**
+     * Specify decoding in first bit. Value is zero.
+     */
     public final static int DECODE = 0;
 
-    /** Do break lines when encoding. Value is 8. */
+    /**
+     * Do break lines when encoding. Value is 8.
+     */
     public final static int DO_BREAK_LINES = 8;
 
     /**
@@ -738,13 +765,19 @@ final class Base64 {
      */
     public final static int ORDERED = 32;
 
-    /** Maximum line length (76) of Base64 output. */
+    /**
+     * Maximum line length (76) of Base64 output.
+     */
     private final static int MAX_LINE_LENGTH = 76;
 
-    /** The equals sign (=) as a byte. */
+    /**
+     * The equals sign (=) as a byte.
+     */
     private final static byte EQUALS_SIGN = (byte) '=';
 
-    /** The new line character (\n) as a byte. */
+    /**
+     * The new line character (\n) as a byte.
+     */
     private final static byte NEW_LINE = (byte) '\n';
 
     private final static byte WHITE_SPACE_ENC = -5; // Indicates white space in encoding
@@ -752,57 +785,62 @@ final class Base64 {
 
 	/* ******** S T A N D A R D B A S E 6 4 A L P H A B E T ******** */
 
-    /** The 64 valid Base64 values. */
-	/* Host platform me be something funny like EBCDIC, so we hardcode these values. */
-    private final static byte[] _STANDARD_ALPHABET = { (byte) 'A', (byte) 'B',
-                                                       (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H',
-                                                       (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
-                                                       (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T',
-                                                       (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
-                                                       (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f',
-                                                       (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l',
-                                                       (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r',
-                                                       (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x',
-                                                       (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
-                                                       (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9',
-                                                       (byte) '+', (byte) '/' };
+    /**
+     * The 64 valid Base64 values.
+     */
+  /* Host platform me be something funny like EBCDIC, so we hardcode these values. */
+    private final static byte[] _STANDARD_ALPHABET = {
+      (byte) 'A', (byte) 'B',
+      (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H',
+      (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
+      (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T',
+      (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
+      (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f',
+      (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l',
+      (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r',
+      (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x',
+      (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+      (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9',
+      (byte) '+', (byte) '/'
+    };
 
     /**
      * Translates a Base64 value to either its 6-bit reconstruction value or a negative
      * number indicating some other meaning.
      **/
-    private final static byte[] _STANDARD_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9,
-                                                        -9, // Decimal 0 - 8
-                                                        -5, -5, // Whitespace: Tab and Linefeed
-                                                        -9, -9, // Decimal 11 - 12
-                                                        -5, // Whitespace: Carriage Return
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
-                                                        -9, -9, -9, -9, -9, // Decimal 27 - 31
-                                                        -5, // Whitespace: Space
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 42
-                                                        62, // Plus sign at decimal 43
-                                                        -9, -9, -9, // Decimal 44 - 46
-                                                        63, // Slash at decimal 47
-                                                        52, 53, 54, 55, 56, 57, 58, 59, 60, 61, // Numbers zero through nine
-                                                        -9, -9, -9, // Decimal 58 - 60
-                                                        -1, // Equals sign at decimal 61
-                                                        -9, -9, -9, // Decimal 62 - 64
-                                                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, // Letters 'A' through 'N'
-                                                        14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, // Letters 'O' through 'Z'
-                                                        -9, -9, -9, -9, -9, -9, // Decimal 91 - 96
-                                                        26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, // Letters 'a' through 'm'
-                                                        39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // Letters 'n' through 'z'
-                                                        -9, -9, -9, -9, -9, // Decimal 123 - 127
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 128 - 139
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 140 - 152
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 153 - 165
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 166 - 178
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 179 - 191
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 192 - 204
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 205 - 217
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 218 - 230
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 231 - 243
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9 // Decimal 244 - 255
+    private final static byte[] _STANDARD_DECODABET = {
+      -9, -9, -9, -9, -9, -9, -9, -9,
+      -9, // Decimal 0 - 8
+      -5, -5, // Whitespace: Tab and Linefeed
+      -9, -9, // Decimal 11 - 12
+      -5, // Whitespace: Carriage Return
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
+      -9, -9, -9, -9, -9, // Decimal 27 - 31
+      -5, // Whitespace: Space
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 42
+      62, // Plus sign at decimal 43
+      -9, -9, -9, // Decimal 44 - 46
+      63, // Slash at decimal 47
+      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, // Numbers zero through nine
+      -9, -9, -9, // Decimal 58 - 60
+      -1, // Equals sign at decimal 61
+      -9, -9, -9, // Decimal 62 - 64
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, // Letters 'A' through 'N'
+      14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, // Letters 'O' through 'Z'
+      -9, -9, -9, -9, -9, -9, // Decimal 91 - 96
+      26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, // Letters 'a' through 'm'
+      39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // Letters 'n' through 'z'
+      -9, -9, -9, -9, -9, // Decimal 123 - 127
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 128 - 139
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 140 - 152
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 153 - 165
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 166 - 178
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 179 - 191
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 192 - 204
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 205 - 217
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 218 - 230
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 231 - 243
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9 // Decimal 244 - 255
     };
 
 	/* ******** U R L S A F E B A S E 6 4 A L P H A B E T ******** */
@@ -814,58 +852,61 @@ final class Base64 {
      * Notice that the last two bytes become "hyphen" and "underscore" instead of "plus"
      * and "slash."
      */
-    private final static byte[] _URL_SAFE_ALPHABET = { (byte) 'A', (byte) 'B',
-                                                       (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H',
-                                                       (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
-                                                       (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T',
-                                                       (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
-                                                       (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f',
-                                                       (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l',
-                                                       (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r',
-                                                       (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x',
-                                                       (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
-                                                       (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9',
-                                                       (byte) '-', (byte) '_' };
+    private final static byte[] _URL_SAFE_ALPHABET = {
+      (byte) 'A', (byte) 'B',
+      (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H',
+      (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N',
+      (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T',
+      (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z',
+      (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f',
+      (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l',
+      (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r',
+      (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x',
+      (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+      (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9',
+      (byte) '-', (byte) '_'
+    };
 
     /**
      * Used in decoding URL- and Filename-safe dialects of Base64.
      */
-    private final static byte[] _URL_SAFE_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9,
-                                                        -9, // Decimal 0 - 8
-                                                        -5, -5, // Whitespace: Tab and Linefeed
-                                                        -9, -9, // Decimal 11 - 12
-                                                        -5, // Whitespace: Carriage Return
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
-                                                        -9, -9, -9, -9, -9, // Decimal 27 - 31
-                                                        -5, // Whitespace: Space
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 42
-                                                        -9, // Plus sign at decimal 43
-                                                        -9, // Decimal 44
-                                                        62, // Minus sign at decimal 45
-                                                        -9, // Decimal 46
-                                                        -9, // Slash at decimal 47
-                                                        52, 53, 54, 55, 56, 57, 58, 59, 60, 61, // Numbers zero through nine
-                                                        -9, -9, -9, // Decimal 58 - 60
-                                                        -1, // Equals sign at decimal 61
-                                                        -9, -9, -9, // Decimal 62 - 64
-                                                        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, // Letters 'A' through 'N'
-                                                        14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, // Letters 'O' through 'Z'
-                                                        -9, -9, -9, -9, // Decimal 91 - 94
-                                                        63, // Underscore at decimal 95
-                                                        -9, // Decimal 96
-                                                        26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, // Letters 'a' through 'm'
-                                                        39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // Letters 'n' through 'z'
-                                                        -9, -9, -9, -9, -9, // Decimal 123 - 127
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 128 - 139
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 140 - 152
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 153 - 165
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 166 - 178
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 179 - 191
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 192 - 204
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 205 - 217
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 218 - 230
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 231 - 243
-                                                        -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9 // Decimal 244 - 255
+    private final static byte[] _URL_SAFE_DECODABET = {
+      -9, -9, -9, -9, -9, -9, -9, -9,
+      -9, // Decimal 0 - 8
+      -5, -5, // Whitespace: Tab and Linefeed
+      -9, -9, // Decimal 11 - 12
+      -5, // Whitespace: Carriage Return
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
+      -9, -9, -9, -9, -9, // Decimal 27 - 31
+      -5, // Whitespace: Space
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 42
+      -9, // Plus sign at decimal 43
+      -9, // Decimal 44
+      62, // Minus sign at decimal 45
+      -9, // Decimal 46
+      -9, // Slash at decimal 47
+      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, // Numbers zero through nine
+      -9, -9, -9, // Decimal 58 - 60
+      -1, // Equals sign at decimal 61
+      -9, -9, -9, // Decimal 62 - 64
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, // Letters 'A' through 'N'
+      14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, // Letters 'O' through 'Z'
+      -9, -9, -9, -9, // Decimal 91 - 94
+      63, // Underscore at decimal 95
+      -9, // Decimal 96
+      26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, // Letters 'a' through 'm'
+      39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, // Letters 'n' through 'z'
+      -9, -9, -9, -9, -9, // Decimal 123 - 127
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 128 - 139
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 140 - 152
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 153 - 165
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 166 - 178
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 179 - 191
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 192 - 204
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 205 - 217
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 218 - 230
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 231 - 243
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9 // Decimal 244 - 255
     };
 
 	/* ******** O R D E R E D B A S E 6 4 A L P H A B E T ******** */
@@ -876,58 +917,61 @@ final class Base64 {
      * href="http://www.faqs.org/qa/rfcc-1940.html">http://www.faqs.org/
      * qa/rfcc-1940.html</a>.
      */
-    private final static byte[] _ORDERED_ALPHABET = { (byte) '-', (byte) '0', (byte) '1',
-                                                      (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7',
-                                                      (byte) '8', (byte) '9', (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D',
-                                                      (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J',
-                                                      (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P',
-                                                      (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V',
-                                                      (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) '_', (byte) 'a',
-                                                      (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g',
-                                                      (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm',
-                                                      (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's',
-                                                      (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
-                                                      (byte) 'z' };
+    private final static byte[] _ORDERED_ALPHABET = {
+      (byte) '-', (byte) '0', (byte) '1',
+      (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7',
+      (byte) '8', (byte) '9', (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D',
+      (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J',
+      (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P',
+      (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V',
+      (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) '_', (byte) 'a',
+      (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g',
+      (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm',
+      (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's',
+      (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
+      (byte) 'z'
+    };
 
     /**
      * Used in decoding the "ordered" dialect of Base64.
      */
-    private final static byte[] _ORDERED_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9,
-                                                       -9, // Decimal 0 - 8
-                                                       -5, -5, // Whitespace: Tab and Linefeed
-                                                       -9, -9, // Decimal 11 - 12
-                                                       -5, // Whitespace: Carriage Return
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
-                                                       -9, -9, -9, -9, -9, // Decimal 27 - 31
-                                                       -5, // Whitespace: Space
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 42
-                                                       -9, // Plus sign at decimal 43
-                                                       -9, // Decimal 44
-                                                       0, // Minus sign at decimal 45
-                                                       -9, // Decimal 46
-                                                       -9, // Slash at decimal 47
-                                                       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, // Numbers zero through nine
-                                                       -9, -9, -9, // Decimal 58 - 60
-                                                       -1, // Equals sign at decimal 61
-                                                       -9, -9, -9, // Decimal 62 - 64
-                                                       11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, // Letters 'A' through 'M'
-                                                       24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, // Letters 'N' through 'Z'
-                                                       -9, -9, -9, -9, // Decimal 91 - 94
-                                                       37, // Underscore at decimal 95
-                                                       -9, // Decimal 96
-                                                       38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, // Letters 'a' through 'm'
-                                                       51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, // Letters 'n' through 'z'
-                                                       -9, -9, -9, -9, -9, // Decimal 123 - 127
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 128 - 139
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 140 - 152
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 153 - 165
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 166 - 178
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 179 - 191
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 192 - 204
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 205 - 217
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 218 - 230
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 231 - 243
-                                                       -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9 // Decimal 244 - 255
+    private final static byte[] _ORDERED_DECODABET = {
+      -9, -9, -9, -9, -9, -9, -9, -9,
+      -9, // Decimal 0 - 8
+      -5, -5, // Whitespace: Tab and Linefeed
+      -9, -9, // Decimal 11 - 12
+      -5, // Whitespace: Carriage Return
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 14 - 26
+      -9, -9, -9, -9, -9, // Decimal 27 - 31
+      -5, // Whitespace: Space
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 33 - 42
+      -9, // Plus sign at decimal 43
+      -9, // Decimal 44
+      0, // Minus sign at decimal 45
+      -9, // Decimal 46
+      -9, // Slash at decimal 47
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, // Numbers zero through nine
+      -9, -9, -9, // Decimal 58 - 60
+      -1, // Equals sign at decimal 61
+      -9, -9, -9, // Decimal 62 - 64
+      11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, // Letters 'A' through 'M'
+      24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, // Letters 'N' through 'Z'
+      -9, -9, -9, -9, // Decimal 91 - 94
+      37, // Underscore at decimal 95
+      -9, // Decimal 96
+      38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, // Letters 'a' through 'm'
+      51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, // Letters 'n' through 'z'
+      -9, -9, -9, -9, -9, // Decimal 123 - 127
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 128 - 139
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 140 - 152
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 153 - 165
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 166 - 178
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 179 - 191
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 192 - 204
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 205 - 217
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 218 - 230
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal 231 - 243
+      -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9 // Decimal 244 - 255
     };
 
     private Base64() {
@@ -944,8 +988,7 @@ final class Base64 {
     public static boolean isBase64(byte[] bytes) {
         try {
             decode(bytes);
-        }
-        catch (InvalidBase64CharacterException e) {
+        } catch (InvalidBase64CharacterException e) {
             return false;
         }
         return true;
@@ -956,17 +999,16 @@ final class Base64 {
      * specified. It's possible, though silly, to specify ORDERED <b>and</b> URLSAFE in
      * which case one of them will be picked, though there is no guarantee as to which one
      * will be picked.
+     *
      * @param options the options
      * @return the alphabet array
      */
     private static byte[] getAlphabet(int options) {
         if ((options & URL_SAFE) == URL_SAFE) {
             return _URL_SAFE_ALPHABET;
-        }
-        else if ((options & ORDERED) == ORDERED) {
+        } else if ((options & ORDERED) == ORDERED) {
             return _ORDERED_ALPHABET;
-        }
-        else {
+        } else {
             return _STANDARD_ALPHABET;
         }
     }
@@ -976,17 +1018,16 @@ final class Base64 {
      * specified. It's possible, though silly, to specify ORDERED and URL_SAFE in which
      * case one of them will be picked, though there is no guarantee as to which one will
      * be picked.
+     *
      * @param options the options
      * @return the decodabet array
      */
     private static byte[] getDecodabet(int options) {
         if ((options & URL_SAFE) == URL_SAFE) {
             return _URL_SAFE_DECODABET;
-        }
-        else if ((options & ORDERED) == ORDERED) {
+        } else if ((options & ORDERED) == ORDERED) {
             return _ORDERED_DECODABET;
-        }
-        else {
+        } else {
             return _STANDARD_DECODABET;
         }
     }
@@ -1006,16 +1047,19 @@ final class Base64 {
      * <p>
      * This is the lowest level of the encoding methods with all possible parameters.
      * </p>
-     * @param source the array to convert
-     * @param srcOffset the index where conversion begins
+     *
+     * @param source      the array to convert
+     * @param srcOffset   the index where conversion begins
      * @param numSigBytes the number of significant bytes in your array
      * @param destination the array to hold the conversion
-     * @param destOffset the index where output will be put
-     * @param options the options
+     * @param destOffset  the index where output will be put
+     * @param options     the options
      * @return the <code>destination</code> array
      */
-    private static byte[] encode3to4(byte[] source, int srcOffset, int numSigBytes,
-                                     byte[] destination, int destOffset, int options) {
+    private static byte[] encode3to4(
+      byte[] source, int srcOffset, int numSigBytes,
+      byte[] destination, int destOffset, int options
+    ) {
 
         byte[] ALPHABET = getAlphabet(options);
 
@@ -1063,13 +1107,14 @@ final class Base64 {
 
     /**
      * Low-level access to encoding ASCII characters in the form of a byte array.
-     * @param source The data to convert
-     * @param off Offset in array where conversion should begin
-     * @param len Length of data to convert
+     *
+     * @param source  The data to convert
+     * @param off     Offset in array where conversion should begin
+     * @param len     Length of data to convert
      * @param options Specified options
      * @return The Base64-encoded data as a String
-     * @throws java.io.IOException if there is an error
-     * @throws NullPointerException if source array is null
+     * @throws java.io.IOException      if there is an error
+     * @throws NullPointerException     if source array is null
      * @throws IllegalArgumentException if source array, offset, or length are invalid
      * @see Base64#DO_BREAK_LINES
      */
@@ -1090,7 +1135,8 @@ final class Base64 {
         if (off + len > source.length) {
             throw new IllegalArgumentException(String.format(
               "Cannot have offset of %d and length of %d with array of length %d",
-              off, len, source.length));
+              off, len, source.length
+            ));
         } // end if: off < 0
 
         boolean breakLines = (options & DO_BREAK_LINES) > 0;
@@ -1135,8 +1181,7 @@ final class Base64 {
             // System.err.println("Having to resize array from " + outBuff.length + " to "
             // + e );
             return finalOut;
-        }
-        else {
+        } else {
             // System.err.println("No need to resize array.");
             return outBuff;
         }
@@ -1155,18 +1200,21 @@ final class Base64 {
      * <p>
      * This is the lowest level of the decoding methods with all possible parameters.
      * </p>
-     * @param source the array to convert
-     * @param srcOffset the index where conversion begins
+     *
+     * @param source      the array to convert
+     * @param srcOffset   the index where conversion begins
      * @param destination the array to hold the conversion
-     * @param destOffset the index where output will be put
-     * @param options alphabet type is pulled from this (standard, url-safe, ordered)
+     * @param destOffset  the index where output will be put
+     * @param options     alphabet type is pulled from this (standard, url-safe, ordered)
      * @return the number of decoded bytes converted
-     * @throws NullPointerException if source or destination arrays are null
+     * @throws NullPointerException     if source or destination arrays are null
      * @throws IllegalArgumentException if srcOffset or destOffset are invalid or there is
-     * not enough room in the array.
+     *                                  not enough room in the array.
      */
-    private static int decode4to3(final byte[] source, final int srcOffset,
-                                  final byte[] destination, final int destOffset, final int options) {
+    private static int decode4to3(
+      final byte[] source, final int srcOffset,
+      final byte[] destination, final int destOffset, final int options
+    ) {
 
         // Lots of error checking and exception throwing
         if (source == null) {
@@ -1179,13 +1227,15 @@ final class Base64 {
             throw new IllegalArgumentException(
               String.format(
                 "Source array with length %d cannot have offset of %d and still process four bytes.",
-                source.length, srcOffset));
+                source.length, srcOffset
+              ));
         } // end if
         if (destOffset < 0 || destOffset + 2 >= destination.length) {
             throw new IllegalArgumentException(
               String.format(
                 "Destination array with length %d cannot have offset of %d and still store three bytes.",
-                destination.length, destOffset));
+                destination.length, destOffset
+              ));
         } // end if
 
         byte[] DECODABET = getDecodabet(options);
@@ -1243,16 +1293,19 @@ final class Base64 {
      * recommended method, although it is used internally as part of the decoding process.
      * Special case: if len = 0, an empty array is returned. Still, if you need more speed
      * and reduced memory footprint (and aren't gzipping), consider this method.
-     * @param source The Base64 encoded data
-     * @param off The offset of where to begin decoding
-     * @param len The length of characters to decode
+     *
+     * @param source  The Base64 encoded data
+     * @param off     The offset of where to begin decoding
+     * @param len     The length of characters to decode
      * @param options Can specify options such as alphabet type to use
      * @return decoded data
      * @throws IllegalArgumentException If bogus characters exist in source data
      */
     @SuppressWarnings("cast")
-    private static byte[] decode(final byte[] source, final int off, final int len,
-                                 final int options) {
+    private static byte[] decode(
+      final byte[] source, final int off, final int len,
+      final int options
+    ) {
 
         // Lots of error checking and exception throwing
         if (source == null) {
@@ -1262,13 +1315,13 @@ final class Base64 {
             throw new IllegalArgumentException(
               String.format(
                 "Source array with length %d cannot have offset of %d and process %d bytes.",
-                source.length, off, len));
+                source.length, off, len
+              ));
         } // end if
 
         if (len == 0) {
             return new byte[0];
-        }
-        else if (len < 4) {
+        } else if (len < 4) {
             throw new IllegalArgumentException(
               "Base64-encoded string must have at least four characters, but length specified was "
               + len);
@@ -1305,12 +1358,12 @@ final class Base64 {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 // There's a bad input character in the Base64 stream.
                 throw new InvalidBase64CharacterException(String.format(
                   "Bad Base64 input character decimal %d in array position %d",
-                  ((int) source[i]) & 0xFF, i));
+                  ((int) source[i]) & 0xFF, i
+                ));
             }
         }
 

@@ -17,7 +17,7 @@ function toastrProvider($provide, toastrConfig) {
         containerId: "toast-container",
         maxOpened: 0,
         newestOnTop: true,
-        positionClass: "toast-top-full-width",
+        positionClass: "toast-top-center",
         preventDuplicates: false,
         preventOpenDuplicates: false,
         target: "body",

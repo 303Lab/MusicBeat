@@ -7,7 +7,6 @@ import com.musicbeat.web.model.cache.RetrieveCache;
 import com.musicbeat.web.service.EmailService;
 import com.musicbeat.web.service.RedisService;
 import com.musicbeat.web.service.UserService;
-
 import com.musicbeat.web.utils.EncryptUtil;
 import com.musicbeat.web.utils.RandomUtil;
 import com.musicbeat.web.utils.RegexValidateUtil;
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
             if (this.add(user)) {
                 if (emailService.sendActiveEmail(user, random)) {
                     return true;
-                } else if(this.deleteByUserName(user.getUsername())) {
+                } else if (this.deleteByUserName(user.getUsername())) {
                     return false;
                 } else {
                     throw new Exception(USERSERVICE_ERROR_DELETE);
@@ -79,8 +78,9 @@ public class UserServiceImpl implements UserService {
         try {
             // 用户未注册
             List<User> emails = this.findByEmail(user.getEmail(), false);
-            if (emails.isEmpty()) return user.getEmail() + RESPONSE_ERROR_RETRIEVE_NONE_USER;
-
+            if (emails.isEmpty()) {
+                return user.getEmail() + RESPONSE_ERROR_RETRIEVE_NONE_USER;
+            }
 
             RetrieveCache cache = redisService.findRetrieveCode(user);
 
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
             JSONObject object = new JSONObject();
             object.put("user", user.toString());
-            object.put("random",randomString);
+            object.put("random", randomString);
             String random = EncryptUtil.SHA512(object.toJSONString());
 
             random = (
@@ -117,13 +117,12 @@ public class UserServiceImpl implements UserService {
             byte[] emailBytes = user.getEmail().getBytes(HTTP_UTF8);
             String base64String = Base64Utils.encodeToUrlSafeString(emailBytes);
 
-
-            url = url + "/api/retrieve?u=" + base64String +"&c=" + random;
+            url = url + "/api/retrieve?u=" + base64String + "&c=" + random;
 
             cache = new RetrieveCache(user.getEmail(), random);
 
             if (redisService.addRetrieveCode(cache)) {
-                if (emailService.sendRetrieveEmail(user, url)){
+                if (emailService.sendRetrieveEmail(user, url)) {
                     return RESPONSE_SUCCESS;
                 } else {
                     redisService.deleteRetrieveCode(user);
@@ -132,7 +131,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 throw new Exception(USERSERVICE_ERROR_RETRIEVE);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error(e, e.fillInStackTrace());
 
             return RESPONSE_ERROR_EXCEPTION;
@@ -142,14 +141,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean retrieveWithoutTimeCheck(User user, String code) {
 
-        try{
+        try {
 
             RetrieveCache cache = redisService.findRetrieveCode(user);
 
             if (cache != null) {
                 String verifyCode = cache.getRandom();
 
-                if (verifyCode.equals(code) && redisService.deleteRetrieveCode(user)){
+                if (verifyCode.equals(code) && redisService.deleteRetrieveCode(user)) {
                     return true;
                 } else {
                     throw new Exception();
@@ -177,7 +176,6 @@ public class UserServiceImpl implements UserService {
                 user = users.get(0);
                 user.setPassword(newPassword);
 
-
                 return this.update(user);
             }
 
@@ -191,14 +189,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean retrieveVerify(User user, String code) {
 
-        try{
+        try {
 
             RetrieveCache cache = redisService.findRetrieveCode(user);
 
             if (cache != null) {
                 String verifyCode = cache.getRandom();
 
-                if (verifyCode.equals(code)){
+                if (verifyCode.equals(code)) {
                     return true;
                 } else {
                     throw new Exception();

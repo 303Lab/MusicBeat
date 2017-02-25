@@ -1,7 +1,5 @@
 package com.musicbeat.web.model.viewModel;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 /**
  * User视图类
  *

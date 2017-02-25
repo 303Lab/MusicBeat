@@ -92,4 +92,18 @@
       play_amount = #{playAmount,jdbcType=BIGINT}
     where time = #{time,jdbcType=DATE}
   </update>
+
+  <select id="selectByPlayAmount" useCache="true" parameterType="java.util.Date" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from billboard
+    where time = #{time,jdbcType=DATE} order by play_amount DESC
+  </select>
+
+  <select id="selectByDownloadAmount" useCache="true" parameterType="java.util.Date" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from billboard
+    where time = #{time,jdbcType=DATE} order by download_amount DESC
+  </select>
 </mapper>

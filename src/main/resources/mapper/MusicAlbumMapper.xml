@@ -6,10 +6,8 @@
   <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
 
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.MusicAlbum">
-    <constructor>
-      <idArg column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <idArg column="aid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    </constructor>
+      <id column="mid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <id column="aid" javaType="java.lang.Integer" jdbcType="INTEGER" />
   </resultMap>
 
   <delete id="deleteByPrimaryKey" flushCache="true" parameterType="map">
@@ -20,7 +18,7 @@
 
   <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.MusicAlbum">
     insert into music_album (mid, aid)
-    values (#{mid,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER})
+    values (#{music.id,jdbcType=INTEGER}, #{album.id,jdbcType=INTEGER})
   </insert>
 
   <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.MusicAlbum">
@@ -38,8 +36,9 @@
         #{mid,jdbcType=INTEGER},
       </if>
       <if test="aid != null">
-        #{aid,jdbcType=INTEGER},
+        #{aid,jdbcType=},
       </if>
     </trim>
   </insert>
+
 </mapper>

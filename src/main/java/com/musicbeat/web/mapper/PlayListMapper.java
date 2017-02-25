@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Param;
 public interface PlayListMapper {
     int deleteByPrimaryKey(@Param("mid") Integer mid, @Param("uid") Integer uid);
 
-    int insert(PlayList record);
+    int insert(@Param("mid") Integer mid, @Param("uid") Integer uid);
 
-    int insertSelective(PlayList record);
+    int insertSelective(@Param("mid") Integer mid, @Param("uid") Integer uid);
+
+    PlayList selectByUserId(Integer userId);
 }

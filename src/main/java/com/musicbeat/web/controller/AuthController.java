@@ -2,11 +2,7 @@ package com.musicbeat.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.musicbeat.web.model.User;
-import com.musicbeat.web.model.cache.RetrieveCache;
-import com.musicbeat.web.service.RedisService;
 import com.musicbeat.web.service.UserService;
-import org.mybatis.caches.redis.RedisCache;
-import org.springframework.cache.support.NullValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,14 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
 import javax.annotation.Resource;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import static com.musicbeat.web.model.constant.Constants.AUTH_ROLE;
@@ -45,12 +37,10 @@ import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE_NONE;
-import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE_TIMEOUT;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_FAIL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_MESSAGE;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_STATUS;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_SUCCESS;
-import static com.musicbeat.web.model.constant.Constants.RETRIEVE_EXPIRE_TIME;
 import static com.musicbeat.web.model.constant.Constants.SESSION_USER;
 import static com.musicbeat.web.utils.ModelConvertUtil.convert2ViewModelIgnoreNull;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
@@ -157,15 +147,14 @@ public class AuthController extends BaseController {
 
                 // 日志记录
                 logger.info(logObj.toJSONString() + " Log out");
-            }
-            else{
+            } else {
                 model.put(RESPONSE_STATUS, RESPONSE_FAIL);
                 model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_LOGOFF_USER_BLANK);
                 response.setStatus(SC_BAD_REQUEST);
 
                 logger.info(logObj.toJSONString() + " Logoff nothing");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             model.put(RESPONSE_STATUS, RESPONSE_FAIL);
             model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_EXCEPTION);
             response.setStatus(SC_INTERNAL_SERVER_ERROR);
@@ -347,7 +336,6 @@ public class AuthController extends BaseController {
             user.setEmail(emailString);
             logObj.put(LOG_EMAIL, email);
             logObj.put(LOG_NEW_PASSWORD, newPassword);
-
 
             if (userService.retrieveWithoutTimeCheck(user, code) && userService.changePassword(user, newPassword)) {
 

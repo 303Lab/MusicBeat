@@ -6,24 +6,73 @@
   <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
 
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Music">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="lyrics" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="link" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="duration" javaType="java.util.Date" jdbcType="TIME" />
-    </constructor>
+      <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="lyrics" property="lyrics" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="link" property="link" javaType="java.lang.String" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="MusicAlbumMap" type="com.musicbeat.web.model.Music" extends="BaseResultMap">
+    <association property="album" column="music_album_id" javaType="com.musicbeat.web.model.Album">
+      <id property="id" column="a_id"/>
+      <result property="name" column="a_name"/>
+      <result property="introduction" column="a_introduction"/>
+      <result property="releaseTime" column="a_releaseTime"/>
+      <result property="picture" column="a_picture"/>
+    </association>
+  </resultMap>
+
+  <resultMap id="MusicLabelMap" type="com.musicbeat.web.model.Music" extends="BaseResultMap">
+    <collection property="labels" ofType="com.musicbeat.web.model.Label">
+      <id property="id" column="l_id"/>
+      <result property="name" column="l_name"/>
+      <result property="gid" column="l_gid"/>
+    </collection>
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, name, lyrics, link, duration
+    id, name, lyrics, link
   </sql>
 
-  <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <select id="selectByMusicId" useCache="true" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from music
+     where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByMusicName" useCache="true" parameterType="String" resultMap="BaseResultMap">
+    select id from music
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectMusicsByMusicName" useCache="true" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from music
-    where id = #{id,jdbcType=INTEGER}
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
   </select>
 
   <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
@@ -35,10 +84,8 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into music (name, lyrics, link, 
-      duration)
-    values (#{name,jdbcType=VARCHAR}, #{lyrics,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
-      #{duration,jdbcType=TIME})
+    insert into music (name, lyrics, link)
+    values (#{name,jdbcType=VARCHAR}, #{lyrics,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR})
   </insert>
 
   <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.Music">
@@ -56,9 +103,6 @@
       <if test="link != null">
         link,
       </if>
-      <if test="duration != null">
-        duration,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -69,9 +113,6 @@
       </if>
       <if test="link != null">
         #{link,jdbcType=VARCHAR},
-      </if>
-      <if test="duration != null">
-        #{duration,jdbcType=TIME},
       </if>
     </trim>
   </insert>
@@ -88,9 +129,6 @@
       <if test="link != null">
         link = #{link,jdbcType=VARCHAR},
       </if>
-      <if test="duration != null">
-        duration = #{duration,jdbcType=TIME},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -100,7 +138,25 @@
     set name = #{name,jdbcType=VARCHAR},
       lyrics = #{lyrics,jdbcType=VARCHAR},
       link = #{link,jdbcType=VARCHAR},
-      duration = #{duration,jdbcType=TIME}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAlbumById" useCache="true" parameterType="Integer" resultMap="MusicAlbumMap">
+    select m.id,m.name,m.lyrics,m.link,a.id as a_id,a.name as a_name,a.introduction as a_introduction,a.release_time as a_releaseTime, a.picture as a_picture
+    from music m left join music_album ma on m.id = ma.mid left join album a on ma.aid = a.id
+     where m.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" useCache="true">
+    select
+    <include refid="Base_Column_List"/>
+    from music
+  </select>
+
+  <select id="selectLabelsById" useCache="true" parameterType="Integer" resultMap="MusicLabelMap">
+    select m.id,m.name,m.gid, l.id as l_id,l.name as l_name,l.gid as l_gid
+    from music m left join music_label ml on  ml.mid = m.id
+    left join label l on l.id = ml.lid
+    where m.id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

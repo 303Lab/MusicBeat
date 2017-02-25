@@ -14,16 +14,16 @@ angular
         "toastr",
         "toastrProvider",
         "authService",
-        "authEvent",
+        "appEvent",
         changeController
     ]);
 
-function changeController($scope, $timeout, toastr, toastrProvider, authService, authEvent) {
+function changeController($scope, $timeout, toastr, toastrProvider, authService, appEvent) {
 
     $scope.changeModel = {
         password: "",
         confirm: "",
-        message: authEvent.changeDefault,
+        message: appEvent.changeDefault,
         color: {"color": "#FFFFFF"},
         buttonColor: {"border": "0px"}
     };
@@ -31,7 +31,7 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
     // 监听文本
     $scope.inputChange = function () {
         if (($scope.changeModel.password !== undefined && $scope.changeModel.password.trim() !== "") || ($scope.changeModel.confirm !== undefined && $scope.changeModel.confirm.trim() !== "")){
-            $scope.changeModel.message = authEvent.changeDefault;
+            $scope.changeModel.message = appEvent.changeDefault;
             $scope.changeModel.color = {"color": "#FFFFFF"};
         }
     };
@@ -47,12 +47,12 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
     $scope.change = function () {
         if (!$scope.changeModel.password.trim() || !$scope.changeModel.confirm.trim()) return;
         if ($scope.changeModel.password.trim() !== $scope.changeModel.confirm.trim()) {
-            $scope.changeModel.message = authEvent.changeCheckFailed;
+            $scope.changeModel.message = appEvent.changeCheckFailed;
             $scope.changeModel.color = {"color": "#EE3D3D"};
             return;
         }
 
-        $scope.changeModel.message = authEvent.changeDefault;
+        $scope.changeModel.message = appEvent.changeDefault;
         $scope.changeModel.color = {"color": "#5d8730"};
 
         authService
@@ -61,8 +61,8 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
                 function (data) {
                     $scope.changeModel.password = "";
                     $scope.changeModel.confirm = "";
-                    var result = data.status === authEvent.ok;
-                    $scope.changeModel.message = result ? authEvent.changeOk : authEvent.notOk;
+                    var result = data.status === appEvent.ok;
+                    $scope.changeModel.message = result ? appEvent.changeOk : appEvent.notOk;
                     var text = toastrProvider.textCenter($scope.changeModel.message);
 
                     if (result) {
@@ -77,10 +77,10 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
                 },
 
                 function (reason) {
-                    if (reason.message !== null && reason.message !== undefined) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
                         $scope.registerMsg.message = reason.message;
                     } else {
-                        $scope.registerMsg.message = "Server Internal Error";
+                        $scope.registerMsg.message = appEvent.error;
                     }
                     $scope.registerMsg.color = {"color": "#EE3D3D"};
                     var text = toastrProvider.textCenter(reason.message);

@@ -13,23 +13,23 @@ import java.util.Date;
  */
 public class TimeConvertUtil {
 
-  /**
-   * TimeStamp to Date time String, millisecond
-   *
-   * @param timestamp the timestamp
-   * @return the string
-   */
-  public static String timeStamp2DateTimeMSec(long timestamp) {
-    return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(timestamp));
-  }
+    /**
+     * TimeStamp to Date time String, millisecond
+     *
+     * @param timestamp the timestamp
+     * @return the string
+     */
+    public static String timeStamp2DateTimeMSec(long timestamp) {
+        return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(timestamp));
+    }
 
-  /**
-   * TimeStamp to Date time String
-   *
-   * @param timestamp the timestamp
-   * @return the string
-   */
-  public static String timeStamp2DateTime(long timestamp) {
-    return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(timestamp * 1000));
-  }
+    /**
+     * TimeStamp to Date time String
+     *
+     * @param timestamp the timestamp
+     * @return the string
+     */
+    public static String timeStamp2DateTime(long timestamp) {
+        return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(timestamp * 1000));
+    }
 }

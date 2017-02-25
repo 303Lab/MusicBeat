@@ -2,17 +2,12 @@ package com.musicbeat.web.service.impl;
 
 import com.musicbeat.web.model.User;
 import com.musicbeat.web.service.EmailService;
-import com.musicbeat.web.service.UserService;
-import com.musicbeat.web.utils.RandomUtil;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.mail.Transport;
 import javax.mail.internet.MimeMessage;
-import java.util.concurrent.Future;
 
 /**
  * 邮件激活实现类

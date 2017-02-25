@@ -4,8 +4,6 @@ import com.musicbeat.web.model.User;
 import org.apache.log4j.Logger;
 
 /**
- *
- *
  * @author windawings
  * @version 1.0.0
  * @time.creation 2017/02/16 9:30

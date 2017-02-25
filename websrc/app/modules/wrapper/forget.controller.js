@@ -11,17 +11,17 @@ angular
     .controller("retrieveController", [
         "$scope",
         "authService",
-        "authEvent",
+        "appEvent",
         "toastr",
         "toastrProvider",
         retrieveController
     ]);
 
-function retrieveController($scope, authService, authEvent, toastr, toastrProvider) {
+function retrieveController($scope, authService, appEvent, toastr, toastrProvider) {
     // 监听文本
     $scope.inputChange = function () {
         if ($scope.retrieve.email !== undefined && $scope.retrieve.email.trim() !== ""){
-            $scope.retrieve.message = authEvent.retrieveDefault;
+            $scope.retrieve.message = appEvent.retrieveDefault;
             $scope.retrieve.color = {"color": "#FFFFFF"};
         }
     };
@@ -29,7 +29,7 @@ function retrieveController($scope, authService, authEvent, toastr, toastrProvid
     $scope.forget = function () {
         if (!$scope.retrieve.email.trim()) return;
 
-        $scope.retrieve.message = authEvent.registerWait;
+        $scope.retrieve.message = appEvent.registerWait;
         $scope.retrieve.color = {"color": "#5d8730"};
 
         authService
@@ -37,8 +37,8 @@ function retrieveController($scope, authService, authEvent, toastr, toastrProvid
             .then(
                 function (data) {
                     $scope.retrieve.email = "";
-                    var result = data.status === authEvent.ok;
-                    $scope.retrieve.message = result ? authEvent.retrieveOk : authEvent.notOk;
+                    var result = data.status === appEvent.ok;
+                    $scope.retrieve.message = result ? appEvent.retrieveOk : appEvent.notOk;
                     var text = toastrProvider.textCenter($scope.retrieve.message);
 
                     if (jQuery(".forget-wrapper").hasClass("open")) {

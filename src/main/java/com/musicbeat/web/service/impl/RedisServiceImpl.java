@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @since 1.0.0
  */
 @Service("RedisService")
-public class RedisServiceImpl implements RedisService{
+public class RedisServiceImpl implements RedisService {
 
     @Resource
     private RedisTemplate<String, RetrieveCache> redisTemplate;

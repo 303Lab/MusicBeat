@@ -27,7 +27,18 @@ function baseRouter($stateProvider, $urlRouterProvider, appConst) {
                     controller: "headerController"
                 }
             }
-
+        })
+        .state("admin", {
+            url: "/admin",
+            abstract: true,
+            views: {
+                "header@": {
+                    templateUrl: fnBasePath("admin.header.html")
+                },
+                "content@":{
+                    templateUrl: fnBasePath("admin.singer.html")
+                }
+            }
         })
     ;
 

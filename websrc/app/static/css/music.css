@@ -1,0 +1,192 @@
+/* ==========================================================================
+   1. Music
+   ========================================================================== */
+.music-post {
+    position: relative;
+    -webkit-transition: .25s;
+    -ms-transition: .25s;
+    -moz-transition: .25s;
+    -o-transition: .25s;
+    transition: .25s;
+    margin-bottom: 30px;
+}
+
+.music-post:hover {
+    box-shadow: 0 12px 22px rgba(0, 0, 0, .35);
+}
+
+.music-post > img {
+    width: 100%;
+}
+
+.music-post .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(23, 36, 52, 0);
+    background: -moz-linear-gradient(top, rgba(23, 36, 52, 0) 0%, rgba(23, 36, 52, 1) 100%);
+    /*background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(23, 36, 52, 0)), color-stop(100%, rgba(23, 36, 52, 1)));*/
+    background: -webkit-linear-gradient(top, rgba(23, 36, 52, 0) 0%, rgba(23, 36, 52, 1) 100%);
+    background: -o-linear-gradient(top, rgba(23, 36, 52, 0) 0%, rgba(23, 36, 52, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(23, 36, 52, 0) 0%, rgba(23, 36, 52, 1) 100%);
+    background: linear-gradient(to bottom, rgba(23, 36, 52, 0) 0%, rgba(23, 36, 52, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#172434", endColorstr="#172434", GradientType=0);
+    z-index: 2;
+}
+
+.music-post .avatar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 12px 22px rgba(0, 0, 0, .35);
+    z-index: 3;
+}
+
+.music-post .content {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    text-align: right;
+    font-size: 14px;
+    line-height: 28px;
+    letter-spacing: .7px;
+    font-weight: 500;
+    color: #fff;
+    z-index: 3;
+    padding-left: 12px;
+}
+
+.music-post .content p {
+    margin-bottom: 6px;
+}
+
+.music-post .content h3 {
+    color: #fff;
+    margin-bottom: 18px;
+}
+
+.music-post.quote .content h3 {
+    font-style: italic;
+}
+
+.music-post .content h3 a {
+    color: #fff;
+}
+
+.music-post .content h3 a:hover {
+    opacity: 1;
+    color: #00b0ff;
+}
+
+.music-post .content .meta {
+    color: #646e7b;
+    line-height: 40px;
+    display: inline-block;
+    background: #fff;
+    padding: 0 30px;
+    border-radius: 40px;
+}
+
+.music-post .type {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    background: #fff;
+    text-align: center;
+    z-index: 3;
+}
+
+.music-view-more {
+    text-align: center;
+}
+
+.music-post .play-video {
+    margin: 0 0 6px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    background: #fff;
+    color: #49a0d5;
+    font-size: 15px;
+    letter-spacing: 0;
+    -webkit-transition: .25s;
+    -ms-transition: .25s;
+    -moz-transition: .25s;
+    -o-transition: .25s;
+    transition: .25s;
+    text-align: center;
+}
+
+.music-post .play-video:hover {
+    box-shadow: 0 12px 22px rgba(0, 0, 0, .35);
+    background: #00b0ff;
+    color: #fff;
+    opacity: 1;
+}
+
+.music-post .play-video i {
+    line-height: inherit;
+    padding-left: 4px;
+}
+
+.musicdirectory-item {
+    position: relative;
+    margin-bottom: 30px;
+    -webkit-transition: .25s;
+    -ms-transition: .25s;
+    -moz-transition: .25s;
+    -o-transition: .25s;
+    transition: .25s;
+}
+
+
+
+.music-sidebar {
+    filter:alpha(opacity=90);
+    font-color:write;
+    padding: 50px 30px;
+}
+
+.music-sidebar input:not([type=submit]):not([type=file]):not([type=checkbox]):not([type=radio]), .music-sidebar select, .music-sidebar textarea {
+    background: #f1f2f6;
+}
+
+.music-sidebar select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    background: url(images//dropdown.png) no-repeat right 18px center;
+}
+
+.music-sidebar .sidebar-widget {
+    margin-top: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.music-sidebar .sidebar-widget h5 {
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.music-sidebar .sidebar-widget .box{
+    text-align: center;
+    line-height: 2em;
+    font-size: 16px;
+    background-color: white;
+    margin: 5px 5px;
+    padding:inherit;
+}

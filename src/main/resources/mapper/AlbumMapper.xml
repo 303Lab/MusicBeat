@@ -16,6 +16,40 @@
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
   </resultMap>
 
+  <resultMap id="AlbumMusicMap" type="com.musicbeat.web.model.Album" extends="ResultMapWithBLOBs">
+    <collection property="musics" ofType="com.musicbeat.web.model.Music">
+      <id property="id" column="m_id"/>
+      <result property="name" column="m_name"/>
+      <result property="link" column="m_link"/>
+      <result property="lyrics" column="m_lyrics"/>
+    </collection>
+  </resultMap>
+  
+  <resultMap id="SingerMap" type="com.musicbeat.web.model.Singer">
+    <id property="id" column="s_id"/>
+    <result property="name" column="s_name"/>
+    <result property="gender" column="s_gender"/>
+    <result property="lang" column="s_lang"/>
+    <result property="picture" column="s_picture"/>
+    <result property="introduction" column="s_introduction"/>
+    <result property="isBand" column="s_isBand"/>
+  </resultMap>
+
+  <resultMap id="AlbumSingerMap" type="com.musicbeat.web.model.Album" extends="BaseResultMap">
+    <association property="singer" column="album_singer_id" javaType="com.musicbeat.web.model.Singer" resultMap="SingerMap"/>
+  </resultMap>
+
+  <resultMap id="SingerAlbumMusicMap" type="com.musicbeat.web.model.Album" extends="BaseResultMap">
+    <association property="singer" column="Singer_Album_Music_id" resultMap="SingerMap"/>
+    <collection property="musics" ofType="com.musicbeat.web.model.Music">
+      <id property="id" column="m_id"/>
+      <result property="name" column="m_name"/>
+      <result property="link" column="m_link"/>
+      <result property="lyrics" column="m_lyrics"/>
+    </collection>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     id, name, release_time, picture
   </sql>
@@ -23,6 +57,19 @@
   <sql id="Blob_Column_List">
     introduction
   </sql>
+
+  <!--用singer的id得到歌曲集-->
+  <select id="selectMusicsBySingerId" parameterType="Integer" resultMap="SingerAlbumMusicMap">
+    select s.id as s_id,s.name as s_name,s.gender as s_gender,s.lang as s_lang,s.picture as s_picture,s.introduction as s_introduction,
+    s.is_band as s_isBand,a.id,a.name,a.introduction,a.release_time,a.picture,
+    m.id as m_id,m.name as m_name,m.link as m_link,m.lyrics as m_lyrics
+    from album a
+    right join singer_album sa on a.id=sa.aid
+    right join singer s on sa.sid=s.id
+    left join music_album ma on ma.aid=a.id
+    left join music m on m.id=ma.mid
+    where s.id = #{id}
+  </select>
 
   <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
@@ -33,12 +80,44 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="selectByAlbumName" useCache="true" parameterType="java.lang.String" resultType="Integer">
+    select id from album
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByReleaseTime" useCache="true" parameterType="java.util.HashMap" resultType="Integer">
+    select id from album
+    <where>
+      <if test="minTime != null">
+        <![CDATA[
+          AND release_time>#{minTime,jdbcType=DATE}
+        ]]>
+      </if>
+      <if test="maxTime != null">
+        <![CDATA[
+          AND release_time<=#{maxTime,jdbcType=DATE}
+        ]]>
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" flushCache="true" parameterType="java.lang.Integer">
     delete from album
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.Album">
+  <insert flushCache="true" id="insert" parameterType="com.musicbeat.web.model.Album">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -48,7 +127,7 @@
       #{introduction,jdbcType=LONGVARCHAR})
   </insert>
 
-  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.Album">
+  <insert flushCache="true" id="insertSelective" parameterType="com.musicbeat.web.model.Album">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -83,7 +162,7 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.Album">
+  <update flushCache="true" id="updateByPrimaryKeySelective" parameterType="com.musicbeat.web.model.Album">
     update album
     <set>
       <if test="name != null">
@@ -102,7 +181,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKeyWithBLOBs" flushCache="true" parameterType="com.musicbeat.web.model.Album">
+  <update flushCache="true" id="updateByPrimaryKeyWithBLOBs" parameterType="com.musicbeat.web.model.Album">
     update album
     set name = #{name,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=DATE},
@@ -111,11 +190,60 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKey" flushCache="true" parameterType="com.musicbeat.web.model.Album">
+  <update flushCache="true" id="updateByPrimaryKey" parameterType="com.musicbeat.web.model.Album">
     update album
     set name = #{name,jdbcType=VARCHAR},
       release_time = #{releaseTime,jdbcType=DATE},
       picture = #{picture,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAllByReleaseTime" parameterType="Integer" resultMap="SingerAlbumMusicMap">
+    select s.id as s_id,s.name as s_name,s.gender as s_gender,s.lang as s_lang,s.picture as s_picture,s.introduction as s_introduction,
+    s.is_band as s_isBand,a.id,a.name,a.introduction,a.release_time,a.picture,
+    m.id as m_id,m.name as m_name,m.link as m_link,m.lyrics as m_lyrics
+    from album a
+    right join singer_album sa on a.id=sa.aid
+    right join singer s on sa.sid=s.id
+    left join music_album ma on ma.aid=a.id
+    left join music m on m.id=ma.mid
+    order by a.release_time DESC
+  </select>
+
+  <select id="selectSingerById" parameterType="Integer" resultMap="AlbumSingerMap">
+    select a.id,a.name,a.introduction,a.release_time,a.picture,s.id as s_id,
+    s.name as s_name,s.gender as s_gender,s.lang as s_lang,s.picture as s_picture,
+    s.introduction as s_introduction,s.is_band as s_isBand
+    from album a left join singer_album sa on a.id = sa.aid
+     left join singer s on sa.sid = s.id
+     where a.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectMusicsById" parameterType="Integer" resultMap="AlbumMusicMap">
+    select a.id,a.name,a.introduction,a.release_time,a.picture,
+    m.id as m_id,m.name as m_name,m.link as m_link,m.lyrics as m_lyrics
+    from music m left join music_album ma on m.id = ma.mid
+    left join album a on ma.aid = a.id
+    where a.id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAlbumsByAlbumName" parameterType="String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from album
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
 </mapper>

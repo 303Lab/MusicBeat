@@ -11,7 +11,7 @@ angular
     .controller("userController", ["$scope", "$state", "$sessionStorage", userController]);
 
 function userController($scope, $state, $sessionStorage) {
-    if($sessionStorage.isAuthed === false || $sessionStorage.isAuthed === undefined || $sessionStorage.roleName !== "user"){
+    if($sessionStorage.isAuthed === false || typeof($sessionStorage.isAuthed) === "undefined" || $sessionStorage.roleName !== "user"){
         $state.go("app.home");
     }
 }
