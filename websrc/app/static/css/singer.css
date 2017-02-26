@@ -1,0 +1,106 @@
+.singer-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(23, 36, 52, .9);
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+    -webkit-transition-delay: .5s;
+    -ms-transition-delay: .5s;
+    -moz-transition-delay: .5s;
+    -o-transition-delay: .5s;
+    transition-delay: .5s;
+}
+
+.singer-wrapper.open {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.singer {
+    background: rgba(23, 36, 52, .5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 30px;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 430px;
+    color: #fff;
+    opacity: 0;
+    -webkit-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    transition: .5s;
+    -webkit-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.singer-wrapper.open .singer {
+    opacity: 1;
+    -webkit-transition-delay: .5s;
+    -ms-transition-delay: .5s;
+    -moz-transition-delay: .5s;
+    -o-transition-delay: .5s;
+    transition-delay: .5s;
+}
+
+.singer .form-group {
+    margin-bottom: 30px;
+}
+
+.singer .checkbox {
+    margin: 0;
+    float: left;
+}
+
+.singer .checkbox label {
+    font-size: 14px;
+    line-height: 28px;
+    letter-spacing: .7px;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+.singer .button-wrapper {
+    text-align: center;
+    margin-top: 45px;
+    margin-bottom: 28px;
+}
+
+.singer .button-wrapper .button {
+    width: 200px;
+}
+
+.singer p {
+    margin-bottom: 40px;
+}
+
+.page-title > .inner .pic img{
+    max-width: 300px;
+    max-height: 300px;
+    text-align: center;
+}
+
+

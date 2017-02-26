@@ -1,5 +1,6 @@
 package com.musicbeat.web.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.musicbeat.web.mapper.AlbumMapper;
 import com.musicbeat.web.mapper.LabelMapper;
@@ -39,8 +40,14 @@ public class MusicServiceImpl implements MusicService {
     /****************************************歌曲*************************************/
 
     @Override
-    public List<Music> getAll() {
-        return musicMapper.selectAll();
+    public JSONArray getAll() {
+        JSONArray mvs = new JSONArray();
+        List<Music> musics = musicMapper.selectAll();
+        for(Music music:musics) {
+            MusicViewModel mv = setMusicViewMode(music);
+            mvs.add(mv);
+        }
+        return mvs;
     }
 
     @Override
@@ -51,15 +58,21 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public List<Music> getByMusicName(String Mname, Boolean like) {
-        return musicMapper.selectMusicsByMusicName(Mname, like);
+    public JSONArray getByMusicName(String Mname) {
+        JSONArray mvs = new JSONArray();
+        List<Music> musics = musicMapper.selectMusicsByMusicName(Mname,true);
+        for(Music music:musics) {
+            MusicViewModel mv = setMusicViewMode(music);
+            mvs.add(mv);
+        }
+        return mvs;
     }
 
     @Override
-    public List<Music> getBySingerName(String Sname, Boolean like) {
-        List<Music> musicList = new ArrayList<>();
-        List<Integer> sIds = singerMapper.selectSingerIdByName(Sname, false);
-        for (Integer id : sIds) {
+    public List<Music> getBySingerName(String Sname) {
+        List<Music> musicList =new ArrayList<>();
+        List<Integer> sIds = singerMapper.selectSingerIdByName(Sname,true);
+        for (Integer id :sIds) {
             List<Album> albums = albumMapper.selectMusicsBySingerId(id);
             for (Album album : albums) {
                 List<Music> musics = album.getMusics();
@@ -114,8 +127,8 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public List<Album> getAlbumsByAlbumName(String Aname, Boolean like) {
-        return albumMapper.selectAlbumsByAlbumName(Aname, false);
+    public List<Album> getAlbumsByAlbumName(String Aname) {
+        return albumMapper.selectAlbumsByAlbumName(Aname,true);
     }
 
     @Override
@@ -132,6 +145,11 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public Album selectSingerById(Integer id) {
         return albumMapper.selectSingerById(id);
+    }
+
+    @Override
+    public List<Singer> selectSingerBySname(String name) {
+        return singerMapper.selectSingersBySingerName(name, true);
     }
 
     @Override
@@ -191,7 +209,7 @@ public class MusicServiceImpl implements MusicService {
         }
 
         if (aName != "") {
-            musicViewModel.setsName(aName);
+            musicViewModel.setaName(aName);
         }
 
         if (sName != "") {

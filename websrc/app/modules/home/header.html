@@ -18,24 +18,24 @@
             <ul class="music-unstyled">
                 <!--歌手-->
                 <li class="menu-item-has-children" ng-repeat="(menuItem, subItem) in menu.singer">
-                    <a><p ng-bind-html="menuItem"></p></a>
+                    <a ui-sref="app.singer({p:1,type:''})" ui-sref-opts="{reload:true}"><p ng-bind-html="menuItem"></p></a>
                     <ul>
                         <li class="menu-item-has-children" ng-repeat="(item, list) in subItem">
                             <a ng-bind-html="item"><i class="pe-7s-right-arrow"></i></a>
                             <ul>
-                                <li><a ng-repeat="item in list" ui-sref="app.singer({type:item})">{{item}}</a></li>
+                                <li><a ng-repeat="item in list" ui-sref="app.singer({type:item})" ui-sref-opts="{reload:true}">{{item}}</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
                 <!--歌曲-->
                 <li class="menu-item-has-children" ng-repeat="(menuItem, subItem) in menu.music">
-                    <a ui-sref="app.music({name:''})"><p ng-bind-html="menuItem"></p></a>
+                    <a ui-sref="app.music({label:'',p:1,search:''})" ui-sref-opts="{reload:true}"><p ng-bind-html="menuItem"></p></a>
                     <ul>
                         <li class="menu-item-has-children" ng-repeat="(item, list) in subItem">
                             <a ng-bind-html="item"><i class="pe-7s-right-arrow"></i></a>
                             <ul>
-                                <li><a ng-repeat="item in list" ui-sref="app.music({name:item})" ng-bind-html="item"></a></li>
+                                <li><a ng-repeat="item in list" ui-sref="app.music({label:item})"   ui-sref-opts="{reload:true}" ng-bind-html="item"></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -45,7 +45,7 @@
                     <a ui-sref="app.blog"><p ng-bind-html="menuItem"></p></a>
                     <ul>
                         <li ng-repeat="item in subItem">
-                            <a ui-sref="app.blog" ng-bind-html="item"></a>
+                            <a ui-sref="app.blog.category({name:item})" ng-bind-html="item"></a>
                         </li>
                     </ul>
                 </li>
@@ -92,7 +92,7 @@
                         <nav class="main-nav">
                             <ul class="music-unstyled">
                                 <li class="menu-item-has-children">
-                                    <a href="" ui-sref="user" class="button"
+                                    <a target="_blank" ui-sref="admin.singer" class="button"
                                        ng-bind-html="session.currentUser.username"></a>
                                     <ul>
                                         <li><a target="_blank" ui-sref="admin.singer">Console</a></li>

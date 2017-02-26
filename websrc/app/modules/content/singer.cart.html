@@ -4,7 +4,7 @@
             <ul class="music-unstyled">
                 <li><a ui-sref="app.home">主页</a></li>
                 <li><a ui-sref="app.singer">歌手</a></li>
-                <li ng-bind-html="current.singer.category.name"></li>
+                <li ng-bind-html="singer.name"></li>
             </ul>
         </div> <!-- end .breadcrumbs -->
     </div> <!-- end .container -->
@@ -12,9 +12,9 @@
 
 <div class="page-title" style="background-image: url('images/background05.jpg');">
     <div class="inner">
-        <img ng-src="{{current.singer.category.pic}}">
-        <h1 ng-bind-html="current.singer.category.name"></h1>
-        <p ng-bind-html="current.singer.category.intro"></p>
+        <div class="pic"><img ng-src="{{singer.pic}}"></div>
+        <h1 ng-bind-html="singer.name"></h1>
+        <p ng-bind-html="singer.intro"></p>
     </div> <!-- end .inner -->
 </div> <!-- end .page-title -->
 
@@ -32,15 +32,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="item in current.singer.category.musics">
+                        <tr ng-repeat="item in singer.musics">
                             <td ng-bind-html="$index + 1"></td>
+                            <td ng-bind-html="item.mName"></td>
                             <td ng-bind-html="item.name"></td>
-                            <td ng-bind-html="item.album"></td>
                             <td>
-                                <a href="#"><span class="glyphicon glyphicon-play"></span></a>
+                                <a href="" ng-click="addMusic(item.mId);"><span class="glyphicon glyphicon-play"></span></a>
                             </td>
                             <td>
-                                <a href="#"><span class="glyphicon glyphicon-save"></span></a>
+                                <a href=""><span class="glyphicon glyphicon-save"></span></a>
                             </td>
                         </tr>
                         </tbody>

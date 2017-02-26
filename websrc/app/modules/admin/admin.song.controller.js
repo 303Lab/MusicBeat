@@ -17,4 +17,15 @@ function adminSongController($scope, $document) {
             jQuery('.song-edit-wrapper').removeClass('open');
         }
     });
+
+    /*==========song Add Edit ==========*/
+    jQuery('.song-add-edit-open').on('click', function(event) {
+        event.preventDefault();
+        jQuery('.song-add-edit-wrapper').addClass('open');
+    });
+    $document.on('click', function(event) {
+        if (!jQuery(event.target).closest('.song-add-edit').length && !jQuery(event.target).closest('.song-add-edit-open').length) {
+            jQuery('.song-add-edit-wrapper').removeClass('open');
+        }
+    });
 }

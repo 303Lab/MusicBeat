@@ -3,95 +3,25 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8"  style="font-family:'Microsoft YaHei';font-size: 20px;margin-top:20px;">
-            <!--添加歌手信息-->
-            <li style="font-family:'Microsoft YaHei UI'">直接添加歌手的信息</li>
-            <div class="container col-md-12" style="background-color:transparent "><br/>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="singerinfo">
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-6 form-group">
-                                        <input type="text" class="form-control" id="name" placeholder="歌手姓名">
-                                    </div>
-                                </form>
-                                <div class="col-md-1 form-group"></div>
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-6 form-group">
-                                        <input type="text" class="form-control" id="country" placeholder="歌手国籍">
-                                    </div>
-                                </form>
-                                <div class="row">
-                                    <div class="col-md-6 xuanze">
-                                        <div class="radio">
-                                            <div class="col-md-12"><span >直接选择歌手的性别</span></div>
-                                            <div class="col-md-3 form-group">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 男
-                                                </label>
-                                            </div>
-                                            <div class="col-md-1 form-group"></div>
-                                            <div class="col-md-3 form-group">
-                                                <label>
-                                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">女
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 xuanze">
-                                        <div class="radio">
-                                            <div class="col-md-12"><span style="font-size: 20px">歌手属于某个乐队?</span></div>
-                                            <div class="col-md-3 form-group">
-                                                <label>
-                                                    <input type="radio" name="bond" id="bong1" value="option1" checked> 是
-                                                </label>
-                                            </div>
-                                            <div class="col-md-1 form-group"></div>
-                                            <div class="col-md-3 form-group">
-                                                <label>
-                                                    <input type="radio" name="bond" id="bond2" value="option2">否
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="photo-item">
-                                <div class="changgetx row">
-                                    <div class="col-md-4"><p>选择头像</p></div>
-                                    <div class="col-md-8" style="text-align: right">
-                                        <label class="label" for="inputfile"></label>
-                                        <input type="file" id="inputfile">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-info col-md-12">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">歌手简介</h3>
-                            </div>
-                            <div class="panel-body" style="height: 200px">
-                                <input type="text"id="introduce" placeholder="请输入歌手简介">
-                            </div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" class="btn btn-default">添加</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             <!-- 歌手输入查找框-->
             <li>查找歌手的信息</li><br/>
-            <div class="col-md-12">
-                    <form class="form-horizontal" role="form">
-                        <input type="text" class="form-control" id="findname" placeholder="歌手姓名">
-                        <span class="input-group-btn" style="text-align: right">
-                            <button class="btn btn-default" type="button">查找</button>
-                        </span>
-                    </form>
-                </div><br/>
+            <div class="col-md-7" style="margin-right: 400px;">
+                <form class="form-horizontal" role="form">
+                    <input type="text" class="form-control" id="findname" placeholder="歌手姓名">
+                    <span class="input-group-btn" style="text-align: right">
+                        <button class="btn btn-default" type="button">查找</button>
+                    </span>
+                </form>
+            </div><br/>
+            <!-- 添加歌手的信息 -->
+            <li>添加歌手信息</li>
+            <div class="col-md-7" style="margin-right: 400px;">
+                <form class="form-horizontal" role="form">
+                    <span class="input-group-btn" style="text-align: right">
+                        <button class="btn btn-default" type="button"><a href="" class="singer-add-edit-open">添加</a></button>
+                    </span>
+                </form>
+            </div><br/>
             <!-- 歌手显示表-->
             <li style="font-family:'Microsoft YaHei UI'">查看歌手信息列表</li>
             <div id="edit_line">
@@ -123,7 +53,7 @@
                                     2016年11月，薛之谦宣布代言《问道》全品牌。</td>
                             <td>否</td>
                             <th><a href="" class="singer-edit-open">编辑</a></th>
-                            <th><a href="">删除</a></th>
+                            <th><a>删除</a></th>
                         </tr>
                         </tbody>
                     </table>
@@ -135,3 +65,4 @@
 
 <!--edit wrapper-->
 <div ng-include="'tpls/admin.singer.edit.html'"></div>
+<div ng-include="'tpls/admin.singer.add.edit.html'"></div>

@@ -23,39 +23,39 @@
                         <div class="music-sidebar">
                             <div class="sidebar-widget">
                                 <h3 style="color: whitesmoke;font-size: 20px">查找歌曲</h3>
-                                <form class="searchform">
-                                    <input type="text" placeholder="Type here ...">
-                                    <button><i class="pe-7s-search"></i></button>
+                                <form class="searchform" ng-submit="search();">
+                                    <input type="text" placeholder="Type here ..." ng-model="musicName" required aria-required="true">
+                                    <button type="submit"><i class="pe-7s-search"></i></button>
                                 </form>
                             </div> <!-- 歌曲查找 -->
                             <div class="sidebar-widget">
                                 <h3 style="color:whitesmoke;font-size: 20px">歌曲分类</h3>
                                 <div class="row">
                                     <div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">安静</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">民谣</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">摇滚</a></div>
-                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event);">影视原声</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">流行</a></div>
-                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event);">网络歌曲</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">旅行</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">运动</a></div>
-                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event);">下午茶</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">R&B</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">嘻哈</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">乡村</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">电子</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">爵士</a></div>
-                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event);">校园歌曲</a></div>
-                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event);">古典</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">安静</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">民谣</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">摇滚</a></div>
+                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event)">影视原声</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">流行</a></div>
+                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event)">网络歌曲</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">旅行</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">运动</a></div>
+                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event)">下午茶</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">R&B</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">嘻哈</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">乡村</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">电子</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">爵士</a></div>
+                                        <div class="col-md-3 box"><a href="" ng-click="getMusicByLabel($event)">校园歌曲</a></div>
+                                        <div class="col-md-2 box"><a href="" ng-click="getMusicByLabel($event)">古典</a></div>
                                     </div>
                                 </div>
                             </div> <!-- 歌手分类 -->
                         </div> <!-- end .music-sidebar -->
                     </div> <!-- end .col-md-4 -->
                     <div class="col-md-8" style="background-color:transparent">
-                        <div class="tab-pane">
-                            <div style="text-align: center;margin-top: -30px;color:white;font-size: 20px;font-family: 'Microsoft YaHei UI Light',serif">歌曲列表</div>
+                        <div class="tab-pane" style="color: whitesmoke">
+                            <div style="text-align: center;margin-top: -30px;font-size: 20px;font-family: 'Microsoft YaHei UI Light',serif">歌曲列表</div>
                             <!-- 歌曲显示表-->
                             <table class="table" style="border-color: deepskyblue;">
                                 <th>
@@ -73,20 +73,20 @@
                                     <td style="width: 300px" ng-bind-html="music.title"></td>
                                     <td style="width: 300px" ng-bind-html="music.album"></td>
                                     <td style="width: 10px"><img src="images/download.png"></td>
-                                    <td style="width:10px"><img src="images/plus.png"></td>
+                                    <td style="width:10px"><img src="images/plus.png" ng-click="addMusic(music.id);"></td>
                                 </tr>
                                 </tbody>
                             </table>
                             <div class="pagination" style="text-align: center">
-                                <li><a href="#">&laquo;</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">6</a></li>
-                                <li><a href="#">7</a></li>
-                                <li><a href="#">&raquo;</a></li>
+                                <li><a href="" ng-click="beforePages();">&laquo;</a></li>
+                                <li><a href="" ng-bind-html="page[0]" ng-click="pageSelect(page[0]);"></a></li>
+                                <li><a href="" ng-bind-html="page[1]" ng-click="pageSelect(page[1]);"></a></li>
+                                <li><a href="" ng-bind-html="page[2]" ng-click="pageSelect(page[2]);"></a></li>
+                                <li><a href="" ng-bind-html="page[3]" ng-click="pageSelect(page[3]);"></a></li>
+                                <li><a href="" ng-bind-html="page[4]" ng-click="pageSelect(page[4]);"></a></li>
+                                <li><a href="" ng-bind-html="page[5]" ng-click="pageSelect(page[5]);"></a></li>
+                                <li><a href="" ng-bind-html="page[6]" ng-click="pageSelect(page[6]);"></a></li>
+                                <li><a href="" ng-click="nextPages();">&raquo;</a></li>
                             </div>
                         </div>
                     </div><!-- end .col-md-8 -->

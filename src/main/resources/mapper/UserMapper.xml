@@ -79,7 +79,7 @@
       <if test="username != null and username != ''">
         <choose>
           <when test="like">
-            and username = "%"#{username,jdbcType=VARCHAR}"%"
+            and username like "%"#{username,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and username = #{username,jdbcType=VARCHAR}
@@ -104,7 +104,7 @@
             and realname like "%"#{realname,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
-            and realname like #{realname,jdbcType=VARCHAR}
+            and realname = #{realname,jdbcType=VARCHAR}
           </otherwise>
         </choose>
 
@@ -137,7 +137,7 @@
             and phone like "%"#{phone,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
-            and phone like #{phone,jdbcType=VARCHAR}
+            and phone = #{phone,jdbcType=VARCHAR}
           </otherwise>
         </choose>
       </if>
@@ -159,7 +159,7 @@
             and email like "%"#{email,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
-            and email like #{email,jdbcType=VARCHAR}
+            and email = #{email,jdbcType=VARCHAR}
           </otherwise>
         </choose>
       </if>

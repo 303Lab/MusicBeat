@@ -3,7 +3,7 @@
         <div class="container">
             <h1 style="font-size:30px;"><strong>开&nbsp启&nbsp你&nbsp的&nbsp悦&nbsp享&nbsp世&nbsp界</strong></h1>
             <p class="lead">Find great music to relax, express, study, or enjoy from Yue</p>
-            <form>
+            <form ng-submit="searchMusicByName();">
                 <div class="row">
                     <div class="col-md-3">
                         <div>
@@ -12,7 +12,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" placeholder="根据歌手名/歌名搜索">
+                            <input type="text" placeholder="根据歌名搜索" ng-model="search.name">
                         </div> <!-- end .form-group -->
                     </div>
                     <div class="col-md-3">
@@ -49,11 +49,12 @@
                 <small>Explore some of the best music all over the world</small>
             </h2>
             <div class="row">
-                <div class="col-md-3 col-sm-6" ng-repeat="item in current.singer.recommend">
-                    <a ui-sref="app.singer.category({sid:item.id})" class="category-box" style="{{item.img}}">
+                <div class="col-md-3 col-sm-6" ng-repeat="item in recommend">
+                    <a ui-sref="app.singer.category({sid:item.id})" class="category-box" style="background-image: url('{{item.pic}}');-moz-background-size:cover;-webkit-background-size:cover;
+-o-background-size:cover;background-size:cover;">
                         <div class="inner">
-                            <span class="number" ng-bind-html="item.number"></span>
-                            <span class="title" ng-bind-html="item.title"></span>
+                            <span class="number" ng-bind-html="item.lang"></span>
+                            <span class="title" ng-bind-html="item.name"></span>
                         </div> <!-- end .inner -->
                     </a> <!-- end .category-box -->
                 </div> <!-- end .col-md-3 -->

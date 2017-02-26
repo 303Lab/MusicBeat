@@ -80,13 +80,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByAlbumName" useCache="true" parameterType="java.lang.String" resultType="Integer">
+  <select id="selectByAlbumName" useCache="true" parameterType = "map" resultType="Integer">
     select id from album
     <where>
       <if test="name != null and name != ''">
         <choose>
           <when test="like">
-            and name = "%"#{name,jdbcType=VARCHAR}"%"
+            and name like "%"#{name,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and name = #{name,jdbcType=VARCHAR}
@@ -227,7 +227,7 @@
     where a.id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectAlbumsByAlbumName" parameterType="String" resultMap="ResultMapWithBLOBs">
+  <select id="selectAlbumsByAlbumName" parameterType = "map" resultMap="ResultMapWithBLOBs">
     select
     <include refid="Base_Column_List" />
     ,
@@ -237,7 +237,7 @@
       <if test="name != null and name != ''">
         <choose>
           <when test="like">
-            and name = "%"#{name,jdbcType=VARCHAR}"%"
+            and name like "%"#{name,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and name = #{name,jdbcType=VARCHAR}

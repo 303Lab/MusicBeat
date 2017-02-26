@@ -15,8 +15,8 @@ angular
             classical: "古典",
             sport: "运动",
             electronic: "电子",
-            ballad: "民谣",
-            cure: "治愈"
+            ballad: "嘻哈",
+            cure: "下午茶"
         },
 
         // header.html menu
@@ -38,11 +38,8 @@ angular
                 },
             },
             billboard: {
-                "排行榜": ["排行榜", "新歌潮流榜", "经典热歌榜", "心随乐动榜"],
-            },
-            musicLabelRecommend: {
-
-            },
+                "排行榜": ["新歌潮流榜", "经典热歌榜", "心随乐动榜"],
+            }
         },
 
         // header.html ui-sref url reflect

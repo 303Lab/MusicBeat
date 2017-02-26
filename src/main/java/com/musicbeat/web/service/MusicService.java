@@ -18,16 +18,16 @@ public interface MusicService {
 
     /****************************************歌曲*************************************/
     /*获得全部歌曲*/
-    List<Music> getAll();
+    JSONArray getAll();
 
     /*通过音乐id找到音乐*/
     MusicViewModel getByMusicId(Integer id);
 
     /*通过音乐名查询歌曲集*/
-    List<Music> getByMusicName(String Mname, Boolean like);
+    JSONArray getByMusicName(String Mname);
 
     /*通过歌手名字查询歌曲集*/
-    List<Music> getBySingerName(String Sname, Boolean like);
+    List<Music> getBySingerName(String Sname);
 
     /*通过专辑id获得旗下的所有音乐*/
     Album selectMusicsById(Integer id);
@@ -43,7 +43,7 @@ public interface MusicService {
     Album selectAlbumByAlbumId(Integer id);
 
     /*通过专辑名字查询专辑集*/
-    List<Album> getAlbumsByAlbumName(String Aname, Boolean like);
+    List<Album> getAlbumsByAlbumName(String Aname);
 
     /*通过歌手id获得旗下的所有专辑*/
     Singer selectAlbumsById(Integer id);
@@ -51,9 +51,13 @@ public interface MusicService {
     /*通过音乐id找到唯一专辑*/
     Music selectAlbumById(Integer id);
 
+
     /****************************************歌手*************************************/
     /*通过专辑id找到唯一歌手*/
     Album selectSingerById(Integer id);
+
+    /*通过歌手名字找到歌手*/
+    List<Singer> selectSingerBySname(String name);
 
     /*获得全部歌手*/
     List<Singer> selectAll();

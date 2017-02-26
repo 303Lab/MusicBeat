@@ -41,13 +41,13 @@
      where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByMusicName" useCache="true" parameterType="String" resultMap="BaseResultMap">
+  <select id="selectByMusicName" useCache="true" parameterType = "map" resultMap="BaseResultMap">
     select id from music
     <where>
       <if test="name != null and name != ''">
         <choose>
           <when test="like">
-            and name = "%"#{name,jdbcType=VARCHAR}"%"
+            and name like "%"#{name,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and name = #{name,jdbcType=VARCHAR}
@@ -57,7 +57,7 @@
     </where>
   </select>
 
-  <select id="selectMusicsByMusicName" useCache="true" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectMusicsByMusicName" useCache="true" parameterType = "map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from music
@@ -65,7 +65,7 @@
       <if test="name != null and name != ''">
         <choose>
           <when test="like">
-            and name = "%"#{name,jdbcType=VARCHAR}"%"
+            and name like "%"#{name,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and name = #{name,jdbcType=VARCHAR}

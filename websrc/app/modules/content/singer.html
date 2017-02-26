@@ -23,9 +23,9 @@
                         <div class="singer-sidebar">
                             <div class="sidebar-widget">
                                 <h3 style="color: whitesmoke">查找歌手</h3>
-                                <form class="searchform">
-                                    <input type="text" placeholder="Type here ...">
-                                    <button><i class="pe-7s-search"></i></button>
+                                <form class="searchform" ng-submit="getSingerByName();">
+                                    <input type="text" placeholder="Type here ..." ng-model="singerName" required aria-required="true">
+                                    <button type="submit"><i class="pe-7s-search"></i></button>
                                 </form>
                             </div> <!-- 歌手查找 -->
                             <div class="sidebar-widget">
@@ -38,7 +38,7 @@
                                                 <a>{{subItem}}<i class="pe-7s-right-arrow"></i></a>
                                                 <ul style="margin-left: 280px; margin-top: -90px; width:200px;">
                                                     <li class="menu-item-has-children" style="width: 200px;" ng-repeat="item in list">
-                                                        <a ui-sref="app.music">{{item}}<i class="pe-7s-right-arrow"></i></a>
+                                                        <a href="" ng-click="getSingerByType($event);">{{item}}<i class="pe-7s-right-arrow"></i></a>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -52,20 +52,20 @@
                         <div class="text-center" style="line-height: 4em">
                             <div class="row">
                                 <div class="col-md-3" ng-repeat="singer in singers">
-                                    <a ui-sref="app.singer.category({id:singer.id})" ng-bind-html="singer.name"></a>
+                                    <a ui-sref="app.singer.category({sid:singer.id})" ng-bind-html="singer.name"></a>
                                 </div>
                             </div> <!-- end.歌手链接-->
                         </div>
                         <div class="pagination" style="text-align: center">
-                            <li><a href="#">&laquo;</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li><a href="#">7</a></li>
-                            <li><a href="#">&raquo;</a></li>
+                            <li><a href="" ng-click="beforePages();">&laquo;</a></li>
+                            <li><a href="" ng-bind-html="page[0]" ng-click="pageSelect(page[0]);"></a></li>
+                            <li><a href="" ng-bind-html="page[1]" ng-click="pageSelect(page[1]);"></a></li>
+                            <li><a href="" ng-bind-html="page[2]" ng-click="pageSelect(page[2]);"></a></li>
+                            <li><a href="" ng-bind-html="page[3]" ng-click="pageSelect(page[3]);"></a></li>
+                            <li><a href="" ng-bind-html="page[4]" ng-click="pageSelect(page[4]);"></a></li>
+                            <li><a href="" ng-bind-html="page[5]" ng-click="pageSelect(page[5]);"></a></li>
+                            <li><a href="" ng-bind-html="page[6]" ng-click="pageSelect(page[6]);"></a></li>
+                            <li><a href="" ng-click="nextPages();">&raquo;</a></li>
                         </div>
                     </div> <!-- end .col-md-8 -->
                 </div> <!-- end .row -->

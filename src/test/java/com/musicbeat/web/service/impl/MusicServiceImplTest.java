@@ -86,22 +86,22 @@ public class MusicServiceImplTest {
     /**
      * Method: getByMusicName(String Mname, Boolean like)
      */
-    @Test
+    /*@Test
     public void testGetByMusicName() throws Exception {
-        List<Music> musicList = musicService.getByMusicName("她说", false);
-        for (Music music : musicList) {
+        List<MusicViewModel> musicList = musicService.getByMusicName("她说", false);
+        for (MusicViewModel music : musicList) {
             logger.info(music.getId());
         }
         logger.info(musicList);
-//TODO: Test goes here... 
-    }
+//TODO: Test goes here...
+    }*/
 
     /**
      * Method: getByAlbumName(String Aname, Boolean like)
      */
     @Test
     public void testGetByAlbumName() throws Exception {
-        List<Album> albums = musicService.getAlbumsByAlbumName("初学者", false);
+        List<Album> albums = musicService.getAlbumsByAlbumName("初学者");
         logger.info(JSON.toJSONString(albums));
 //TODO: Test goes here... 
     }
@@ -111,7 +111,7 @@ public class MusicServiceImplTest {
      */
     @Test
     public void testGetBySingerName() throws Exception {
-        List<Music> musicList = musicService.getBySingerName("薛之谦", false);
+        List<Music> musicList = musicService.getBySingerName("薛之谦");
         for (Music music : musicList) {
             logger.info(music.getId());
         }

@@ -11,13 +11,16 @@ angular
     .controller("headerController", [
         "$scope",
         "$state",
-        "authService",
+        "toastr",
+        "toastrProvider",
         "appEvent",
         "baseConst",
+        "authService",
+        "headerService",
         headerController
     ]);
 
-function headerController($scope, $state, authService, appEvent, baseConst) {
+function headerController($scope, $state, toastr, toastrProvider, appEvent, baseConst, authService, headerService) {
 
     // singer category
     $scope.menu = baseConst.menu;
@@ -93,4 +96,36 @@ function headerController($scope, $state, authService, appEvent, baseConst) {
                 }
             );
     };
+
+    // test
+
+    function queryAllLabels() {
+        headerService
+            .findAllLabels()
+            .then(
+                function (data) {
+
+                    data = data.All_Labels;
+
+                    if (!jQuery.isEmptyObject(data)) {
+                        for (var i = 0; i < data.length; i++) {
+                            console.log(data);
+                        }
+
+                    } else {
+                        toastr.warning(toastrProvider.textCenter(appEvent.noneSinger));
+                    }
+                },
+
+                function (reason) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
+                        toastr.error(toastrProvider.textCenter(reason.message));
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.error));
+                    }
+
+                    console.log(reason);
+                }
+            );
+    }
 }

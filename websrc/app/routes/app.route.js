@@ -23,7 +23,8 @@ function appRouter($stateProvider, appConst) {
             }
         })
         .state("app.music", {
-            url: "/music/{name}",
+            url: "/music?search&p&label",
+            reloadOnSearch: false,
             views: {
                 "content@":{
                     templateUrl: fnBasePath("music.html"),
@@ -44,12 +45,14 @@ function appRouter($stateProvider, appConst) {
             url: "/category/{name}",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("blog.cart.html")
+                    templateUrl: fnBasePath("blog.cart.html"),
+                    controller: "blogCategoryController"
                 }
             }
         })
         .state("app.singer", {
-            url: "/singer/{type}",
+            url: "/singer?type&p&search",
+            reloadOnSearch: false,
             views: {
                 "content@":{
                     templateUrl: fnBasePath("singer.html"),
@@ -61,7 +64,8 @@ function appRouter($stateProvider, appConst) {
             url: "/category/{sid:int}",
             views: {
                 "content@":{
-                    templateUrl: fnBasePath("singer.cart.html")
+                    templateUrl: fnBasePath("singer.cart.html"),
+                    controller: "singerCategoryController"
                 }
             }
         })

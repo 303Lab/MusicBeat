@@ -1,9 +1,5 @@
 /**
- *
- * @author windawings
- * @create.time 2017/02/23 21:42
- * @version 1.0.0
- * @since 1.0.0
+ * Created by qinshen on 2017/2/24.
  */
 
 angular
@@ -11,16 +7,26 @@ angular
     .controller("adminSingerController", ["$scope", "$document", adminSingerController]);
 
 function adminSingerController($scope, $document) {
-
-    // open edit panel
-    jQuery(".singer-edit-open").on("click", function(event){
+    /*==========Singer  Edit ==========*/
+    jQuery('.singer-edit-open').on('click', function(event) {
         event.preventDefault();
-        jQuery(".singer-edit-wrapper").addClass("open");
+        jQuery('.singer-edit-wrapper').addClass('open');
     });
-
-    $document.on("click", function (event) {
-        if (!jQuery(event.target).closest(".singer-edit").length && !jQuery(event.target).closest(".singer-edit-open").length) {
-            jQuery(".singer-edit-wrapper").removeClass("open");
+    $document.on('click', function(event) {
+        if (!jQuery(event.target).closest('.singer-edit').length && !jQuery(event.target).closest('.singer-edit-open').length) {
+            jQuery('.singer-edit-wrapper').removeClass('open');
         }
     });
+
+    /*==========Singer Add Edit ==========*/
+    jQuery('.singer-add-edit-open').on('click', function(event) {
+        event.preventDefault();
+        jQuery('.singer-add-edit-wrapper').addClass('open');
+    });
+    $document.on('click', function(event) {
+        if (!jQuery(event.target).closest('.singer-add-edit').length && !jQuery(event.target).closest('.singer-add-edit-open').length) {
+            jQuery('.singer-add-edit-wrapper').removeClass('open');
+        }
+    });
+
 }

@@ -18,13 +18,16 @@ angular
 function singerService($http, $q, appConst) {
 
     var serviceBaseApi = appConst.apiUrl;
-    var getSingersByMenuApi = serviceBaseApi + "/getSingersByMenu";
+    var getSingersApi = serviceBaseApi + "/All_Singers";
+    var getSingersByTypeApi = serviceBaseApi + "/Kinds_of_Singers";
+    var getSingerByIdApi = serviceBaseApi + "/Musics_of_Singer";
+    var getSingersByNameApi = serviceBaseApi + "/Singers_of_Sname";
 
-    function getSingersByMenu(type) {
+    function getSingersByType(type, page) {
 
         var deferred = $q.defer();
 
-        var url = getSingersByMenuApi + "?country=" + type.country + "&sex=" + (typeof(type.sex) === 'undefined' ? "" : type.sex) + "&band=" + (typeof(type.band) === 'undefined' ? "" : type.band);
+        var url = getSingersByTypeApi + "?country=" + type.country + "&sex=" + (typeof(type.sex) === 'undefined' ? "" : type.sex) + "&isBand=" + (typeof(type.band) === 'undefined' ? "" : type.band) + "&pageNum=" + (typeof(page) === 'undefined' ? "" : page);
 
         $http.get(url)
             .then(
@@ -42,9 +45,74 @@ function singerService($http, $q, appConst) {
 
     }
 
+    function getSingers(page) {
+        var deferred = $q.defer();
+
+        var url = getSingersApi + "?pageNum=" + (typeof(page) === 'undefined' ? "" : page);
+
+        $http.get(url)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function getSingerById(id) {
+        var deferred = $q.defer();
+
+        var url = getSingerByIdApi + "?singer_id=" + (typeof(id) === 'undefined' ? "" : id);
+
+        $http.get(url)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function getSingersByName(name, page) {
+        var deferred = $q.defer();
+
+        var url = getSingersByNameApi + "?singer_name=" + (typeof(name) === 'undefined' ? "" : name.trim()) + "&pageNum=" + (typeof(page) === 'undefined' ? "" : page);
+
+        $http.get(url)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
     return {
 
-        getSingersByMenu: getSingersByMenu,
+        getSingers: getSingers,
 
+        getSingersByType: getSingersByType,
+
+        getSingerById: getSingerById,
+
+        getSingersByName: getSingersByName,
     };
 }

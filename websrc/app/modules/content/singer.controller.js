@@ -11,6 +11,7 @@ angular
     .controller("singerController", [
         "$scope",
         "$stateParams",
+        "$location",
         "toastr",
         "toastrProvider",
         "baseConst",
@@ -19,37 +20,17 @@ angular
         singerController
     ]);
 
-function singerController($scope, $stateParams, toastr, toastrProvider, baseConst, appEvent, singerService) {
+function singerController($scope, $stateParams, $location, toastr, toastrProvider, baseConst, appEvent, singerService) {
 
     $scope.menu = baseConst.menu;
 
-    // get singers
-    $scope.singers = [
-        {
-            id: 1,
-            name: "薛之谦"
-        },
-        {
-            id: 2,
-            name: "周杰伦"
-        },
-        {
-            id: 3,
-            name: "陈奕迅"
-        },
-        {
-            id: 4,
-            name: "林俊杰"
-        },
-        {
-            id: 5,
-            name: "张学友"
-        },
-        {
-            id: 6,
-            name: "张杰"
-        }
-    ];
+    var defaultPage = [1, 2, 3, 4, 5, 6];
+
+    $scope.page = defaultPage;
+
+    $scope.singerName = "";
+
+    $scope.singers = [];
 
     var reflectorSingerMenu = {
         "华语男歌手": {
@@ -124,32 +105,224 @@ function singerController($scope, $stateParams, toastr, toastrProvider, baseCons
         },
     };
 
-    singerService
-        .getSingersByMenu(reflectorSingerMenu[$stateParams.type])
-        .then(
-            function (data) {
-                if (!jQuery.isEmptyObject(data) && data.length > 0) {
-                    for (var i = 0; i < data.length; i++) {
-                        var singer = {};
-                        singer.id = data[i].id;
-                        singer.name = data[i].name;
+    // get singers
+    if (typeof($stateParams.type) !== "undefined" && $stateParams.type !== "") {
+        querySingersByType($stateParams.type);
+    } else if (typeof($stateParams.search) !== "undefined" && $stateParams.search !== "") {
+        querySingersByName();
+    } else{
+        querySingersByNone();
+    }
 
-                        $scope.singers.splice(i, 0, singer);
+    $scope.nextPages = function () {
+        if (Number($stateParams.p) === $scope.page[5] && $scope.musics.length == 10) {
+            for (var i = 0; i < 6; i++) {
+                $scope.page[i] += 3;
+            }
+        }
+    };
+
+    $scope.beforePages = function () {
+        if ($scope.page[0] > 3) {
+            for (var i = 0; i < 6; i++) {
+                $scope.page[i] -= 3;
+            }
+        }
+    };
+
+    $scope.pageSelect = function (page) {
+
+        $stateParams = {
+            type: typeof($stateParams.type) === "undefined" ? "": $stateParams.type,
+            search: typeof($stateParams.search) === "undefined" ? "": $stateParams.search,
+            p: page
+        };
+
+        $location.search('p', $stateParams.p);
+        $location.search('type', $stateParams.type);
+        $location.search('search', $stateParams.search);
+
+        $scope.singers.splice(0, $scope.singers.length);
+
+        if (typeof($stateParams.type) !== "undefined" && $stateParams.type !== "") {
+            querySingersByType($stateParams.type);
+        } else if (typeof($stateParams.search) !== "undefined" && $stateParams.search !== "") {
+            querySingersByName();
+        } else{
+            querySingersByNone();
+        }
+    };
+
+    $scope.getSingerByType = function ($event) {
+
+        $scope.page = defaultPage;
+
+        $stateParams = {
+            type: $event.target.innerText,
+            p: 1,
+            search: ""
+        };
+
+        $location.search('p', $stateParams.p);
+        $location.search('type', $stateParams.type);
+        $location.search('search', $stateParams.search);
+
+        $scope.singers.splice(0, $scope.singers.length);
+
+        querySingersByType($event.target.innerText);
+    };
+
+    $scope.getSingerByName = function () {
+        $scope.page = defaultPage;
+
+        $stateParams = {
+            type: "",
+            p: 1,
+            search: $scope.singerName
+        };
+
+        $location.search('p', $stateParams.p);
+        $location.search('type', $stateParams.type);
+        $location.search('search', $stateParams.search);
+
+        $scope.singers.splice(0, $scope.singers.length);
+
+        querySingersByName();
+    };
+
+    function querySingersByType(type) {
+
+        var page = 1;
+        if (typeof($stateParams.p) !== "undefined" && $stateParams.p !== "") {
+            page = $stateParams.p;
+        }
+
+        singerService
+            .getSingersByType(reflectorSingerMenu[type], page)
+            .then(
+                function (data) {
+
+                    data = data.KindsOfSingers;
+
+                    if (!jQuery.isEmptyObject(data) && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var singer = {};
+                            singer.id = data[i].id;
+                            singer.name = data[i].name;
+                            singer.albums = data[i].albums;
+                            singer.gender = data[i].gender;
+                            singer.intro = data[i].introduction;
+                            singer.lang = data[i].lang;
+                            singer.pic = data[i].picture;
+                            singer.isBand = data[i].band;
+
+                            $scope.singers.splice(i, 0, singer);
+                        }
+
+                    } else {
+                        toastr.warning(toastrProvider.textCenter(appEvent.noneSinger));
+                    }
+                },
+
+                function (reason) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
+                        toastr.error(toastrProvider.textCenter(reason.message));
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.error));
                     }
 
-                } else {
-                    toastr.error(toastrProvider.textCenter(appEvent.noneSinger));
+                    console.log(reason);
                 }
-            },
+            );
+    }
 
-            function (reason) {
-                if (typeof(reason.message) !== "undefined" && reason.message !== null) {
-                    toastr.error(toastrProvider.textCenter(reason.message));
-                } else {
-                    toastr.error(toastrProvider.textCenter(appEvent.error));
+    function querySingersByNone() {
+        var page = 1;
+        if (typeof($stateParams.p) !== "undefined" && $stateParams.p !== "") {
+            page = $stateParams.p;
+        }
+
+        singerService
+            .getSingers(page)
+            .then(
+                function (data) {
+
+                    data = data.All_Singer;
+
+                    if (!jQuery.isEmptyObject(data) && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var singer = {};
+                            singer.id = data[i].id;
+                            singer.name = data[i].name;
+                            singer.albums = data[i].albums;
+                            singer.gender = data[i].gender;
+                            singer.intro = data[i].introduction;
+                            singer.lang = data[i].lang;
+                            singer.pic = data[i].picture;
+                            singer.isBand = data[i].band;
+
+                            $scope.singers.splice(i, 0, singer);
+                        }
+
+                    } else {
+                        toastr.warning(toastrProvider.textCenter(appEvent.noneSinger));
+                    }
+                },
+
+                function (reason) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
+                        toastr.error(toastrProvider.textCenter(reason.message));
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.error));
+                    }
+
+                    console.log(reason);
                 }
+            );
+    }
 
-                console.log(reason);
-            }
-        );
+    function querySingersByName() {
+        var page = 1;
+        if (typeof($stateParams.p) !== "undefined" && $stateParams.p !== "") {
+            page = $stateParams.p;
+        }
+
+        singerService
+            .getSingersByName($scope.singerName, page)
+            .then(
+                function (data) {
+
+                    data = data.SingersBySingerName;
+
+                    if (!jQuery.isEmptyObject(data) && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var singer = {};
+                            singer.id = data[i].id;
+                            singer.name = data[i].name;
+                            singer.albums = data[i].albums;
+                            singer.gender = data[i].gender;
+                            singer.intro = data[i].introduction;
+                            singer.lang = data[i].lang;
+                            singer.pic = data[i].picture;
+                            singer.isBand = data[i].band;
+
+                            $scope.singers.splice(i, 0, singer);
+                        }
+
+                    } else {
+                        toastr.warning(toastrProvider.textCenter(appEvent.noneSinger));
+                    }
+                },
+
+                function (reason) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
+                        toastr.error(toastrProvider.textCenter(reason.message));
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.error));
+                    }
+
+                    console.log(reason);
+                }
+            );
+    }
 }

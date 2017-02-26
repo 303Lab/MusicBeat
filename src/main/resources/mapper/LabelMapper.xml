@@ -99,13 +99,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByName" parameterType="String" resultType="Integer">
+  <select id="selectByName" parameterType = "map" resultType="Integer">
     select id from label
     <where>
       <if test="name != null and name != ''">
         <choose>
           <when test="like">
-            and name = "%"#{name,jdbcType=VARCHAR}"%"
+            and name like "%"#{name,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and name = #{name,jdbcType=VARCHAR}
@@ -115,7 +115,7 @@
     </where>
   </select>
 
-  <select id="selectLabelByName" parameterType="String" resultMap="MusicLabelMap">
+  <select id="selectLabelByName" parameterType = "map" resultMap="MusicLabelMap">
     select l.id,l.name,l.gid,m.id as m_id,m.name as m_name,m.lyrics as m_lyrics,m.link as m_link
     from label l left join music_label ml on l.id = ml.lid
     left join music m on ml.mid = m.id
@@ -123,7 +123,7 @@
       <if test="name != null and name != ''">
         <choose>
           <when test="like">
-            and l.name = "%"#{name,jdbcType=VARCHAR}"%"
+            and l.name like "%"#{name,jdbcType=VARCHAR}"%"
           </when>
           <otherwise>
             and l.name = #{name,jdbcType=VARCHAR}

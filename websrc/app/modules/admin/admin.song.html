@@ -3,88 +3,23 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8" style="font-family:'Microsoft YaHei';font-size: 20px;margin-top:20px;font-color:black">
-                <!--添加歌曲信息-->
-                <li style="font-family:'Microsoft YaHei UI'">直接添加歌曲的信息</li>
-                <div class="container col-xs-12" style="background-color:transparent "><br/>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="songinfo">
-                                <form class="form-horizontal" role="form">
-                                    <div class="col-md-11 form-group">
-                                        <input type="text" class="form-control" id="songname" placeholder="歌曲名">
-                                    </div>
-                                    <div class="col-md-11 form-group">
-                                        <input type="text" class="form-control" id="singername" placeholder="歌手名">
-                                    </div>
-                                    <div class="col-md-11 form-group">
-                                        <input type="text" class="form-control" id="albumname" placeholder="专辑名">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="row">
-                                <div class="music-item changgetx row">
-                                    <div class="col-md-4"><p>选择音乐</p></div>
-                                    <div class="col-md-8" style="text-align: right">
-                                        <label class="label" for="inputmusic"></label>
-                                        <input type="file" id="inputmusic">
-                                    </div>
-                                    <div class="col-md-12">&nbsp;</div>
-                                    <div class="col-md-4"><p>选择音乐</p></div>
-                                    <div class="col-md-8" style="text-align: right">
-                                        <label class="label" for="inputlyric"></label>
-                                        <input type="file" id="inputlyric">
-                                    </div>
-                                </div>
-                                <div class="col-md-12"></div><br/>
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="label-item" style="line-height: 1.5em">
-                                <form action="" method="get">歌曲风格？
-                                    <li>心情</li>
-                                    <label><input name="Lable" type="checkbox" value="" />安静</label>
-                                    <label><input name="Lable" type="checkbox" value="" />运动 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />旅行 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />下午茶 </label>
-                                    <li>场景</li>
-                                    <label><input name="Lable" type="checkbox" value="" />影视原声 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />校园歌曲 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />网络歌曲 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />KTV </label>
-                                    <li>语言</li>
-                                    <label><input name="Lable" type="checkbox" value="" />华语 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />日韩 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />欧美 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />其他 </label>
-                                    <li>风格</li>
-                                    <label><input name="Lable" type="checkbox" value="" />流行 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />摇滚 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />R&B </label>
-                                    <label><input name="Lable" type="checkbox" value="" />嘻哈 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />乡村 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />民谣 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />爵士 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />古典 </label>
-                                    <label><input name="Lable" type="checkbox" value="" />电子 </label>
-                                </form>
-                            </div>
-                        </div>
-                        <div style="text-align:right">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">添加</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- 歌曲输入查找框-->
                 <li>查找歌曲的信息</li><br/>
-                <div class="col-md-12">
+                <div class="col-md-7" style="margin-right: 400px;">
                     <form class="form-horizontal" role="form">
-                        <input type="text" class="form-control" id="findname" placeholder="歌曲名">
+                        <input type="text" class="form-control" id="musicname" placeholder="歌曲姓名">
                         <span class="input-group-btn" style="text-align: right">
-                            <button class="btn btn-default" type="button">查找</button>
-                        </span>
+                        <button class="btn btn-default" type="button">查找</button>
+                    </span>
+                    </form>
+                </div><br/>
+                <!-- 添加歌手的信息 -->
+                <li>添加歌曲信息</li>
+                <div class="col-md-7" style="margin-right: 400px;">
+                    <form class="form-horizontal" role="form">
+                    <span class="input-group-btn" style="text-align: right">
+                        <button class="btn btn-default" type="button"><a href="" class="song-add-edit-open">添加</a></button>
+                    </span>
                     </form>
                 </div><br/>
                 <!-- 歌曲显示表-->
@@ -118,3 +53,4 @@
 
 <!--edit wrapper-->
 <div ng-include="'tpls/admin.song.edit.html'"></div>
+<div ng-include="'tpls/admin.song.add.edit.html'"></div>
