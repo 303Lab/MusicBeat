@@ -16,9 +16,10 @@
       and aid = #{aid,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.MusicAlbum">
+  <!--修改parameterType,mid,aid  by gyz-->
+  <insert id="insert" flushCache="true" parameterType="map">
     insert into music_album (mid, aid)
-    values (#{music.id,jdbcType=INTEGER}, #{album.id,jdbcType=INTEGER})
+    values (#{mid,jdbcType=INTEGER}, #{aid,jdbcType=INTEGER})
   </insert>
 
   <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.MusicAlbum">
@@ -40,5 +41,19 @@
       </if>
     </trim>
   </insert>
+
+
+<!--add by gyz 音乐ID查找专辑ID-->
+  <select id="selectAlbumIDByMusicID" useCache="true" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select distinct aid from music_album
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+
+  <!--add by gyz 专辑ID查找音乐ID-->
+  <select id="selectMusicIdByAlbumId" flushCache="true" parameterType="java.lang.Integer"
+          resultType="java.lang.Integer">
+    select distinct mid from music_album
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
 
 </mapper>

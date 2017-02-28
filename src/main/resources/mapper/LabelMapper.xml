@@ -21,7 +21,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, lid, mid, name
+    id, gid, name
   </sql>
 
   <select id="selectById" useCache="true" parameterType="Integer" resultMap="MusicLabelMap">
@@ -36,38 +36,32 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.Label">
+  <insert id="insert" flushCache="true" parameterType="map">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into label (lid, mid, name
+    insert into label (id, gid, name
       )
-    values (#{lid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}
       )
   </insert>
 
-  <insert id="insertSelective" flushCache="true" parameterType="com.musicbeat.web.model.Label">
+  <insert id="insertSelective" flushCache="true" parameterType="map">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into label
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="lid != null">
-        lid,
-      </if>
-      <if test="mid != null">
-        mid,
+      <if test="gid != null">
+        gid,
       </if>
       <if test="name != null">
         name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="lid != null">
-        #{lid,jdbcType=INTEGER},
-      </if>
-      <if test="mid != null">
-        #{mid,jdbcType=INTEGER},
+      <if test="gid != null">
+        #{gid,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -75,14 +69,11 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="com.musicbeat.web.model.Label">
+  <update id="updateByPrimaryKeySelective" flushCache="true" parameterType="map">
     update label
     <set>
-      <if test="lid != null">
-        lid = #{lid,jdbcType=INTEGER},
-      </if>
-      <if test="mid != null">
-        mid = #{mid,jdbcType=INTEGER},
+      <if test="gid != null">
+        gid = #{gid,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -91,10 +82,9 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKey" flushCache="true" parameterType="com.musicbeat.web.model.Label">
+  <update id="updateByPrimaryKey" flushCache="true" parameterType="map">
     update label
-    set lid = #{lid,jdbcType=INTEGER},
-      mid = #{mid,jdbcType=INTEGER},
+    set gid = #{gid,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -137,6 +127,27 @@
     select
     <include refid="Base_Column_List"/>
     from label
+  </select>
+
+
+  <!--add by gyz LabelGroupID查找LabelIdID-->
+  <select id="selectLabelIdByLabelGroupId" useCache="true" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select distinct id from label
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+
+  <!--add by gyz LabelID查找LabelGroupID-->
+  <select id="selectLabelGroupIdByLabelId" flushCache="true" parameterType="java.lang.Integer"
+          resultType="java.lang.Integer">
+    select distinct gid from label
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--add by gyz LabelID查找LabelGroupID-->
+  <select id="selectMusicIdByLabelId" flushCache="true" parameterType="java.lang.Integer"
+          resultType="java.lang.Integer">
+    select distinct mid from music_label
+    where lid = #{lid,jdbcType=INTEGER}
   </select>
 
 </mapper>

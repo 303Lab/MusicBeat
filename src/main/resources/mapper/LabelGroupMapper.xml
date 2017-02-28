@@ -68,4 +68,23 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+<!--add by gyz 通过name找LabelGroup-->
+  <select id="selectLabelGroupByName" useCache="true" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from label_group
+    <where>
+      <if test="name != null and name != ''">
+        <choose>
+          <when test="like">
+            and name = "%"#{name,jdbcType=VARCHAR}"%"
+          </when>
+          <otherwise>
+            and name = #{name,jdbcType=VARCHAR}
+          </otherwise>
+        </choose>
+      </if>
+    </where>
+  </select>
 </mapper>

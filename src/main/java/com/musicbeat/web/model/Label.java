@@ -41,6 +41,10 @@ public class Label implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+	
+	public Integer getId() {
+        return id;
+    }
 
     public Integer getGid() {
         return gid;

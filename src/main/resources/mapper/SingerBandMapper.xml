@@ -18,7 +18,7 @@
       and bid = #{bid,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.SingerBand">
+  <insert id="insert" flushCache="true" parameterType="map">
     insert into singer_band (sid, bid)
     values (#{sid,jdbcType=INTEGER}, #{bid,jdbcType=INTEGER})
   </insert>
@@ -42,4 +42,13 @@
       </if>
     </trim>
   </insert>
+
+
+  <!--add by gyz-->
+  <update id="updateBySingerId" flushCache="true" parameterType="map">
+    update singer_band
+    set
+    bid = #{bid,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
 </mapper>

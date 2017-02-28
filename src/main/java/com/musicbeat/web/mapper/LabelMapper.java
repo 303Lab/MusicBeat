@@ -8,13 +8,13 @@ import java.util.List;
 public interface LabelMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Label record);
+    int insert(@Param("id") Integer id,@Param("gid") Integer gid,@Param("name") String name);
 
-    int insertSelective(Label record);
+    int insertSelective(@Param("id") Integer id,@Param("gid") Integer gid,@Param("name") String name);
 
-    int updateByPrimaryKeySelective(Label record);
+    int updateByPrimaryKeySelective(@Param("id") Integer id,@Param("gid") Integer gid,@Param("name") String name);
 
-    int updateByPrimaryKey(Label record);
+    int updateByPrimaryKey(@Param("id") Integer id,@Param("gid") Integer gid,@Param("name") String name);
 
     Integer selectByName(@Param("name") String name, @Param("like") Boolean like);
 
@@ -23,4 +23,11 @@ public interface LabelMapper {
     Label selectLabelByName(@Param("name") String name, @Param("like") Boolean like);
 
     List<Label> selectAll();
+
+    //add by gyz id
+    List<Integer> selectLabelIdByLabelGroupId(Integer gid);
+    //add by gyz
+    Integer selectLabelGroupIdByLabelId(Integer lid);
+
+
 }

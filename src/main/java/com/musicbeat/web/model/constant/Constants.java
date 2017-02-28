@@ -22,11 +22,44 @@ public class Constants {
     public static final String REQUEST_CITY_JSON = "city";
     public static final String REQUEST_SEX_JSON = "sex";
     public static final String REQUEST_QQ_JSON = "qq";
+    public static final String REQUEST_COMMENT_JSON ="comment";
+    //add by gyz 2.22
+    public static final String REQUEST_SINGERID_JSON = "singerid";
+    public static final String REQUEST_SINGERNAME_JSON = "singername";
+    public static final String REQUEST_SINGERPIC_JSON = "singerpic";
+    public static final String REQUEST_SINGERGENDER_JSON = "gender";
+    public static final String REQUEST_SINGERLANG_JSON = "lang";
+    public static final String REQUEST_SINGERISBAND_JSON = "isBand";
+    public static final String REQUEST_SINGERINFO_JSON = "introduction";
+ 	public static final String REQUEST_ALBUMID_JSON = "albumid";
+    public static final String REQUEST_ALBUMNAME_JSON = "albumname";
+    public static final String REQUEST_ALBUMRELEASETIME_JSON = "albumrt";
+    public static final String REQUEST_ALBUMPIC_JSON = "albumpic";
+    public static final String REQUEST_ALBUMINFO_JSON = "albuminfo";
+	public static final String REQUEST_MUSICID_JSON = "musicid";
+    public static final String REQUEST_MUSICNAME_JSON = "musicname";
+    public static final String REQUEST_MUSICLINK_JSON = "musiclink";
+    public static final String REQUEST_MUSICLYRICS_JSON = "musiclyrics";
 
-    public static final String REQUEST_COMMENT_JSON = "comment";
+    public static final String REQUEST_LABELGROUPID_JSON = "labelgroupid";
+    public static final String REQUEST_LABELGROUPNAME_JSON = "labelgroupname";
+    public static final String REQUEST_LABELID_JSON = "labelid";
+    public static final String REQUEST_LABELNAME_JSON = "labelname";
+    
+
+
+
+
+
 
     // === Session ===
     public static final String SESSION_USER = "userData";
+    //add by gyz 2.22
+    public static final String SESSION_SINGER = "singerData";
+    public static final String SESSION_ALBUM = "albumData";
+    public static final String SESSION_MUSIC = "musicData";
+    public static final String SESSION_LABEL = "labelData";
+    public static final String SESSION_LABELGROUP = "labelgroupData";
 
     // === Auth Role ===
     public static final String AUTH_ROLE = "roleName";

@@ -12,6 +12,8 @@ public class LabelGroup implements Serializable {
 
     private String name;
 
+    public LabelGroup(){}
+
     @Override
     public String toString() {
         List<String> list = new ArrayList<>();
@@ -33,5 +35,13 @@ public class LabelGroup implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

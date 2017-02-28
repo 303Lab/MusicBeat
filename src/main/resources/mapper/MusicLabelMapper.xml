@@ -15,7 +15,7 @@
       and lid = #{lid,jdbcType=INTEGER}
   </delete>
 
-  <insert id="insert" flushCache="true" parameterType="com.musicbeat.web.model.MusicLabel">
+  <insert id="insert" flushCache="true" parameterType="map">
     insert into music_label (mid, lid)
     values (#{mid,jdbcType=INTEGER}, #{lid,jdbcType=INTEGER})
   </insert>
@@ -39,4 +39,26 @@
       </if>
     </trim>
   </insert>
+
+
+  <!--专辑名ID查找歌手ID add by gyz-->
+  <select id="selectMusicIdByLabelId" useCache="true" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select distinct mid from music_label
+    where lid = #{lid,jdbcType=INTEGER}
+  </select>
+
+  <!--add by gyz-->
+  <select id="selectLabelIdByMusicId" useCache="true" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select distinct lid from music_label
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+
+
+  <!--add by gyz-->
+  <update id="updateByMusicId" flushCache="true" parameterType="map">
+    update music_label
+    set
+    lid = #{lid,jdbcType=INTEGER}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
 </mapper>

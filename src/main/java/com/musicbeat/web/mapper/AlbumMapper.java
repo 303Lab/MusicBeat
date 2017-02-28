@@ -34,4 +34,6 @@ public interface AlbumMapper {
     Album selectSingerById(Integer id);
 
     Album selectMusicsById(Integer id);
+
+    List<Album> selectAll();
 }
