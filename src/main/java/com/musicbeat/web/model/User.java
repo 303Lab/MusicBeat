@@ -24,6 +24,30 @@ public class User implements Serializable {
 
     private String city;
 
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     private String qq;
 
     private String phone;

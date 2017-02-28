@@ -1,0 +1,44 @@
+<div class="tab-pane active" id="userDetail">
+    <form name="userForm" class="setting-profile-table">
+        <!-- 性别-->
+        <div class="form-group">
+            <p style="display: inline;clear:both;">性别:&nbsp;&nbsp;</p>
+            <div class="radio" style="display: inline">
+                <label>
+                    <input type="radio" name="sex" id="optionsRadios1" ng-value="true" ng-model="user.sex" ng-checked="user.sex"> 男
+                </label>
+                <label>
+                    <input type="radio" name="sex" id="optionsRadios2" ng-value="false" ng-model="user.sex" ng-checked="!user.sex">女
+                </label>
+            </div>
+        </div>
+        <!-- 联系方式 -->
+        <div style="float:left" class="form-group">
+            <p>联系方式:</p>
+            <input style="size: 30px;max-width: 300px;" name="mobile" type="text" ng-model="user.mobile" ng-minlength="11" ng-maxlength="11">
+        </div>
+        <!--邮箱-->
+        <div style="float:left;margin-left:40px" class="form-group">
+            <p>邮箱:</p>
+            <input style="size: 30px;max-width: 400px;" type="email" name="email" ng-model="user.email">
+        </div>
+        <!-- QQ -->
+        <div style="clear:both;" class="form-group">
+            <p>QQ:</p>
+            <input style="size: 30px;max-width: 300px;" type="text" name="qq" ng-model="user.qq" ng-maxlength="10">
+        </div>
+        <!--居住地-->
+        <div class="form-group">
+            <p>居住地:</p>
+            <input type="text" style="max-width: 300px;" name="city" class="cityinput" id="citySelect" placeholder="选择你的所在地" ng-model="user.city">
+        </div>
+    </form>
+    <div style="text-align: right">
+        <a class="submit button" href="" ng-click="submitBasic();">提交</a>
+    </div>
+</div>
+
+<!-- Scripts.js -->
+<script type="text/javascript">
+    var test = new Vcity.CitySelector({input: 'citySelect'});
+</script>

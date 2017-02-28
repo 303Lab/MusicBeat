@@ -69,12 +69,37 @@ function appRouter($stateProvider, appConst) {
                 }
             }
         })
+
+        // user
         .state("app.user", {
             url: "/user",
+            abstract: true,
             views: {
-                "content@":{
-                    templateUrl: fnBasePath("user.html"),
+                "header@": {
+                    templateUrl: fnBasePath("user.header.html")
+                },
+                "content@": {
+                    templateUrl: fnBasePath("user.home.html"),
                     controller: "userController"
+                },
+                "userContent": {
+                    templateUrl: fnBasePath("user.detail.html"),
+                }
+            }
+        })
+        .state("app.user.detail", {
+            url: "/detail",
+            views: {
+                "userContent@app.user": {
+                    templateUrl: fnBasePath("user.detail.html")
+                }
+            }
+        })
+        .state("app.user.security", {
+            url: "/security",
+            views: {
+                "userContent@app.user": {
+                    templateUrl: fnBasePath("user.security.html")
                 }
             }
         })

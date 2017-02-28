@@ -36,6 +36,7 @@ var path = {
         "app/lib/js/scripts.js",
         "app/lib/js/html5shiv.min.js",
         "app/lib/js/respond.min.js",
+        "app/lib/js/cityselect.js",
         "app/lib/js/APlayer.min.js"
     ],
     vendorCss: [

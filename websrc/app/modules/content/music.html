@@ -54,7 +54,7 @@
                         </div> <!-- end .music-sidebar -->
                     </div> <!-- end .col-md-4 -->
                     <div class="col-md-8" style="background-color:transparent">
-                        <div class="tab-pane" style="color: whitesmoke">
+                       <div class="tab-pane" style="color: whitesmoke;font-size: 16px; font-family: 'Microsoft YaHei UI', serif; margin-top: -60px;">
                             <div style="text-align: center;margin-top: -30px;font-size: 20px;font-family: 'Microsoft YaHei UI Light',serif">歌曲列表</div>
                             <!-- 歌曲显示表-->
                             <table class="table" style="border-color: deepskyblue;">
@@ -72,7 +72,7 @@
                                     <td style="width: 20px" ng-bind-html="$index + 1"></td>
                                     <td style="width: 300px" ng-bind-html="music.title"></td>
                                     <td style="width: 300px" ng-bind-html="music.album"></td>
-                                    <td style="width: 10px"><img src="images/download.png"></td>
+                                    <td style="width: 10px"><img src="images/download.png" ng-click="downMusic(music.id);"></td>
                                     <td style="width:10px"><img src="images/plus.png" ng-click="addMusic(music.id);"></td>
                                 </tr>
                                 </tbody>
@@ -85,7 +85,6 @@
                                 <li><a href="" ng-bind-html="page[3]" ng-click="pageSelect(page[3]);"></a></li>
                                 <li><a href="" ng-bind-html="page[4]" ng-click="pageSelect(page[4]);"></a></li>
                                 <li><a href="" ng-bind-html="page[5]" ng-click="pageSelect(page[5]);"></a></li>
-                                <li><a href="" ng-bind-html="page[6]" ng-click="pageSelect(page[6]);"></a></li>
                                 <li><a href="" ng-click="nextPages();">&raquo;</a></li>
                             </div>
                         </div>

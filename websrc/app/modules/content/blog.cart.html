@@ -42,7 +42,7 @@
                                 <td ng-bind-html="$index + 1"></td>
                                 <td ng-bind-html="music.title"></td>
                                 <td ng-bind-html="music.author"></td>
-                                <td style="width: 10px"><img src="images/download.png"></td>
+                                <td style="width: 10px"><img src="images/download.png" ng-click="downMusic(music.id);"></td>
                                 <td style="width:10px"><img src="images/plus.png" ng-click="addMusic(music.id);"></td>
                             </tr>
                             </tbody>

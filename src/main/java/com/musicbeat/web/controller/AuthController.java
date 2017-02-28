@@ -24,19 +24,28 @@ import static com.musicbeat.web.model.constant.Constants.AUTH_ROLE;
 import static com.musicbeat.web.model.constant.Constants.HTTP_UTF8;
 import static com.musicbeat.web.model.constant.Constants.LOG_EMAIL;
 import static com.musicbeat.web.model.constant.Constants.LOG_NEW_PASSWORD;
+import static com.musicbeat.web.model.constant.Constants.LOG_NEW_USER;
 import static com.musicbeat.web.model.constant.Constants.LOG_PASSWORD;
 import static com.musicbeat.web.model.constant.Constants.LOG_USER;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_CITY_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_EMAIL_JSON;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_NEW_PASSWORD_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_PASSWORD_JSON;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_QQ_JSON;
+import static com.musicbeat.web.model.constant.Constants.REQUEST_SEX_JSON;
 import static com.musicbeat.web.model.constant.Constants.REQUEST_USERNAME_JSON;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_CREDENTIAL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_EXCEPTION;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_LOGOFF_USER_BLANK;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_NOTHING_UPDATE;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_PARAM_NOT_EXIST;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_PASSWORD;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER_DUPLICATE_EMAIL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_REGISTER_DUPLICATE_USERNAME;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_RETRIEVE_NONE;
+import static com.musicbeat.web.model.constant.Constants.RESPONSE_ERROR_USERNAME_DUPLICATION;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_FAIL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_MESSAGE;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_STATUS;
@@ -191,7 +200,7 @@ public class AuthController extends BaseController {
             } else {
                 // 默认用户名
                 user.setUsername(user.getEmail().split("@")[0]);
-                users = userService.findByUserName(username, false);
+                users = userService.findByUserName(user.getUsername(), false);
             }
 
             logObj.put(LOG_EMAIL, email);
@@ -334,7 +343,7 @@ public class AuthController extends BaseController {
             String base64String = URLDecoder.decode(email, HTTP_UTF8);
             String emailString = new String(Base64Utils.decodeFromUrlSafeString(base64String), HTTP_UTF8);
             user.setEmail(emailString);
-            logObj.put(LOG_EMAIL, email);
+            logObj.put(LOG_EMAIL, emailString);
             logObj.put(LOG_NEW_PASSWORD, newPassword);
 
             if (userService.retrieveWithoutTimeCheck(user, code) && userService.changePassword(user, newPassword)) {
@@ -368,5 +377,240 @@ public class AuthController extends BaseController {
         }
 
         return model;
+    }
+
+    @RequestMapping(value = "/user/updateBasic", method = RequestMethod.POST)
+    public @ResponseBody Callable<ModelMap> updateBasic(@RequestBody JSONObject jsonObject) {
+
+        ModelMap model = new ModelMap();
+        JSONObject logObj = new JSONObject();
+
+        try {
+
+            User user = (User) session.getAttribute(SESSION_USER);
+
+            if (user != null) {
+
+                logObj.put(LOG_USER, user);
+                boolean flag = false;
+                // 解析Json对象
+                String city = URLDecoder.decode(jsonObject.getString(REQUEST_CITY_JSON), HTTP_UTF8);
+                String email = URLDecoder.decode(jsonObject.getString(REQUEST_EMAIL_JSON), HTTP_UTF8);
+                String qq = URLDecoder.decode(jsonObject.getString(REQUEST_QQ_JSON), HTTP_UTF8);
+                boolean sex = jsonObject.getBoolean(REQUEST_SEX_JSON);
+
+                if (city != null) {
+                    if (user.getCity() == null) {
+                        user.setCity(city);
+                        flag = true;
+                    } else if (!user.getCity().equals(city)) {
+                        user.setCity(city);
+                        flag = true;
+                    }
+                }
+
+                if (email != null) {
+                    if (user.getEmail() == null) {
+                        user.setEmail(email);
+                        flag = true;
+                    } else if (!user.getEmail().equals(email)) {
+                        user.setEmail(email);
+                        flag = true;
+                    }
+                }
+
+                if (qq != null) {
+                    if (user.getQq() == null) {
+                        user.setQq(qq);
+                        flag = true;
+                    } else if (!user.getQq().equals(qq)) {
+                        user.setQq(qq);
+                        flag = true;
+                    }
+                }
+
+                if (user.getGender() == null) {
+                    user.setGender(sex);
+                    flag = true;
+                } else if (!user.getGender().equals(sex)) {
+                    user.setGender(sex);
+                    flag = true;
+                }
+
+                if (flag) {
+                    // update database & cache
+                    userService.update(user);
+                    session.setAttribute(SESSION_USER, user);
+
+                    // response
+                    logObj.put(LOG_NEW_USER, user);
+
+                    JSONObject userViewModel = convert2ViewModelIgnoreNull(user);
+
+                    model.put(SESSION_USER, userViewModel);
+                    model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+                    logger.info(logObj.toJSONString() + ", User update basic success!");
+
+                } else {
+
+                    logObj.put(LOG_USER, jsonObject);
+                    logger.error(logObj.toJSONString() + ", User update basic failed!");
+
+                    model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                    model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_NOTHING_UPDATE);
+
+                }
+
+
+            } else {
+
+                logObj.put(LOG_USER, jsonObject);
+                logger.error(logObj.toJSONString() + ", User update basic failed!");
+
+                model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                model.put(RESPONSE_MESSAGE, "进入了这个逻辑我也是服气了……");
+            }
+        } catch (Exception e) {
+
+            model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+            model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_RETRIEVE);
+
+            response.setStatus(SC_NOT_FOUND);
+
+            logger.error(logObj.toJSONString() + ", User Update Basic Error");
+            logger.error(e, e.fillInStackTrace());
+        }
+
+        return () -> model;
+    }
+
+    @RequestMapping(value = "/user/updateUserName", method = RequestMethod.POST)
+    public @ResponseBody Callable<ModelMap> updateUserName(@RequestBody JSONObject jsonObject) {
+
+        ModelMap model = new ModelMap();
+        JSONObject logObj = new JSONObject();
+
+        try {
+
+            User user = (User) session.getAttribute(SESSION_USER);
+
+            if (user != null) {
+
+                logObj.put(LOG_USER, user);
+                // 解析Json对象
+                String username = URLDecoder.decode(jsonObject.getString(REQUEST_USERNAME_JSON), HTTP_UTF8);
+
+                if (username != null && !user.getUsername().equals(username)) {
+                    user.setUsername(username);
+                    // update database & cache
+                    userService.update(user);
+                    session.setAttribute(SESSION_USER, user);
+
+                    // response
+                    logObj.put(LOG_NEW_USER, user);
+                    model.put(REQUEST_USERNAME_JSON, user.getUsername());
+                    model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+                    logger.info(logObj.toJSONString() + ", User update username success!");
+
+                } else {
+
+                    logObj.put(LOG_USER, jsonObject);
+                    logger.error(logObj.toJSONString() + ", User update username failed!");
+
+                    model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                    model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_USERNAME_DUPLICATION);
+                }
+            } else {
+
+                logObj.put(LOG_USER, jsonObject);
+                logger.error(logObj.toJSONString() + ", User update username failed!");
+
+                model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                model.put(RESPONSE_MESSAGE, "进入了这个逻辑我也是服气了……");
+            }
+        } catch (Exception e) {
+
+            model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+            model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_RETRIEVE);
+
+            response.setStatus(SC_NOT_FOUND);
+
+            logger.error(logObj.toJSONString() + ", User Update username Error");
+            logger.error(e, e.fillInStackTrace());
+        }
+
+        return () -> model;
+    }
+
+    @RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
+    public @ResponseBody Callable<ModelMap> updatePassword(@RequestBody JSONObject jsonObject) {
+
+        ModelMap model = new ModelMap();
+        JSONObject logObj = new JSONObject();
+
+        try {
+
+            User user = (User) session.getAttribute(SESSION_USER);
+
+            if (user != null) {
+
+                logObj.put(LOG_USER, user);
+                // 解析Json对象
+                String oldpass = URLDecoder.decode(jsonObject.getString(REQUEST_PASSWORD_JSON), HTTP_UTF8);
+                String newpass = URLDecoder.decode(jsonObject.getString(REQUEST_NEW_PASSWORD_JSON), HTTP_UTF8);
+
+                // update password
+                if (oldpass != null && newpass != null) {
+                    if (user.getPassword().equals(oldpass)) {
+
+                        user.setPassword(newpass);
+                        logObj.put(LOG_NEW_USER, user);
+
+                    } else {
+
+                        model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                        model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_PASSWORD);
+
+                        logger.error(logObj.toJSONString() + ", User update password error!");
+
+                        return () -> model;
+                    }
+
+                    // update database & cache
+                    userService.update(user);
+                    session.setAttribute(SESSION_USER, user);
+
+                    // response
+                    model.put(REQUEST_NEW_PASSWORD_JSON, user.getPassword());
+                    model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+                    logger.info(logObj.toJSONString() + ", User update password success!");
+                } else {
+
+                    logObj.put(LOG_USER, jsonObject);
+                    logger.error(logObj.toJSONString() + ", User update password failed!");
+
+                    model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                    model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_PARAM_NOT_EXIST);
+                }
+            } else {
+
+                logObj.put(LOG_USER, jsonObject);
+                logger.error(logObj.toJSONString() + ", User update password failed!");
+
+                model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+                model.put(RESPONSE_MESSAGE, "进入了这个逻辑我也是服气了……");
+            }
+        } catch (Exception e) {
+
+            model.put(RESPONSE_STATUS, RESPONSE_FAIL);
+            model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_RETRIEVE);
+
+            response.setStatus(SC_NOT_FOUND);
+
+            logger.error(logObj.toJSONString() + ", User Update password Error");
+            logger.error(e, e.fillInStackTrace());
+        }
+
+        return () -> model;
     }
 }

@@ -85,5 +85,5 @@ function billboardService($http, $q, appConst) {
 
         findMusicByDownAmount: findMusicByDownAmount,
 
-    }
+    };
 }

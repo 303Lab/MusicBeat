@@ -17,7 +17,11 @@ public class Constants {
     public static final String REQUEST_TYPE_JSON = "json";
     public static final String REQUEST_USERNAME_JSON = "username";
     public static final String REQUEST_PASSWORD_JSON = "password";
+    public static final String REQUEST_NEW_PASSWORD_JSON = "newpass";
     public static final String REQUEST_EMAIL_JSON = "email";
+    public static final String REQUEST_CITY_JSON = "city";
+    public static final String REQUEST_SEX_JSON = "sex";
+    public static final String REQUEST_QQ_JSON = "qq";
 
     public static final String REQUEST_COMMENT_JSON = "comment";
 
@@ -37,11 +41,18 @@ public class Constants {
     public static final String RESPONSE_SUCCESS = "ok";
     public static final String RESPONSE_FAIL = "fail";
 
+    // === Response Update Password Error Message
+    public static final String RESPONSE_ERROR_PARAM_NOT_EXIST = "Params Lost, Try Again!";
+    public static final String RESPONSE_ERROR_USERNAME_DUPLICATION = "Params Lost or UserName Dumplication!";
+    public static final String RESPONSE_ERROR_NOTHING_UPDATE = "Nothing to Update!";
+
     // === Response Server Error Message
     public static final String RESPONSE_ERROR_EXCEPTION = "Server Error, Try Again!";
 
     // === Response Login Error Message ===
     public static final String RESPONSE_ERROR_CREDENTIAL = "Username or Password Error!";
+
+    public static final String RESPONSE_ERROR_PASSWORD = "Old Password Error!";
 
     // === Response Log Off Error Message ===
     public static final String RESPONSE_ERROR_LOGOFF_USER_BLANK = "the User has Logged Off!";
@@ -62,6 +73,7 @@ public class Constants {
 
     // === Log Object ===
     public static final String LOG_USER = "user";
+    public static final String LOG_NEW_USER = "userUpdate";
     public static final String LOG_EMAIL = "email";
     public static final String LOG_PASSWORD = "pass";
     public static final String LOG_NEW_PASSWORD = "newPass";

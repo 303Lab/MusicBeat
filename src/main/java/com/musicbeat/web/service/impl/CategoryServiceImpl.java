@@ -125,7 +125,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public JSONArray findByLabelName(String name) {
-        Label label = labelMapper.selectLabelByName(name,true);
+        Label label = labelMapper.selectLabelByName(name,false);
 
         List<Music> musics = label.getMusics();
         JSONArray musicsViewModel = new JSONArray();

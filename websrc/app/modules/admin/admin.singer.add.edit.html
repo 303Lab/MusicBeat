@@ -1,5 +1,5 @@
 <div class="singer-add-edit-wrapper">
-    <div class="singer-add-edit">
+    <div class="singer-add-edit" style="line-height: 2em;font-size: 15px;font-family: 'Microsoft YaHei UI Light'">
         <form>
             <!--姓名-->
             <div class="form-group">
@@ -7,80 +7,52 @@
             </div>
             <!--国籍-->
             <div class="form-group">
-                <div class="radio" style="color: white">
-                    <div class="col-md-3">国&nbsp;籍</div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="countryRadios" id="countryRadios1" value="option1" checked>
-                            <span style="color: white">华语</span>
-                        </label>
+                <div class="row">
+                    <div class="col-md-3"><span>歌手国籍</span></div>
+                    <div class="col-md-3">
+                        <label class="checkbox-inline">
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox1" value="Chinese"> 华语
+                    </label>
                     </div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="countryRadios" id="countryRadios2" value="option2" >
-                            <span style="color: white">日本</span>
-                        </label>
+                    <div class="col-md-3">
+                        <label class="checkbox-inline">
+                    <input type="radio" name="optionsRadiosinline" id="inlineCheckbox2" value="Japanese"> 日本
+                </label>
                     </div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="countryRadios" id="countryRadios3" value="option3" >
-                            <span style="color: white">韩国</span>
-                        </label>
+                    <div class="col-md-3">
+                        <label class="checkbox-inline">
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox3" value="Korea"> 韩国
+                    </label>
                     </div>
                     <div class="col-md-3"></div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="countryRadios" id="countryRadios4" value="option4" >
-                            <span style="color: white">欧美</span>
-                        </label>
+                    <div class="col-md-3">
+                        <label class="checkbox-inline">
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox4" value="English"> 欧美
+                    </label>
                     </div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="countryRadios" id="countryRadios5" value="option5" >
-                            <span style="color: white">其他</span>
-                        </label>
+                    <div class="col-md-3">
+                        <label class="checkbox-inline">
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox5" value="other"> 其他
+                    </label>
                     </div>
-                </div>
+            </div>
             </div>
             <!--性别-->
             <div class="form-group">
-                <div class="radio" style="color: white">
-                    <div class="col-md-6">请选择歌手性别</div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="genderRadios" value="option1" checked>
-                            <span style="color: white">男</span>
-                        </label>
-                    </div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="genderRadios" value="option2">
-                            <span style="color: white">女</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <!--类型-->
-            <div class="form-group">
-                <div class="radio">
-                    <div class="col-md-6">是否属于某个乐队？</div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="band" id="band1" value="option1">
-                            <span style="color: white">是</span>
-                        </label>
-                    </div>
-                    <div class="col-md-3 form-group">
-                        <label>
-                            <input type="radio" name="band" id="band2" value="option2">
-                            <span style="color: white">否</span>
-                        </label>
-                    </div>
-                </div>
+                <span>是否属于某个组合</span>
+                <label class="checkbox-inline">
+                    <input type="radio" name="optionsRadiosinline" id="man" value="man"> 男
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="optionsRadiosinline" id="woman" value="women"> 女
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="optionsRadiosinline" id="band" value="band"> 组合
+                </label>
             </div>
             <!--头像-->
             <div class="form-group">
-                <div class="col-md-4"><p>选择头像</p></div>
+                <div class="col-md-4" style="text-align: left"><span>选择头像</span></div>
                 <div class="col-md-8" style="text-align: right">
                     <label class="label" for="inputfile"></label>
                     <input type="file" id="inputfile">
@@ -88,8 +60,8 @@
             </div>
             <!--简介-->
             <div class="form-group">
-                <div class="panel-body" style="height: 200px">
-                    <input type="text"id="introduce" placeholder="请输入歌手简介">
+                <div class="panel-body">
+                    <input style="height: 100px;border-radius: 0;" type="text" id="introduce" placeholder="请输入歌手简介">
                 </div>
             </div>
             <div class="button-wrapper">

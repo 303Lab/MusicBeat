@@ -11,6 +11,7 @@ angular
     .controller("changeController", [
         "$scope",
         "$timeout",
+        "$location",
         "toastr",
         "toastrProvider",
         "authService",
@@ -18,7 +19,7 @@ angular
         changeController
     ]);
 
-function changeController($scope, $timeout, toastr, toastrProvider, authService, appEvent) {
+function changeController($scope, $timeout, $location, toastr, toastrProvider, authService, appEvent) {
 
     $scope.changeModel = {
         password: "",
@@ -73,7 +74,9 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
                         $scope.changeModel.color = {"color": "#EE3D3D"};
                     }
 
-                    $timeout(function () {window.location.href = window.location.protocol + "//" + window.location.host + "/" + "musicbeat";}, 2000, true);
+                    $timeout(function () {
+                        window.location.href = getRootPath();
+                    }, 2000, true);
                 },
 
                 function (reason) {
@@ -90,4 +93,15 @@ function changeController($scope, $timeout, toastr, toastrProvider, authService,
                 }
             );
     };
+
+    function getRootPath() {
+        var pathName = document.location.pathname.substring(1);
+        var webName = pathName === '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+        if (webName === "") {
+            return document.location.protocol + '//' + document.location.host;
+        }
+        else {
+            return document.location.protocol + '//' + document.location.host + '/' + webName;
+        }
+    }
 }

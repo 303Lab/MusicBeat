@@ -34,7 +34,7 @@
                                     <nav class="main-nav">
                                         <ul class="music-unstyled">
                                             <!-- 歌手分类 -->
-                                            <li class="menu-item-has-children" style="width: 250px" ng-repeat="(subItem, list) in menu.singer['歌手']">
+                                            <li class="menu-item-has-children" style="width: 250px;color:whitesmoke;" ng-repeat="(subItem, list) in menu.singer['歌手']">
                                                 <a>{{subItem}}<i class="pe-7s-right-arrow"></i></a>
                                                 <ul style="margin-left: 280px; margin-top: -90px; width:200px;">
                                                     <li class="menu-item-has-children" style="width: 200px;" ng-repeat="item in list">
@@ -64,7 +64,6 @@
                             <li><a href="" ng-bind-html="page[3]" ng-click="pageSelect(page[3]);"></a></li>
                             <li><a href="" ng-bind-html="page[4]" ng-click="pageSelect(page[4]);"></a></li>
                             <li><a href="" ng-bind-html="page[5]" ng-click="pageSelect(page[5]);"></a></li>
-                            <li><a href="" ng-bind-html="page[6]" ng-click="pageSelect(page[6]);"></a></li>
                             <li><a href="" ng-click="nextPages();">&raquo;</a></li>
                         </div>
                     </div> <!-- end .col-md-8 -->

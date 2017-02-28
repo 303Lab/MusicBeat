@@ -6,9 +6,9 @@
   <cache eviction="LRU" type="org.mybatis.caches.redis.RedisCache"/>
 
   <resultMap id="BaseResultMap" type="com.musicbeat.web.model.Label">
-    <id column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    <result column="gid" javaType="java.lang.Integer" jdbcType="INTEGER" />
-    <result column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    <result property="gid" column="gid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
   </resultMap>
 
   <resultMap id="MusicLabelMap" type="com.musicbeat.web.model.Label" extends="BaseResultMap">

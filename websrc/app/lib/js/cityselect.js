@@ -289,7 +289,7 @@ Vcity.CitySelector.prototype = {
                 odt.innerHTML = sortKey[j] == 'hot'?'&nbsp;':sortKey[j];
                 odda = [];
                 for(var i=0,n=oCity[key][sortKey[j]].length;i<n;i++){
-                    str = '<a href="#">' + oCity[key][sortKey[j]][i] + '</a>';
+                    str = '<a href="#!/user/detail">' + oCity[key][sortKey[j]][i] + '</a>';
                     odda.push(str);
                 }
                 odd.innerHTML = odda.join('');

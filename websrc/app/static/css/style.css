@@ -750,6 +750,9 @@ select, .light-inputs select {
     box-shadow: none;
     margin-top: 36px;
     height: 50px;
+    display: inline;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .header .right .button:hover {
@@ -3837,9 +3840,8 @@ blockquote {
 
 .userbox5 {
     height: 600px;
-    padding: 0px;
-    background-color: whitesmoke;
-    border: 2px solid lightgrey;
+    padding: 0;
+    background-color: transparent;
     font-family: Microsoft YaHei UI, serif;
     font-size: 20px;
     line-height: 4em;

@@ -14,11 +14,12 @@ angular
         "toastr",
         "toastrProvider",
         "appEvent",
-       "billboardService",
+        "musicService",
+        "billboardService",
        blogCategoryController
     ]);
 
-function blogCategoryController($scope, $stateParams, toastr, toastrProvider, appEvent, billboardService) {
+function blogCategoryController($scope, $stateParams, toastr, toastrProvider, appEvent, musicService, billboardService) {
 
     $scope.billboard = {
         time: "",
@@ -36,6 +37,16 @@ function blogCategoryController($scope, $stateParams, toastr, toastrProvider, ap
             }
         }
 
+    };
+
+    $scope.downMusic = function (id) {
+        for (var i = 0; i < $scope.billboard.musics.length; i++) {
+            if (id === $scope.billboard.musics[i].id) {
+                var path = document.location.origin + document.location.pathname + $scope.billboard.musics[i].url;
+                downloadMusic(path, $scope.billboard.musics[i].title + ' - ' + $scope.billboard.musics[i].author);
+                break;
+            }
+        }
     };
 
     function queryBillboard() {
@@ -173,5 +184,9 @@ function blogCategoryController($scope, $stateParams, toastr, toastrProvider, ap
                     console.log(reason);
                 }
             );
+    }
+
+    function downloadMusic(url, name) {
+        jQuery('<a href="' + url + '" download="' + name + '">Download</a>')[0].click();
     }
 }

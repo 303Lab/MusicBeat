@@ -25,8 +25,18 @@ angular.module("app.configs")
         changeCheckFailed: "Password Input Above Doesn't Match!",
 
         // music event
-        noneMusic: "Error: No Music Found!",
+        noneMusic: "No Music Found!",
+        downMusic: "Download is about to begin.\r\nWait a moment please...",
+        downMusicFailed: "Download Failed!",
 
         // singer event
-        noneSinger: "Error: No Singer Found!",
+        noneSinger: "No Singer Found!",
+
+        // user event
+        updateOk: "Update Success!",
+        updateNone: "Nothing to Update!",
+        mobileNotValid: "Phone Number Is Invalid!",
+        qqNotValid: "QQ Number Is Invalid!",
+        passwordDuplicate: "New Password Is The Same As The Old One!",
+        usernameDuplicate: "New UserName Is The Same As The Old One!",
 });

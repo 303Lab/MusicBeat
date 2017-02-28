@@ -101,7 +101,7 @@ function singerController($scope, $stateParams, $location, toastr, toastrProvide
         },
         "其他乐队组合": {
             country: "Others",
-            band: 1,
+            band: 0,
         },
     };
 

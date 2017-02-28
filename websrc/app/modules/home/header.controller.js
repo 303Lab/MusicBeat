@@ -98,7 +98,6 @@ function headerController($scope, $state, toastr, toastrProvider, appEvent, base
     };
 
     // test
-
     function queryAllLabels() {
         headerService
             .findAllLabels()

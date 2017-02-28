@@ -1,17 +1,20 @@
-<div class="song-add-edit-wrapper">
+<div class="song-add-edit-wrapper" style="line-height: 2em">
     <div class="song-add-edit">
         <form>
-            <!--歌名-->
-            <div class="form-group">
-                <input type="songName" placeholder="输入歌曲姓名">
-            </div>
-            <!--歌手名-->
-            <div class="form-group">
-                <input type="singerName" placeholder="输入歌手姓名">
-            </div>
-            <!--专辑名-->
-            <div class="form-group">
-                <input type="albumName" placeholder="输入专辑名">
+            <div class="form-group row">
+                <!--歌名-->
+                <div class="col-md-4">
+                    <input style="border-radius: 15px;height: 25px" type="songName" placeholder="歌曲名">
+                </div>
+                <!--歌手名-->
+                <div class="col-md-4">
+                    <input style="border-radius: 15px;height: 25px" type="singerName" placeholder="歌手名">
+                </div>
+                <!--专辑名-->
+                <div class="col-md-4">
+                    <input style="border-radius: 15px;height: 25px" type="albumName" placeholder="专辑名">
+                </div>
+
             </div>
             <!--歌曲歌词-->
             <div class="form-group">
@@ -24,8 +27,115 @@
                 </div>
             </div>
             <!--标签-->
-            <div class="form-group">
-                <input type="musicType" placeholder="请输入歌曲标签">
+            <div class="form-group" style="font-size: 12px">
+                <span style="font-size: 16px">选择歌曲标签(可多选)</span>
+                <div class="row">
+                    <div class="col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="quiet"> 安静
+                    </label>
+                </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox2" value="sport"> 运动
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox3" value="trip"> 旅行
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox4" value="free"> 下午茶
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox5" value="ysys"> 影视原声
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox6" value="xygq"> 校园歌曲
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox7" value="wlhq"> 网络歌曲
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox8" value="ktv"> KTV
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox9" value="Chinese"> 华语
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox10" value="Ja&Ko"> 日韩
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox11" value="English"> 欧美
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox12" value="other"> 其他
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox13" value="fashion"> 流行
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox14" value="rack"> 摇滚
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox15" value="R&B"> R&B
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox16" value="xh"> 嘻哈
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox17" value="country"> 乡村
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox18" value="story"> 民谣
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox19" value="jazz"> 爵士
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox20" value="classic"> 古典
+                    </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="inlineCheckbox21" value="electric"> 电子
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="button-wrapper">
                 <div class="col-md-6"><button type="submit" class="button">确定</button></div>

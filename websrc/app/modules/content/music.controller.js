@@ -97,14 +97,13 @@ function musicController($scope, $location, $stateParams, toastr, toastrProvider
     };
 
     $scope.addMusic = function (id) {
-        var music = {};
         for (var i = 0; i < $scope.musics.length; i++) {
             if (id === $scope.musics[i].id) {
-                music = $scope.musics[i];
+                $scope.player.addPlayMusic($scope.musics[i]);
                 break;
             }
         }
-        $scope.player.addPlayMusic(music);
+
     };
 
     $scope.search = function () {
@@ -116,6 +115,16 @@ function musicController($scope, $location, $stateParams, toastr, toastrProvider
         };
 
         $scope.pageSelect(1);
+    };
+
+    $scope.downMusic = function (id) {
+        for (var i = 0; i < $scope.musics.length; i++) {
+            if (id === $scope.musics[i].id) {
+                var path = document.location.origin + document.location.pathname + $scope.musics[i].url;
+                downloadMusic(path, $scope.musics[i].title + ' - ' + $scope.musics[i].author);
+                break;
+            }
+        }
     };
 
     function queryMusicByName(name) {
@@ -254,5 +263,9 @@ function musicController($scope, $location, $stateParams, toastr, toastrProvider
                     console.log(reason);
                 }
             );
+    }
+
+    function downloadMusic(url, name) {
+        jQuery('<a href="' + url + '" download="' + name + '">Download</a>')[0].click();
     }
 }

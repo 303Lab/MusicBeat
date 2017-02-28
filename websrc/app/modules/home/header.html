@@ -57,7 +57,7 @@
     <!-- login panel -->
     <div class="right" ng-controller="wrapperController">
         <div ng-hide="session.isAuthed">
-            <a href="" class="button login-open" ng-click="clearMessage();openLoginPanel();">Log In</a>
+            <a href="" class="button login-open" style="display: block;padding-top: 0;" ng-click="clearMessage();openLoginPanel();">Log In</a>
         </div>
         <div ng-if="session.roleName === 'user'">
             <div class="row">
@@ -72,7 +72,7 @@
                                     <a ui-sref="app.user" class="button"
                                        ng-bind-html="session.currentUser.username"></a>
                                     <ul>
-                                        <li><a ui-sref="app.user">Profile</a></li>
+                                        <li><a ui-sref="app.user.detail">Profile</a></li>
                                         <li><a href="" ng-click="logout();">Log Off</a></li>
                                     </ul>
                                 </li>

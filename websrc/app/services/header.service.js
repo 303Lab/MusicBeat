@@ -41,5 +41,5 @@ function headerService($http, $q, appConst) {
 
         findAllLabels: findAllLabels,
 
-    }
+    };
 }

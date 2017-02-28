@@ -11,23 +11,22 @@ angular
     .controller("singerCategoryController", [
         "$scope",
         "$stateParams",
-        "$location",
         "toastr",
         "toastrProvider",
-        "baseConst",
         "appEvent",
         "singerService",
         "musicService",
         singerCategoryController
     ]);
 
-function singerCategoryController($scope, $stateParams, $location, toastr, toastrProvider, baseConst, appEvent, singerService, musicService) {
+function singerCategoryController($scope, $stateParams, toastr, toastrProvider, appEvent, singerService, musicService) {
 
     querySingersById();
 
     $scope.singer = {};
 
     $scope.addMusic = function (id) {
+
         musicService
             .findMusicById(id)
             .then(
@@ -35,8 +34,9 @@ function singerCategoryController($scope, $stateParams, $location, toastr, toast
 
                     data = data.MusicByMusicId;
 
+                    var music = {};
+
                     if (!jQuery.isEmptyObject(data)) {
-                        var music = {};
                         music.id = data.id;
                         music.title = data.name;
                         music.author = data.sName;
@@ -52,7 +52,37 @@ function singerCategoryController($scope, $stateParams, $location, toastr, toast
                     }
                 },
 
-                // 错误处理
+                function (reason) {
+                    if (typeof(reason.message) !== "undefined" && reason.message !== null) {
+                        toastr.error(toastrProvider.textCenter(reason.message));
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.error));
+                    }
+
+                    console.log(reason);
+                }
+            );
+    };
+
+    $scope.downMusic = function (id) {
+
+        musicService
+            .findMusicById(id)
+            .then(
+                function (data) {
+
+                    data = data.MusicByMusicId;
+
+                    if (!jQuery.isEmptyObject(data)) {
+                        var path = document.location.origin + document.location.pathname + data.link;
+                        toastr.success(toastrProvider.textCenter(appEvent.downMusic));
+                        downloadMusic(path, data.name + " - " + data.sName);
+
+                    } else {
+                        toastr.error(toastrProvider.textCenter(appEvent.noneSinger));
+                    }
+                },
+
                 function (reason) {
                     if (typeof(reason.message) !== "undefined" && reason.message !== null) {
                         toastr.error(toastrProvider.textCenter(reason.message));
@@ -95,5 +125,9 @@ function singerCategoryController($scope, $stateParams, $location, toastr, toast
                     console.log(reason);
                 }
             );
+    }
+
+    function downloadMusic(url, name) {
+        jQuery('<a href="' + url + '" download="' + name + '">Download</a>')[0].click();
     }
 }
