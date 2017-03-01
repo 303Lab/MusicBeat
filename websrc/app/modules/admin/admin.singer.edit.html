@@ -2,29 +2,22 @@
     <div class="singer-edit">
         <form>
             <div class="form-group">
-                <input type="text" placeholder="123456">
+                <input type="text" ng-model="currentSinger.id" placeholder="{{currentSinger.id}}">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="text" placeholder="薛之谦">
+                <input type="text" ng-model="currentSinger.name" placeholder="{{currentSinger.name}}">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="text" placeholder="男">
+                <input type="text" ng-model="currentSinger.gender" placeholder="{{currentSinger.gender | genderFilter}}">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="text" placeholder="薛之谦，1983年7月17日出生于上海，华语流行乐男歌手、音乐制作人、演员、商人，毕业于格里昂酒店管理学院[1]  。
-                                    2005年，参加选秀节目《我型我秀》。2006年，发行首张同名专辑《薛之谦》正式出道，并凭借歌曲《认真的雪》获得一定的关注度[2-3]  。
-                                    2007年，推出第二张个人原创专辑《你过得好吗》[4]  。2008年，发行第三张音乐专辑《深深爱过你》；同年，举行了个人首场演唱会“谦年传说”[5]  。
-                                    2012年，发行专辑《几个薛之谦》；同年，薛之谦第一家连锁火锅店“上上谦”开业，随后，薛之谦又自创了UUJULY品牌女装、UUJULYKIDS品牌童装、Dangerous People品牌男装[6]  。
-                                    2013年，发行专辑《意外》[7]  。2015年5月，发行首张个人EP《绅士》并首次担当制作人，包揽了这张EP的所有词曲；6月10日，正式签约海蝶音乐公司，升为制作人[8]  ；
-                                    10月19日，发行EP《一半》[9]  ；同年，主演了都市励志剧《妈妈像花儿一样》[10]  。2016年，凭借歌曲《演员》获得Music Radio年度金曲；同年，获得第二十届榜中榜“最受欢迎唱作歌手”[11-13]  ；
-                                    7月，发行专辑《初学者》并在北京五棵松体育馆举行免费首唱会[14-15]  。2016年9月，由导演冯小刚执导的电影《我不是潘金莲》的推广曲《来日方长》确认由薛之谦与黄龄共同演绎。[16]
-                                    2016年11月，薛之谦宣布代言《问道》全品牌。">
+                <input type="text" ng-model="currentSinger.intro" placeholder="{{currentSinger.intro}}">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="text" placeholder="否">
+                <input type="text" ng-model="currentSinger.isBand" placeholder="{{currentSinger.isBand | boolFilter}}">
             </div> <!-- end .form-group -->
-            <div class="button-wrapper"><button type="submit" class="button">确定</button></div>
-            <div class="button-wrapper"><button type="submit" class="button">取消</button></div>
+            <div class="button-wrapper"><button type="submit" class="button" ng-click="fakeEdit(currentSinger.id, currentSinger.name)">确定</button></div>
+            <div class="button-wrapper"><button type="submit" class="button" ng-click="closePanel($event);">取消</button></div>
         </form>
     </div>
 </div>

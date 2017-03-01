@@ -2,16 +2,19 @@
     <div class="song-edit">
         <form>
             <div class="form-group">
-                <input type="songId" placeholder="123456">
+                <input type="text" ng-model="currentMusic.id" placeholder="{{currentMusic.id}}">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="songName" placeholder="薛之谦">
+                <input type="text" ng-model="currentMusic.title" placeholder="{{currentMusic.title}}">
             </div> <!-- end .form-group -->
             <div class="form-group">
-                <input type="songLyric" placeholder="yanyuan.mps">
+                <input type="text" ng-model="currentMusic.author" placeholder="{{currentMusic.author}}">
             </div> <!-- end .form-group -->
-            <div class="button-wrapper"><button type="submit" class="button">确定</button></div>
-            <div class="button-wrapper"><button type="submit" class="button">取消</button></div>
+            <div class="form-group">
+                <input type="text" ng-model="currentMusic.album" placeholder="{{currentMusic.album}}">
+            </div> <!-- end .form-group -->
+            <div class="button-wrapper"><button type="submit" class="button" ng-click="fakeEdit(currentMusic.id, currentMusic.title);">确定</button></div>
+            <div class="button-wrapper"><button type="submit" class="button" ng-click="closePanel();">取消</button></div>
         </form>
     </div>
 </div>

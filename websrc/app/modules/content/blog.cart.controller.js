@@ -14,15 +14,15 @@ angular
         "toastr",
         "toastrProvider",
         "appEvent",
-        "musicService",
         "billboardService",
        blogCategoryController
     ]);
 
-function blogCategoryController($scope, $stateParams, toastr, toastrProvider, appEvent, musicService, billboardService) {
+function blogCategoryController($scope, $stateParams, toastr, toastrProvider, appEvent, billboardService) {
 
     $scope.billboard = {
         time: "",
+        name: $stateParams.name,
         musics: [],
     };
 

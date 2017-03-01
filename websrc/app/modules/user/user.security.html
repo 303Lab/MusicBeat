@@ -1,40 +1,31 @@
-<div class="tab-pane row active" id="userpanel-2">
-    <div style="text-align:left;font-size: 25px;font-family: 'Microsoft YaHei UI',serif">用户隐私更改</div>
-    <div class="col-md-6">
-        <div class="changgename col-md-12">
-            <div>更改用户名</div>
-            <form class="bs-example bs-example-form" role="form">
-                <div class="row" style="border-radius: 0">
-                    <div class="input-group">
-                        <input style="border-radius: 0;width: 100%;height: 40px" type="text" class="form-control" placeholder="请输入要更改的用户名：" ng-model="user.username">
-                        <span class="input-group-btn">
-                                                <button style="margin-bottom: 40px;height: 41px" class="btn btn-default" type="button" ng-click="submitUserName();">修改</button>
-                                            </span>
-                    </div><!-- /input-group -->
-                </div><!-- /.row -->
-            </form>
+<div class="tab-pane row active" style="text-align:center" id="userSecurity">
+    <form name="userSecurityForm" class="setting-profile-table">
+        <!-- 更改用户名 -->
+        <div  class="form-group">
+            <label>新用户名:</label>
+            <input style="size:30px;max-width: 200px;display: inline" type="text"  name="name" ng-model="user.username">
+            <span class="input-group-btn">
+                <button style="margin-bottom: 40px;height: 41px" class="btn btn-default" type="button" ng-click="submitUserName();">修改</button>
+            </span>
         </div>
-        <div class="changgepass col-md-12">
-            <div style="margin-top: -50px">更改用户密码</div>
-            <div class="row">
-                <div class="col-md-6">
-                    <input style="border-radius: 0" type="password" class="form-control" id="oldPassword" placeholder="请输入原始密码" ng-model="user.password">
-                </div>
-                <div class="col-md-6">
-                    <input style="border-radius: 0" type="password" class="form-control" id="newPassword" placeholder="请输入新密码" ng-model="user.newpass">
-                </div>
-            </div>
+        <!-- 更改密码 -->
+        <div class="form-group">
+            <label>原密码:</label>
+            <input style="size: 30px;max-width: 200px;display: inline" type="password" ng-model="user.password">
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="changgetx row">
+        <!-- 确认密码 -->
+        <div style="clear:both" class="form-group">
+            <label>新密码:</label>
+            <input style="size: 30px;max-width: 200px;display: inline" type="password" ng-model="user.newpass">
+        </div>
+        <!--更改头像-->
+        <div class="form-group">
             <div class="col-md-5">用户头像<br/><img style="max-width: 150px" src="{{user.pic}}"></div>
-            <div class="col-md-7">更改头像</div>
-            <div class="col-md-7">
-                <label class="label" for="inputfile"></label>
-                <input type="file" id="inputfile">
-            </div>
+            <label for="inputfile">更改用户头像</label>
+            <input style="max-width: 200px;display: inline" type="file" id="inputfile">
         </div>
+    </form>
+    <div>
+        <a class="submit button" href="" ng-click="submitPassword();">提交</a>
     </div>
-    <div style="text-align: right"><button type="submit" class="btn btn-default">确认</button></div>
 </div>

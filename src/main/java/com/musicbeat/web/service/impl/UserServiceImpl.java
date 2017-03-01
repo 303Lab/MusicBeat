@@ -276,7 +276,7 @@ public class UserServiceImpl implements UserService {
                 users = findByUserName(identify, false);
             }
 
-        /*如果输入的是ID*/
+            /*如果输入的是ID*/
             if ((users == null || users.isEmpty()) && RegexValidateUtil.checkNumeric(identify)) {
                 try {
                     users = findById(Integer.parseInt(identify));

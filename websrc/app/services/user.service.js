@@ -1,5 +1,5 @@
 /**
- *
+ * 用户界面控制器
  * @author windawings
  * @create.time 2017/02/27 15:32
  * @version 1.0.0

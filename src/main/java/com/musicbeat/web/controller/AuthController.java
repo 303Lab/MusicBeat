@@ -2,6 +2,7 @@ package com.musicbeat.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.musicbeat.web.model.User;
+import com.musicbeat.web.service.PlayListService;
 import com.musicbeat.web.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,11 +51,13 @@ import static com.musicbeat.web.model.constant.Constants.RESPONSE_FAIL;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_MESSAGE;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_STATUS;
 import static com.musicbeat.web.model.constant.Constants.RESPONSE_SUCCESS;
+import static com.musicbeat.web.model.constant.Constants.SESSION_MUSICIDS;
 import static com.musicbeat.web.model.constant.Constants.SESSION_USER;
 import static com.musicbeat.web.utils.ModelConvertUtil.convert2ViewModelIgnoreNull;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_CONFLICT;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+import static javax.servlet.http.HttpServletResponse.SC_NON_AUTHORITATIVE_INFORMATION;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
@@ -68,6 +71,9 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
  */
 @Controller("AuthController")
 public class AuthController extends BaseController {
+
+    @Resource
+    private PlayListService playListService;
 
     @Resource
     private UserService userService;
@@ -148,6 +154,17 @@ public class AuthController extends BaseController {
             User user = (User) session.getAttribute(SESSION_USER);
 
             if (user != null) {
+
+                Integer uId = user.getId();
+
+                List<Integer> mIds = (List<Integer>) session.getAttribute(SESSION_MUSICIDS);
+
+                if ( mIds != null) {
+                    for (Integer id : mIds) {
+                        playListService.addMusicToList(uId,id);
+                    }
+                }
+
                 logObj.put(LOG_USER, user.getUsername());
                 session.removeAttribute(SESSION_USER);
 
@@ -566,29 +583,27 @@ public class AuthController extends BaseController {
                         user.setPassword(newpass);
                         logObj.put(LOG_NEW_USER, user);
 
+                        // update database & cache
+                        userService.update(user);
+                        session.setAttribute(SESSION_USER, user);
+
+                        // response
+                        model.put(REQUEST_NEW_PASSWORD_JSON, user.getPassword());
+                        model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
+                        logger.info(logObj.toJSONString() + ", User update password success!");
+
                     } else {
 
                         model.put(RESPONSE_STATUS, RESPONSE_FAIL);
                         model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_PASSWORD);
-
+                        response.setStatus(SC_UNAUTHORIZED);
                         logger.error(logObj.toJSONString() + ", User update password error!");
-
-                        return () -> model;
                     }
-
-                    // update database & cache
-                    userService.update(user);
-                    session.setAttribute(SESSION_USER, user);
-
-                    // response
-                    model.put(REQUEST_NEW_PASSWORD_JSON, user.getPassword());
-                    model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-                    logger.info(logObj.toJSONString() + ", User update password success!");
                 } else {
 
                     logObj.put(LOG_USER, jsonObject);
                     logger.error(logObj.toJSONString() + ", User update password failed!");
-
+                    response.setStatus(SC_NOT_FOUND);
                     model.put(RESPONSE_STATUS, RESPONSE_FAIL);
                     model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_PARAM_NOT_EXIST);
                 }

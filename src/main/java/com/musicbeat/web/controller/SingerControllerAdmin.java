@@ -66,8 +66,6 @@ public class SingerControllerAdmin extends BaseController{
     }
 
 
-
-
     @RequestMapping(value = "/addSinger", method = RequestMethod.POST)
     public @ResponseBody ModelMap addSinger(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
 
@@ -75,12 +73,12 @@ public class SingerControllerAdmin extends BaseController{
         // 解析Json对象
         String singername = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERNAME_JSON), HTTP_UTF8);
         String singergender = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERGENDER_JSON), HTTP_UTF8);
-        Integer sgint = Integer.valueOf(singergender).intValue();
+        Integer sgint = Integer.valueOf(singergender);
         Boolean sg = UploadFile.IntertoBoolean(sgint);
         String singerlang = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERLANG_JSON), HTTP_UTF8);
         String singerpic = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERPIC_JSON), HTTP_UTF8);
         String singerisBand = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERISBAND_JSON), HTTP_UTF8);
-        Integer sibint = Integer.valueOf(singerisBand).intValue();
+        Integer sibint = Integer.valueOf(singerisBand);
         Boolean sib = UploadFile.IntertoBoolean(sibint);
         String singerinfo = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERINFO_JSON), HTTP_UTF8);
 
@@ -109,11 +107,6 @@ public class SingerControllerAdmin extends BaseController{
             JSONObject singerViewModel = convert2ViewModelIgnoreNull(viewsinger);
             model.put(SESSION_SINGER, singerViewModel);
             model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-           // model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
-            //model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
-            // 存入Session
-            session.setAttribute(SESSION_SINGER, singerViewModel);
-           // session.setAttribute(ACCESS_TOKEN, "bear test string from SessionCache");
         }
         else {
             model.put(RESPONSE_STATUS, RESPONSE_FAIL);
@@ -127,15 +120,15 @@ public class SingerControllerAdmin extends BaseController{
     public @ResponseBody ModelMap updateSinger(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
         ModelMap model = new ModelMap();
         String singerid = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERID_JSON), HTTP_UTF8);
-        Integer id = Integer.valueOf(singerid).intValue();
+        Integer id = Integer.valueOf(singerid);
         String singername = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERNAME_JSON), HTTP_UTF8);
         String singergender = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERGENDER_JSON), HTTP_UTF8);
-        Integer sgint = Integer.valueOf(singergender).intValue();
+        Integer sgint = Integer.valueOf(singergender);
         Boolean sg = UploadFile.IntertoBoolean(sgint);
         String singerlang = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERLANG_JSON), HTTP_UTF8);
         String singerpic = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERPIC_JSON), HTTP_UTF8);
         String singerisBand = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERISBAND_JSON), HTTP_UTF8);
-        Integer sibint = Integer.valueOf(singerisBand).intValue();
+        Integer sibint = Integer.valueOf(singerisBand);
         Boolean sib = UploadFile.IntertoBoolean(sibint);
         String singerinfo = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERINFO_JSON), HTTP_UTF8);
 
@@ -153,11 +146,6 @@ public class SingerControllerAdmin extends BaseController{
 
         model.put(SESSION_SINGER, newsinger);
         model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-        //model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
-       // model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
-        // 存入Session
-        session.setAttribute(SESSION_SINGER, newsinger);
-        //session.setAttribute(ACCESS_TOKEN, "bear test string from SessionCache");
 
 
         return model;
@@ -169,8 +157,7 @@ public class SingerControllerAdmin extends BaseController{
     @RequestMapping(value = "/deleteSinger", method = RequestMethod.POST)
     public @ResponseBody boolean deleteSinger(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
         String singerid = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERID_JSON), HTTP_UTF8);
-        Integer id = Integer.valueOf(singerid).intValue();
-        // String singername = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERNAME_JSON), HTTP_UTF8);
+        Integer id = Integer.valueOf(singerid);
         Singer singer = singerService.findBySingerId(id);
         singerService.delete(request,singer);
         return true;

@@ -31,6 +31,12 @@ angular.module("app.configs")
 
         // singer event
         noneSinger: "No Singer Found!",
+        delSingerOk: "Delete Singer Success!",
+        delSingerError: "Delete Singer Error!",
+
+        // music event
+        delMusicOk: "Delete Music Success!",
+        delMusicError: "Delete Music Error!",
 
         // user event
         updateOk: "Update Success!",

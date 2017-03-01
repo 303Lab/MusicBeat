@@ -22,6 +22,7 @@ function singerService($http, $q, appConst) {
     var getSingersByTypeApi = serviceBaseApi + "/Kinds_of_Singers";
     var getSingerByIdApi = serviceBaseApi + "/Musics_of_Singer";
     var getSingersByNameApi = serviceBaseApi + "/Singers_of_Sname";
+    var delSingerByIdApi = serviceBaseApi + "/deleteSinger";
 
     function getSingersByType(type, page) {
 
@@ -49,6 +50,26 @@ function singerService($http, $q, appConst) {
         var deferred = $q.defer();
 
         var url = getSingersApi + "?pageNum=" + (typeof(page) === 'undefined' ? "" : page);
+
+        $http.get(url)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function getSingersByAdmin(page, pageSize) {
+        var deferred = $q.defer();
+
+        var url = getSingersApi + "?pageNum=" + (typeof(page) === 'undefined' ? "" : page) + "&pageSize=" + (typeof(pageSize) === 'undefined' ? null : pageSize);
 
         $http.get(url)
             .then(
@@ -105,14 +126,72 @@ function singerService($http, $q, appConst) {
         return deferred.promise;
     }
 
+    function getSingersByNameAdmin(name, page, pageSize) {
+        var deferred = $q.defer();
+
+        var url = getSingersByNameApi + "?singer_name=" + (typeof(name) === 'undefined' ? "" : name.trim()) + "&pageNum=" + (typeof(page) === 'undefined' ? "" : page) + "&pageSize=" + (typeof(pageSize) === 'undefined' ? null : pageSize);
+
+        $http.get(url)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function delSingerById(id) {
+        var data = {
+            singerid: encodeURIComponent(id),
+        };
+
+        var deferred = $q.defer();
+
+        var header = {
+            headers: {"Content-Type": "application/json;charset=UTF-8"}
+        };
+
+        $http.post(delSingerByIdApi, angular.toJson(data), header)
+            .then(
+                function (response) {
+                    deferred.resolve(response.data);
+                }
+            )
+            .catch(
+                function (err) {
+                    deferred.reject(err.data);
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function editSingerById(singer) {
+
+    }
+
     return {
 
         getSingers: getSingers,
+
+        getSingersByAdmin: getSingersByAdmin,
 
         getSingersByType: getSingersByType,
 
         getSingerById: getSingerById,
 
         getSingersByName: getSingersByName,
+
+        delSingerById: delSingerById,
+
+        editSingerById: editSingerById,
+
+        getSingersByNameAdmin: getSingersByNameAdmin,
     };
 }

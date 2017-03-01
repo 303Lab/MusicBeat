@@ -1,12 +1,18 @@
 package com.musicbeat.web.service.impl;
 
-import com.musicbeat.web.mapper.MusicMapper;
-import com.musicbeat.web.mapper.PlayListMapper;
+import com.alibaba.fastjson.JSONArray;
+import com.musicbeat.web.mapper.*;
 import com.musicbeat.web.model.Music;
+import com.musicbeat.web.model.viewModel.MusicViewModel;
+import com.musicbeat.web.service.MusicService;
 import com.musicbeat.web.service.PlayListService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.HTMLDocument;
+import java.io.*;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,20 +24,36 @@ public class PlayListServiceImpl implements PlayListService {
     private PlayListMapper playListMapper;
     @Resource
     private MusicMapper musicMapper;
+    @Resource
+    private MusicService musicService;
 
     @Override
-    public void addMusicToList(Integer uid, Integer mid) {
+    public void addMusicToList(Integer uid,Integer mid) {
         playListMapper.insert(mid, uid);
     }
 
     @Override
-    public void deleteMusicFromList(Integer uid, Integer mid) {
+    public void add(Integer uid,List<Integer> mids) {
+        Iterator it = mids.iterator();
+        while(it.hasNext()) {
+            addMusicToList(uid,(Integer)it.next());
+        }
+    }
+
+    @Override
+    public void deleteMusicFromList(Integer uid,Integer mid) {
         playListMapper.deleteByPrimaryKey(mid, uid);
     }
 
     @Override
-    public List<Music> getByUser(Integer userId) {
-        return playListMapper.selectByUserId(userId).getMusics();
+    public JSONArray getByUser(Integer userId) {
+        List<Music> musicList = playListMapper.selectByUserId(userId).getMusics();
+        JSONArray mvs = new JSONArray();
+        for(Music music:musicList) {
+            MusicViewModel mv = musicService.setMusicViewMode(music);
+            mvs.add(mv);
+        }
+        return mvs;
     }
 
     //传过来音乐实体类，通过音乐找到链接地址？调用浏览器拦截下载？

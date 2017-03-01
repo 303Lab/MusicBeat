@@ -136,7 +136,7 @@ function userController($scope, $state, toastr, toastrProvider, $sessionStorage,
             );
     };
 
-    var regPhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,2,3,5-9]))\\d{8}$/;
+    var regPhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,2,3,5-9]))\d{8}$/;
     var regQQ = /^\d{5,10}$/;
 
     function checkMobile() {
@@ -165,14 +165,11 @@ function userController($scope, $state, toastr, toastrProvider, $sessionStorage,
     }
 
     function checkBasic() {
-        return !($scope.user.email === (typeof($sessionStorage.currentUser.email) === "undefined" ? "" : $sessionStorage.currentUser.email)
-                 && $scope.user.sex === (typeof($sessionStorage.currentUser.gender) === "undefined" ? "" : $sessionStorage.currentUser.gender)
-                 && $scope.user.mobile === (typeof($sessionStorage.currentUser.phone) === "undefined" ? "" : $sessionStorage.currentUser.phone)
-                 && $scope.user.qq === (typeof($sessionStorage.currentUser.qq) === "undefined" ? "" : $sessionStorage.currentUser.qq)
-                 && $scope.user.city === (typeof($sessionStorage.currentUser.city) === "undefined" ? "" : $sessionStorage.currentUser.city));
+        return !($scope.user.email === (typeof($sessionStorage.currentUser.email) === "undefined" ? "" : $sessionStorage.currentUser.email) && $scope.user.sex === (typeof($sessionStorage.currentUser.gender) === "undefined" ? "" : $sessionStorage.currentUser.gender) && $scope.user.mobile === (typeof($sessionStorage.currentUser.phone) === "undefined" ? "" : $sessionStorage.currentUser.phone) && $scope.user.qq === (typeof($sessionStorage.currentUser.qq) === "undefined" ? "" : $sessionStorage.currentUser.qq) && $scope.user.city === (typeof($sessionStorage.currentUser.city) === "undefined" ? "" : $sessionStorage.currentUser.city));
     }
 
     function checkUserName() {
-        return !($scope.user.username === $sessionStorage.currentUser.username);
+        return $scope.user.username !== $sessionStorage.currentUser.username;
+
     }
 }

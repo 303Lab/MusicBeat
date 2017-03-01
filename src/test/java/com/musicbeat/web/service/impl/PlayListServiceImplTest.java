@@ -1,6 +1,7 @@
 package com.musicbeat.web.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.musicbeat.web.model.Music;
 import com.musicbeat.web.service.PlayListService;
 import com.musicbeat.web.utils.JUnit4ClassRunner;
@@ -49,7 +50,7 @@ public class PlayListServiceImplTest {
      */
     @Test
     public void testGetByUserUserId() throws Exception {
-        List<Music> playLists = playListService.getByUser(1);
+        JSONArray playLists = playListService.getByUser(1);
         logger.info(JSON.toJSONString(playLists));
     }
 

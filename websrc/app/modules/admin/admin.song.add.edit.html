@@ -4,15 +4,15 @@
             <div class="form-group row">
                 <!--歌名-->
                 <div class="col-md-4">
-                    <input style="border-radius: 15px;height: 25px" type="songName" placeholder="歌曲名">
+                    <input style="border-radius: 15px;height: 25px" type="text" ng-model="newMusic.title" placeholder="歌曲名" required>
                 </div>
                 <!--歌手名-->
                 <div class="col-md-4">
-                    <input style="border-radius: 15px;height: 25px" type="singerName" placeholder="歌手名">
+                    <input style="border-radius: 15px;height: 25px" type="text" ng-model="newMusic.author" placeholder="歌手名" required>
                 </div>
                 <!--专辑名-->
                 <div class="col-md-4">
-                    <input style="border-radius: 15px;height: 25px" type="albumName" placeholder="专辑名">
+                    <input style="border-radius: 15px;height: 25px" type="text" newMusic="newMusic.album" placeholder="专辑名" required>
                 </div>
 
             </div>
@@ -138,8 +138,8 @@
                 </div>
             </div>
             <div class="button-wrapper">
-                <div class="col-md-6"><button type="submit" class="button">确定</button></div>
-                <div class="col-md-6"><button type="submit" class="button">取消</button></div>
+                <div class="col-md-6"><button type="submit" class="button" ng-click="fakeAdd(newMusic.title);">确定</button></div>
+                <div class="col-md-6"><button type="submit" class="button" ng-click="closePanel();">取消</button></div>
             </div>
         </form>
     </div>

@@ -106,7 +106,8 @@ function appRouter($stateProvider, appConst) {
 
         // admin
         .state("admin.singer", {
-            url: "/singer",
+            url: "/singer?p&search",
+            reloadOnSearch: false,
             views: {
                 "content@":{
                     templateUrl: fnBasePath("admin.singer.html"),
@@ -131,7 +132,8 @@ function appRouter($stateProvider, appConst) {
             }
         })
         .state("admin.song", {
-            url: "/song",
+            url: "/song?p&search",
+            reloadOnSearch: false,
             views: {
                 "content@":{
                     templateUrl: fnBasePath("admin.song.html"),

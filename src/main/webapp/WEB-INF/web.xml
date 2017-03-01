@@ -120,6 +120,10 @@
     <location>/WEB-INF/resources/tpls/404.html</location>
   </error-page>
   <error-page>
+    <error-code>405</error-code>
+    <location>/WEB-INF/resources/tpls/404.html</location>
+  </error-page>
+  <error-page>
     <error-code>500</error-code>
     <location>/WEB-INF/resources/tpls/404.html</location>
   </error-page>

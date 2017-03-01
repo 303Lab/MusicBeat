@@ -157,7 +157,7 @@ public class MusicControllerAdmin extends BaseController{
     @RequestMapping(value = "/deleteMusic", method = RequestMethod.POST)
     public @ResponseBody boolean deleteMusic(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
         String musicid = URLDecoder.decode(jsonObject.getString(REQUEST_MUSICID_JSON), HTTP_UTF8);
-        Integer id = Integer.valueOf(musicid).intValue();
+        Integer id = Integer.valueOf(musicid);
         Music album = musicService.findByMusicId(id);
         musicService.delete(request,album);
         return true;

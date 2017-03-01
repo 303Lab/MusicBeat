@@ -26,11 +26,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, name, gender, lang, picture, is_band
-  </sql>
-
-  <sql id="Blob_Column_List">
-    introduction
+    id, name, gender, lang, picture, is_band, introduction
   </sql>
 
   <select id="selectByPrimaryKey" useCache="true" parameterType="java.lang.Integer" resultMap="SingerAlbumMap">
@@ -60,8 +56,6 @@
   <select id="selectSingersBySingerName" useCache="true" parameterType = "map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from singer
     <where>
       <if test="name != null and name != ''">

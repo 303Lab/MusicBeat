@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-02-27 00:10:05
+Date: 2017-03-01 16:10:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,7 +101,7 @@ INSERT INTO `album` VALUES ('67', 'MADE SERIES', 'BIGBANG全新日本专辑《MA
 INSERT INTO `album` VALUES ('68', 'Coming Over', 'EXO、待望の日本第2弾シングルがリリース。今作は\"完全日本オリジナル楽曲\"を3曲収録した超豪華シングル!アップリフティングでFUNKサウンドが全開なタイトル・ソング\"Coming Over\"ほか、今作に収録される全3曲はいずれも中毒性のあるEXOらしさ満点のアッパー・トラック揃い!', '2016-12-07', 'music/44/68/68.jpg');
 INSERT INTO `album` VALUES ('69', 'Love Me Right ～romantic universe～', '2012年のデビュー以来、韓国・中国のみならずアジア全域にて熱狂を巻き起こし、2013年には韓国のあらゆる音楽大賞を総ナメにするなど、今アジアで最も注目されているボーイズ・グループ “EXO”が日本デビュー・シングルをリリース!日本デビュー曲「Love Me Right ~romantic universe~」は、大好きな人とのトキメキを表現したPOPで壮快なダンス・チューン!デビューよりたくさんの声援を贈り続けてくれるファンへ感謝の気持ちを伝えるために制作された1曲!', '2015-11-04', 'music/44/69/69.jpg');
 INSERT INTO `album` VALUES ('70', 'Everybody Dance Now', 'Everybody Dance Now is the third album from Crazy Frog, and has been released on 19th August 2009. \"Daddy DJ\" will be the first single released from the album.', '2009-10-15', 'music/57/70/70.jpg');
-INSERT INTO `album` VALUES ('71', 'More Crazy Hits: Ultimate Edition', 'no', '2008-06-17', 'music/57/71/71.jpg');
+INSERT INTO `album` VALUES ('71', 'More Crazy Hits: Ultimate Edition', '', '2008-06-17', 'music/57/71/71.jpg');
 
 -- ----------------------------
 -- Table structure for album_comment
@@ -244,7 +244,7 @@ CREATE TABLE `music` (
   `lyrics` varchar(255) DEFAULT NULL,
   `link` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=220 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of music
@@ -277,12 +277,12 @@ INSERT INTO `music` VALUES ('25', '初学者', 'music/23/2/25.lrc', 'music/23/2/
 INSERT INTO `music` VALUES ('26', '演员', 'music/23/2/26.lrc', 'music/23/2/26.mp3');
 INSERT INTO `music` VALUES ('27', '一半', 'music/23/2/27.lrc', 'music/23/2/27.mp3');
 INSERT INTO `music` VALUES ('28', '小孩', 'music/23/2/28.lrc', 'music/23/2/28.mp3');
-INSERT INTO `music` VALUES ('29', '花儿和少年', 'music/23/2/29.lrc', 'music/23/2/29.lmp3');
+INSERT INTO `music` VALUES ('29', '花儿和少年', 'music/23/2/29.lrc', 'music/23/2/29.mp3');
 INSERT INTO `music` VALUES ('30', '下雨了', 'music/23/2/30.lrc', 'music/23/2/30.mp3');
 INSERT INTO `music` VALUES ('31', '刚刚好', 'music/23/2/31.lrc', 'music/23/2/31.mp3');
 INSERT INTO `music` VALUES ('32', '绅士', 'music/23/2/32.lrc', 'music/23/2/32.mp3');
 INSERT INTO `music` VALUES ('33', '我好像在哪见过你', 'music/23/2/33.lrc', 'music/23/2/33.mp3');
-INSERT INTO `music` VALUES ('34', '丑八怪', 'music/23/1/34.lrc', 'music/23/1/34.mp32');
+INSERT INTO `music` VALUES ('34', '丑八怪', 'music/23/1/34.lrc', 'music/23/1/34.mp3');
 INSERT INTO `music` VALUES ('35', '意外', 'music/23/1/35.lrc', 'music/23/1/35.mp3');
 INSERT INTO `music` VALUES ('36', '你还要我怎样', 'music/23/1/36.lrc', 'music/23/1/36.mp3');
 INSERT INTO `music` VALUES ('37', '有没有', 'music/23/1/37.lrc', 'music/23/1/37.mp3');
@@ -468,6 +468,18 @@ INSERT INTO `music` VALUES ('216', 'Cha Cha Slide', 'music/57/70/216.lrc', 'musi
 INSERT INTO `music` VALUES ('217', 'Daddy DJ', 'music/57/70/217.lrc', 'music/57/70/217.mp3');
 INSERT INTO `music` VALUES ('218', '看透', 'music/38/49/218.lrc', 'music/38/49/218.mp3');
 INSERT INTO `music` VALUES ('219', 'Runway', 'music/38/49/219.lrc', 'music/38/49/219.mp3');
+INSERT INTO `music` VALUES ('220', '朋友难当', 'music/28/11/220.lrc', 'music/28/11/220.mp3');
+INSERT INTO `music` VALUES ('221', '翅膀', 'music/28/11/221.lrc', 'music/28/11/221.mp3');
+INSERT INTO `music` VALUES ('222', '不再爱', 'music/28/11/222.lrc', 'music/28/11/222.mp3');
+INSERT INTO `music` VALUES ('223', '亲爱的', 'music/28/12/223.lrc', 'music/28/12/223.mp3');
+INSERT INTO `music` VALUES ('224', '我们', 'music/28/12/224.lrc', 'music/28/12/224.mp3');
+INSERT INTO `music` VALUES ('225', '太重要', 'music/28/12/225.lrc', 'music/28/12/225.mp3');
+INSERT INTO `music` VALUES ('226', '白白的', 'music/26/8/226.lrc', 'music/26/8/226.mp3');
+INSERT INTO `music` VALUES ('227', '第五季', 'music/26/8/227.lrc', 'music/26/8/227.mp3');
+INSERT INTO `music` VALUES ('228', '看得最远的地方', 'music/26/8/228.lrc', 'music/26/8/228.mp3');
+INSERT INTO `music` VALUES ('229', '欧若拉', 'music/26/7/229.lrc', 'music/26/7/229.mp3');
+INSERT INTO `music` VALUES ('230', '手心的太阳', 'music/26/7/230.lrc', 'music/26/7/230.mp3');
+INSERT INTO `music` VALUES ('231', '复活节', 'music/26/7/231.lrc', 'music/26/7/231.mp3');
 
 -- ----------------------------
 -- Table structure for music_album
@@ -543,6 +555,12 @@ INSERT INTO `music_album` VALUES ('55', '6');
 INSERT INTO `music_album` VALUES ('57', '6');
 INSERT INTO `music_album` VALUES ('58', '6');
 INSERT INTO `music_album` VALUES ('59', '6');
+INSERT INTO `music_album` VALUES ('229', '7');
+INSERT INTO `music_album` VALUES ('230', '7');
+INSERT INTO `music_album` VALUES ('231', '7');
+INSERT INTO `music_album` VALUES ('226', '8');
+INSERT INTO `music_album` VALUES ('227', '8');
+INSERT INTO `music_album` VALUES ('228', '8');
 INSERT INTO `music_album` VALUES ('130', '9');
 INSERT INTO `music_album` VALUES ('131', '9');
 INSERT INTO `music_album` VALUES ('132', '9');
@@ -553,6 +571,12 @@ INSERT INTO `music_album` VALUES ('126', '10');
 INSERT INTO `music_album` VALUES ('127', '10');
 INSERT INTO `music_album` VALUES ('128', '10');
 INSERT INTO `music_album` VALUES ('129', '10');
+INSERT INTO `music_album` VALUES ('220', '11');
+INSERT INTO `music_album` VALUES ('221', '11');
+INSERT INTO `music_album` VALUES ('222', '11');
+INSERT INTO `music_album` VALUES ('223', '12');
+INSERT INTO `music_album` VALUES ('224', '12');
+INSERT INTO `music_album` VALUES ('225', '12');
 INSERT INTO `music_album` VALUES ('97', '13');
 INSERT INTO `music_album` VALUES ('98', '13');
 INSERT INTO `music_album` VALUES ('99', '13');
@@ -760,6 +784,11 @@ INSERT INTO `music_label` VALUES ('125', '1');
 INSERT INTO `music_label` VALUES ('129', '1');
 INSERT INTO `music_label` VALUES ('130', '1');
 INSERT INTO `music_label` VALUES ('134', '1');
+INSERT INTO `music_label` VALUES ('221', '1');
+INSERT INTO `music_label` VALUES ('222', '1');
+INSERT INTO `music_label` VALUES ('224', '1');
+INSERT INTO `music_label` VALUES ('230', '1');
+INSERT INTO `music_label` VALUES ('231', '1');
 INSERT INTO `music_label` VALUES ('61', '2');
 INSERT INTO `music_label` VALUES ('69', '2');
 INSERT INTO `music_label` VALUES ('72', '2');
@@ -836,6 +865,10 @@ INSERT INTO `music_label` VALUES ('112', '5');
 INSERT INTO `music_label` VALUES ('116', '5');
 INSERT INTO `music_label` VALUES ('117', '5');
 INSERT INTO `music_label` VALUES ('177', '5');
+INSERT INTO `music_label` VALUES ('220', '5');
+INSERT INTO `music_label` VALUES ('225', '5');
+INSERT INTO `music_label` VALUES ('228', '5');
+INSERT INTO `music_label` VALUES ('229', '5');
 INSERT INTO `music_label` VALUES ('65', '6');
 INSERT INTO `music_label` VALUES ('66', '6');
 INSERT INTO `music_label` VALUES ('68', '6');
@@ -847,6 +880,7 @@ INSERT INTO `music_label` VALUES ('118', '6');
 INSERT INTO `music_label` VALUES ('119', '6');
 INSERT INTO `music_label` VALUES ('136', '6');
 INSERT INTO `music_label` VALUES ('163', '6');
+INSERT INTO `music_label` VALUES ('226', '7');
 INSERT INTO `music_label` VALUES ('25', '8');
 INSERT INTO `music_label` VALUES ('67', '8');
 INSERT INTO `music_label` VALUES ('73', '8');
@@ -891,6 +925,8 @@ INSERT INTO `music_label` VALUES ('208', '9');
 INSERT INTO `music_label` VALUES ('212', '9');
 INSERT INTO `music_label` VALUES ('213', '9');
 INSERT INTO `music_label` VALUES ('214', '9');
+INSERT INTO `music_label` VALUES ('223', '9');
+INSERT INTO `music_label` VALUES ('227', '9');
 INSERT INTO `music_label` VALUES ('18', '10');
 INSERT INTO `music_label` VALUES ('101', '10');
 INSERT INTO `music_label` VALUES ('137', '10');
@@ -1030,7 +1066,7 @@ INSERT INTO `singer` VALUES ('54', '仓木麻衣', '0', 'Japanese', 'music/54/54
 INSERT INTO `singer` VALUES ('55', '宇多田ヒカル', '0', 'Japanese', 'music/55/55.jpg', '宇多田ヒカル（宇多田光）出生在一个音乐世家，小名叫Hikki，出生生长在美国，她的母亲藤圭子是日本七十年代著名的流行歌曲歌手，父亲是唱片制作人，所以她成长中的很多时间都与父亲在演播室度过。1998年12月9日宇多田光正式在日本出道，首张日文专辑《First Love》在日本创造765万张的惊人销量，成为日本史上销量最高专辑，同时也是亚洲乐坛历史上最畅销的唱片。截至目前，宇多田光在日本的唱片总销量已经突破3800万张，位列日本艺人唱片销量榜第九位，为前十艺人中最年轻的；同时也是日本史上唱片销量第三的女歌手，仅次于滨崎步和松任谷由实。', '0');
 INSERT INTO `singer` VALUES ('56', '安室奈美恵', '0', 'Japanese', 'music/56/56.jpg', '安室奈美惠，出生于日本冲绳县那霸市，拥有四分之一意大利血统。她于14岁出道，是女子组合Super Monkey\'s的一分子。尽管该组合不太成功，但在1995年时仍凭著单曲〈Try Me ～Watashi o Shinjite～〉取得一点知名度。在推出多两首单曲后，安室奈美惠离开了该组合，成为艾回旗下的独立歌手。其超过10年的歌手生涯，使她成为其中一位日本最长寿歌手。她亦是唯一一位日本女歌手可以连续十五年有单曲打入十大。主要代表作品：《BEST FICTION》，《PLAY》《Can You Celebrate?》并曾为知名漫画《海贼王》的动画版献唱主题曲《Fight Together》。', '0');
 INSERT INTO `singer` VALUES ('57', 'Crazy Frog', null, 'Others', 'music/57/57.jpg', '“疯狂的青蛙”的创始人是年轻的瑞典小伙子丹尼尔，他尝试用电子音乐模仿发动机嗡嗡作响的声音。随后，这支曲子被一个德国手机铃声网站采用，他们在里面加入了德国电子舞曲和贝斯伴奏，2004年，“疯狂青蛙”的手机铃声被放到网上流传，并在所有年轻人的手机里迅速蔓延，疯狂地流行起来。“疯狂的青蛙”也催生了周边商品和玩具，以及两个电子游戏。', '0');
-INSERT INTO `singer` VALUES ('58', 'Barbie', null, 'Others', 'music/58/58.jpg', 'No', '0');
+INSERT INTO `singer` VALUES ('58', 'Barbie', null, 'Others', 'music/58/58.jpg', '', '0');
 
 -- ----------------------------
 -- Table structure for singer_album
@@ -1176,9 +1212,10 @@ CREATE TABLE `user` (
   `privilege` varchar(5) NOT NULL,
   `is_real_public` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'windawings', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', null, null, null, null, null, null, null, null, 'windawings@foxmail.com', 'images/user.png', 'admin', null);
+INSERT INTO `user` VALUES ('2', 'dengxiao', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '1', null, null, null, '', null, '', null, '1178522623@qq.com', 'images/user.png', 'user', null);

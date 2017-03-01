@@ -3,7 +3,7 @@
         <form>
             <!--姓名-->
             <div class="form-group">
-                <input type="singerName" placeholder="输入歌手姓名">
+                <input type="text" ng-model="newSinger.name" placeholder="输入歌手姓名">
             </div>
             <!--国籍-->
             <div class="form-group">
@@ -11,28 +11,28 @@
                     <div class="col-md-3"><span>歌手国籍</span></div>
                     <div class="col-md-3">
                         <label class="checkbox-inline">
-                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox1" value="Chinese"> 华语
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox1" value="Chinese" ng-model="newSinger.lang"> 华语
                     </label>
                     </div>
                     <div class="col-md-3">
                         <label class="checkbox-inline">
-                    <input type="radio" name="optionsRadiosinline" id="inlineCheckbox2" value="Japanese"> 日本
+                    <input type="radio" name="optionsRadiosinline" id="inlineCheckbox2" value="Japanese" ng-model="newSinger.lang"> 日本
                 </label>
                     </div>
                     <div class="col-md-3">
                         <label class="checkbox-inline">
-                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox3" value="Korea"> 韩国
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox3" value="Korea" ng-model="newSinger.lang"> 韩国
                     </label>
                     </div>
                     <div class="col-md-3"></div>
                     <div class="col-md-3">
                         <label class="checkbox-inline">
-                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox4" value="English"> 欧美
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox4" value="English" ng-model="newSinger.lang"> 欧美
                     </label>
                     </div>
                     <div class="col-md-3">
                         <label class="checkbox-inline">
-                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox5" value="other"> 其他
+                        <input type="radio" name="optionsRadiosinline" id="inlineCheckbox5" value="other" ng-model="newSinger.lang"> 其他
                     </label>
                     </div>
             </div>
@@ -65,8 +65,8 @@
                 </div>
             </div>
             <div class="button-wrapper">
-                <div class="col-md-6"><button type="submit" class="button">确定</button></div>
-                <div class="col-md-6"><button type="submit" class="button">取消</button></div>
+                <div class="col-md-6"><button type="submit" class="button" ng-click="fakeAdd(newSinger.name)">确定</button></div>
+                <div class="col-md-6"><button type="submit" class="button" ng-click="closePanel($event);">取消</button></div>
             </div>
         </form>
     </div>

@@ -21,7 +21,7 @@ function billboardService($http, $q, appConst) {
     var serviceBaseApi = appConst.apiUrl;
     var findMusicByLatestApi = serviceBaseApi + "/latest_music_list";
     var findMusicByPlayAmountApi = serviceBaseApi + "/pAmount_music_list";
-    var findMusicByDownAmountApi =serviceBaseApi + "/dAmount_music_list";
+    var findMusicByDownAmountApi = serviceBaseApi + "/dAmount_music_list";
 
     function findMusicByLatest() {
         var deferred = $q.defer();
