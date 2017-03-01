@@ -26,7 +26,8 @@ $ cd websrc & npm install & npm install –save-dev
 
 [1] Import to IDEA or Eclipse  
 [2] Configure gulpfile.js  
-[3] Complete email.properties.template & move to email.properties & same to jdbc.properties.template
+[3] Complete email.properties.template & move to email.properties & same to jdbc.properties.template  
+[4] Configure Spring, web.xml, Artifacts and tomcat server in IDEA. Then Add Jrebel to IDEA and run&debug it.
 
 ## Run in development  
 For web
