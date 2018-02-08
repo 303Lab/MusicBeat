@@ -53,4 +53,4 @@ $ gulp release
 
 ## LICENSE
 
-[The Star And Thank Author License (SATA)](https://github.com/303Lab/MusicBeat/blob/dev/LICENSE)
+[The MIT License (MIT)](https://github.com/303Lab/MusicBeat/blob/dev/LICENSE)
