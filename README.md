@@ -1,6 +1,6 @@
 # MusicBeat
 
-[![license](https://img.shields.io/badge/license-SATA-green.svg)](https://github.com/303Lab/MusicBeat/blob/dev/LICENSE)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/303Lab/MusicBeat/blob/dev/LICENSE)
 ![npm](https://img.shields.io/badge/npm-v3.10.10-blue.svg)
 ![spring](https://img.shields.io/badge/spring-v4.3.6-orange.svg)
 ![maven](https://img.shields.io/badge/maven-v3.3.9-lightgrey.svg)
