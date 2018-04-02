@@ -14,7 +14,7 @@ src/main/resources/config/jdbc.properties
 src/main/webapp/WEB-INF/resources/
 src/test/logs/
 target/
-webapp/node_modules
+webapp/node_modules/*
 webapp/npm-debug*
 .idea/*
 musicbeat.iml
