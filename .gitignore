@@ -16,8 +16,7 @@ src/test/logs/
 target/
 webapp/node_modules
 webapp/npm-debug*
-.idea/.name
-.idea/workspace.xml
+.idea/*
 musicbeat.iml
 maven.execute.template
 /src/main/resources/config/email.properties

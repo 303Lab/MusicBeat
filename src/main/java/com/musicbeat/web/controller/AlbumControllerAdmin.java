@@ -29,7 +29,7 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
  * Created by gyz on 2017/2/25.
  */
 @Controller("AlbumControllerAdmin")
-public class AlbumControllerAdmin extends BaseController{
+public class AlbumControllerAdmin extends BaseController {
     @Resource
     private AlbumServiceAdmin albumService;
 
@@ -39,19 +39,17 @@ public class AlbumControllerAdmin extends BaseController{
         ModelMap model = new ModelMap();
         String albumname = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMNAME_JSON), HTTP_UTF8);
 
-        List<Album> albums =  albumService.findAlbumByName(albumname,false);
+        List<Album> albums = albumService.findAlbumByName(albumname, false);
 
-        if (albums != null)
-        {
+        if (albums != null) {
             model.put(SESSION_ALBUM, albums);
             model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-           // model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
-           // model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
+            // model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
+            // model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
             // 存入Session
             session.setAttribute(SESSION_ALBUM, albums);
             //session.setAttribute(ACCESS_TOKEN, "bear test string from SessionCache");
-        }
-        else {
+        } else {
             model.put(RESPONSE_STATUS, RESPONSE_FAIL);
             model.put(RESPONSE_MESSAGE, RESPONSE_ERROR_CREDENTIAL);
             response.setStatus(SC_UNAUTHORIZED);
@@ -59,9 +57,9 @@ public class AlbumControllerAdmin extends BaseController{
         return model;
     }
 
-
     @RequestMapping(value = "/findAllAlbums", method = RequestMethod.POST)
-    public @ResponseBody ModelMap findAllAlbums(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
+    public @ResponseBody
+    ModelMap findAllAlbums(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
         ModelMap model = new ModelMap();
         //String singername = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERNAME_JSON), HTTP_UTF8);
         List<Album> albums = albumService.findAlbumAll();
@@ -78,15 +76,16 @@ public class AlbumControllerAdmin extends BaseController{
     }
 
     @RequestMapping(value = "/addAlbum", method = RequestMethod.POST)
-    public @ResponseBody ModelMap addAlbum(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException, ParseException {
+    public @ResponseBody
+    ModelMap addAlbum(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException, ParseException {
 
         ModelMap model = new ModelMap();
         // 解析Json对象
         String albumname = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMNAME_JSON), HTTP_UTF8);
         String albumreleaseTime = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMRELEASETIME_JSON), HTTP_UTF8);
 
-       // SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd ");
-       // Date albumrt= formatter.parse(albumreleaseTime);
+        // SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd ");
+        // Date albumrt= formatter.parse(albumreleaseTime);
         //Date albumrt = new Date(albumreleaseTime);
         Date albumrt = java.sql.Date.valueOf(albumreleaseTime);
         String albumpic = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMPIC_JSON), HTTP_UTF8);
@@ -94,54 +93,51 @@ public class AlbumControllerAdmin extends BaseController{
         String singerid = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERID_JSON), HTTP_UTF8);
         Integer sid = Integer.valueOf(singerid).intValue();
 
-        Album album =new Album();
+        Album album = new Album();
         album.setName(albumname);
         album.setIntroduction(albuminfo);
         album.setPicture(albumpic);
         album.setReleaseTime(albumrt);
 
-
-         albumService.add(request,album,sid);
+        albumService.add(request, album, sid);
 
         Album viewalbum = albumService.findByAlbumId(album.getId());
-
 
         JSONObject singerViewModel = convert2ViewModelIgnoreNull(viewalbum);
         model.put(SESSION_ALBUM, singerViewModel);
         model.put(RESPONSE_STATUS, RESPONSE_SUCCESS);
-       // model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
-       // model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
+        // model.put(ACCESS_TOKEN, "bear test string from ModelAndView");
+        // model.put(RESPONSE_MESSAGE, RESPONSE_MESSAGE_SUCCESS);
         // 存入Session
         session.setAttribute(SESSION_ALBUM, singerViewModel);
         //session.setAttribute(ACCESS_TOKEN, "bear test string from SessionCache");
-
 
         return model;
     }
 
     @RequestMapping(value = "/updateAlbum", method = RequestMethod.POST)
-    public @ResponseBody ModelMap updateAlbum(@RequestBody JSONObject jsonObject, MultipartFile image) throws UnsupportedEncodingException, ParseException {
+    public @ResponseBody
+    ModelMap updateAlbum(@RequestBody JSONObject jsonObject, MultipartFile image)
+      throws UnsupportedEncodingException, ParseException {
         ModelMap model = new ModelMap();
         String albumid = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMID_JSON), HTTP_UTF8);
         Integer id = Integer.valueOf(albumid).intValue();
         String albumname = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMNAME_JSON), HTTP_UTF8);
         String albumreleaseTime = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMRELEASETIME_JSON), HTTP_UTF8);
-       // SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd ");
-       // Date albumrt= formatter.parse(albumreleaseTime);
+        // SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd ");
+        // Date albumrt= formatter.parse(albumreleaseTime);
         Date albumrt = java.sql.Date.valueOf(albumreleaseTime);
         String albumpic = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMPIC_JSON), HTTP_UTF8);
         String albuminfo = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMINFO_JSON), HTTP_UTF8);
 
-
-        Album album =new Album();
+        Album album = new Album();
         album.setId(id);
         album.setName(albumname);
         album.setIntroduction(albuminfo);
         album.setPicture(albumpic);
         album.setReleaseTime(albumrt);
 
-
-        albumService.update(request,album);
+        albumService.update(request, album);
 
         Album newalbum = albumService.findByAlbumId(id);
 
@@ -153,20 +149,18 @@ public class AlbumControllerAdmin extends BaseController{
         session.setAttribute(SESSION_ALBUM, newalbum);
         //session.setAttribute(ACCESS_TOKEN, "bear test string from SessionCache");
 
-
         return model;
-
-
 
     }
 
     @RequestMapping(value = "/deleteAlbum", method = RequestMethod.POST)
-    public @ResponseBody boolean deleteAlbum(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
+    public @ResponseBody
+    boolean deleteAlbum(@RequestBody JSONObject jsonObject) throws UnsupportedEncodingException {
         String albumid = URLDecoder.decode(jsonObject.getString(REQUEST_ALBUMID_JSON), HTTP_UTF8);
         Integer id = Integer.valueOf(albumid).intValue();
         // String singername = URLDecoder.decode(jsonObject.getString(REQUEST_SINGERNAME_JSON), HTTP_UTF8);
         Album album = albumService.findByAlbumId(id);
-        albumService.delete(request,album);
+        albumService.delete(request, album);
         return true;
     }
 }
